@@ -29,13 +29,13 @@ calib_object <- list(
     n_sims = n_sims,
     default_proposal = dplyr::select(
       params_df,
-      prep.start.prob_1, prep.start.prob_2, prep.start.prob_3,
+      dplyr::starts_with("prep.start.prob_"),
       aids.off.tx.mort.rate,
-      hiv.test.rate_1, hiv.test.rate_2, hiv.test.rate_3,
-      tx.init.rate_1, tx.init.rate_2, tx.init.rate_3,
+      dplyr::starts_with("hiv.test.rate_"),
+      dplyr::starts_with("tx.init.rate_"),
       ugc.prob, uct.prob,
-      tx.halt.partial.rate_1, tx.halt.partial.rate_2, tx.halt.partial.rate_3,
-      hiv.trans.scale_1, hiv.trans.scale_2, hiv.trans.scale_3,
+      dplyr::starts_with("tx.halt.partial.rate_"),
+      dplyr::starts_with("hiv.trans.scale_"),
       a.rate
     )
   ),

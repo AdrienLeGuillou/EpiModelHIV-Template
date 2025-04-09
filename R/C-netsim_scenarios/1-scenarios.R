@@ -1,7 +1,4 @@
-## 1. Epidemic Model Scenarios Playground
-##
-## Run `netsim` via the scenario API. This mimics how things will be run on the
-## HPC later on and ensure a smooth transition to the HPC setup.
+## 1. Epidemic Model Scenarios Playground Run `netsim` via the scenario API. This mimics how things will be run on the HPC later on and ensure a smooth transition to the HPC setup.
 ##
 ## This script only runs the simulation. The outputs are explored in the script
 ## 2-scenarios_assess.R
@@ -22,7 +19,8 @@ source("R/netsim_settings.R", local = TRUE)
 
 # Control settings
 control <- control_msm(
-  nsteps = year_steps * 4
+  nsteps = year_steps * 4,
+  .tracker.list = EpiModelHIV::make_calibration_trackers()
 )
 
 # Controls
@@ -47,9 +45,10 @@ scenarios_list <- EpiModel::create_scenario_list(scenarios_df)
 # This will generate 6 files (3 per scenarios)
 EpiModelHPC::netsim_scenarios(
   path_to_est, param, init, control,
-  scenarios_list = scenarios_list, # set to NULL to run with default params
-  n_rep = 3,
-  n_cores = 2,
+  # scenarios_list = scenarios_list, # set to NULL to run with default params
+  scenarios_list = NULL,
+  n_rep = 8,
+  n_cores = 4,
   output_dir = scenarios_dir
 )
 fs::dir_ls(scenarios_dir)

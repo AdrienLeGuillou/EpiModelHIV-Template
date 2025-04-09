@@ -14,7 +14,8 @@ source("R/shared_variables.R", local = TRUE)
 source("R/B-netsim_explore/z-context.R", local = TRUE)
 
 # load the local development version of the project
-pkgload::load_all(EMHIVp_dir)
+# pkgload::load_all(EMHIVp_dir)
+library(EpiModelHIV)
 
 # default theme for the plots
 theme_set(theme_light())
@@ -27,7 +28,8 @@ est <- readRDS(path_to_est)
 
 # Control settings
 control <- control_msm(
-  nsteps = year_steps * 4
+  nsteps = year_steps / 2,
+  .tracker.list = EpiModelHIV::make_calibration_trackers(),
 )
 
 # Epidemic simulation
@@ -35,6 +37,11 @@ sim <- netsim(est, param, init, control)
 
 # Simulation exploration (tidyverse)
 d_sim <- as_tibble(sim)
+
+d_sim$ir100.gono
+mutate_calibration_targets(d_sim) |> pull(ir100.gono)
+
+
 glimpse(d_sim)
 
 ggplot(d_sim, aes(x = time, y = prepCurr)) +

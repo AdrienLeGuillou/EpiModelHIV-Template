@@ -18,11 +18,7 @@ library(EpiModelHIV)
 context <- "hpc"
 source("R/netsim_settings.R", local = TRUE)
 
-d_calib <- readRDS(fs::path(calib_dir, "merged_tibbles", "df__empty_scenario.rds"))
-
-d_outs <- EpiModelHIV::mutate_calibration_targets(d_calib) |>
-  mutate(sim = as.integer(as.factor(paste0(batch_number, "_", sim)))) |>
-  as.epi.data.frame()
+d_outs <- readRDS(fs::path(calib_dir, "merged_tibbles", "df__calib_plot.rds"))
 
 races <- c("B", "H", "W")
 calib_plot_infos <- list(
@@ -79,7 +75,7 @@ calib_plot_infos <- list(
 make_calib_plot <- function(d, plot_info) {
   targets <- EpiModelHIV::get_calibration_targets()
   targets["num"] <- 1e5
-  colors <-  c("steelblue", "firebrick", "seagreen")
+  colors <-  c("steelblue", "firebrick", "seagreen", "chartreuse1", "lavender")
   text_pos <- max(d$time) - 500
   par(mar = c(3, 3, 1, 1), mgp = c(2, 1, 0))
   offset <- plot_info$text_offset

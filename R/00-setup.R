@@ -22,6 +22,11 @@ fs::file_copy(
   overwrite = TRUE
 )
 
+renv::snapshot(
+  packages = c("EpiModelHIV", "EpiModelHPC", "ARTnetData"),
+  lockfile = "renv.lock.hpc"
+)
+
 # # To install the packages from scratch:
 # renv::install(c(
 #     "Epimodel/EpiModelHIV-p",

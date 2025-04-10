@@ -9,63 +9,16 @@
 
 # Setup ------------------------------------------------------------------------
 library(dplyr)
-library(tidyr)
-library(ggplot2)
 
 source("R/shared_variables.R", local = TRUE)
 source("R/Z-calibration/z-context.R", local = TRUE)
-source("R/Z-calibration/utils-calib_plots.R", local = TRUE)
 
-calib_steps <- year_steps
+d_calib <- readRDS(fs::path(calib_dir, "merged_tibbles", "df__empty_scenario.rds"))
+targets <- EpiModelHIV::get_calibration_targets()
 
-# provide var `scenario`
-d_path <- fs::path(calib_dir, "merged_tibbles", paste0("df__", scenario, ".rds"))
-out_dir <- fs::path(calib_plot_dir, scenario)
-if (!fs::dir_exists(out_dir)) fs::dir_create(out_dir)
+d_outs <- EpiModelHIV::mutate_calibration_targets(d_calib) |>
+  mutate(sim = as.integer(as.factor(paste0(batch_number, "_", sim)))) |>
+  select(sim, time, any_of(names(targets))) |>
+  as.epi.data.frame()
 
-calib_plot_infos <- list(
-  cc.dx = list(
-    names = paste0("cc.dx.", c("B", "H", "W")),
-    window_size = 13
-  ),
-  cc.linked1m = list(
-    names = paste0("cc.linked1m.", c("B", "H", "W")),
-    window_size = 13
-  ),
-  cc.vsupp = list(
-    names = paste0("cc.vsupp.", c("B", "H", "W")),
-    window_size = 13
-  ),
-  i.prev.dx = list(
-    names = paste0("i.prev.dx.", c("B", "H", "W")),
-    window_size = 13
-  ),
-  ir100.sti = list(
-    names = c("ir100.gc", "ir100.ct"),
-    window_size = 52
-  ),
-## rm later
-  sti_prev = list(
-    names = c("gc_prev", "ct_prev"),
-    window_size = 13
-  ),
-## done rm
-  cc.prep.ind = list(
-    names = paste0("cc.prep.ind.", c("B", "H", "W")),
-    window_size = 13
-  ),
-  cc.prep = list(
-    names = paste0("cc.prep.", c("B", "H", "W")),
-    window_size = 13
-  ),
-  disease.mr100 = list(
-    names = "disease.mr100",
-    window_size = 13
-  ),
-  num = list(
-    names = "num",
-    window_size = 13
-  )
-)
-
-make_calib_plots(d_path, out_dir, calib_plot_infos, year_steps)
+saveRDS(d_outs, fs::path(calib_dir, "merged_tibbles", "df__calib_plot.rds"))

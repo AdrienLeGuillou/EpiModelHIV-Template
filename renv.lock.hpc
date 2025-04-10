@@ -256,7 +256,7 @@
       "RemoteUsername": "EpiModel",
       "RemoteRepo": "EpiModelHPC",
       "RemoteRef": "main",
-      "RemoteSha": "c269d007fe347833437b45f438ac19680c10d751",
+      "RemoteSha": "9f683abbe49e768a2418733ac7202c9387de5a10",
       "RemoteHost": "api.github.com",
       "Remotes": "github::EpiModel/slurmworkflow, github::EpiModel/swfcalib"
     },

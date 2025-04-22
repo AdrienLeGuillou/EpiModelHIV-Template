@@ -46,7 +46,7 @@ calib_object <- list(
         targets_val = targets["cc.prep.B"],
         params = c("prep.start.rate_1"),
         initial_proposals = dplyr::tibble(
-          prep.start.prob_1 = seq(0.001, 0.01, length.out = n_sims),
+          prep.start.rate_1 = seq(0.001, 0.01, length.out = n_sims),
         ),
         make_next_proposals = swfcalib::make_shrink_proposer(n_sims, shrink = 2),
         get_result = swfcalib::determ_poly_end(0.001, poly_n = 5)
@@ -56,7 +56,7 @@ calib_object <- list(
         targets_val = targets["cc.prep.H"],
         params = c("prep.start.rate_2"),
         initial_proposals = dplyr::tibble(
-          prep.start.prob_2 = seq(0.001, 0.01, length.out = n_sims),
+          prep.start.rate_2 = seq(0.001, 0.01, length.out = n_sims),
         ),
         make_next_proposals = swfcalib::make_shrink_proposer(n_sims, shrink = 2),
         get_result = swfcalib::determ_poly_end(0.001, poly_n = 5)
@@ -66,7 +66,7 @@ calib_object <- list(
         targets_val = targets["cc.prep.W"],
         params = c("prep.start.rate_3"),
         initial_proposals = dplyr::tibble(
-          prep.start.prob_3 = seq(0.001, 0.01, length.out = n_sims),
+          prep.start.rate_3 = seq(0.001, 0.01, length.out = n_sims),
         ),
         make_next_proposals = swfcalib::make_shrink_proposer(n_sims, shrink = 2),
         get_result = swfcalib::determ_poly_end(0.001, poly_n = 5)

@@ -16,7 +16,7 @@ hpc_context <- TRUE
 source("R/shared_variables.R", local = TRUE)
 source("R/Z-calibration/z-context.R", local = TRUE)
 source("R/hpc_configs.R", local = TRUE)
-max_cores <- 8
+max_cores <- 1
 
 # Process ----------------------------------------------------------------------
 source("R/netsim_settings.R", local = TRUE)
@@ -34,14 +34,13 @@ wf <- make_em_workflow("calibration_1", override = TRUE)
 
 # Define calibration scenarios
 # insert test values here
-n_scenarios <- 2
+n_scenarios <- 256
 scenarios_df <- tibble(
   .scenario.id = as.character(seq_len(n_scenarios)),
   .at = 1,
-  ugc.prob = seq(0.3225, 0.3275, length.out = n_scenarios), # best 0.325
-  rgc.prob = plogis(qlogis(ugc.prob) + log(1.25)),
-  uct.prob = seq(0.29, 0.294, length.out = n_scenarios), # best 0.291
-  rct.prob = plogis(qlogis(uct.prob) + log(1.25))
+  prep.start.rate_1 = seq(0.001, 0.01, length.out = n_scenarios),
+  prep.start.rate_2 = sample(prep.start.rate_1),
+  prep.start.rate_3 = sample(prep.start.rate_1)
 )
 scenarios_list <- EpiModel::create_scenario_list(scenarios_df)
 
@@ -51,7 +50,7 @@ wf <- add_workflow_step(
     path_to_est, param, init, control,
     scenarios_list = NULL, # scenarios_list,
     output_dir = calib_dir,
-    n_rep = 32,
+    n_rep = 8,
     n_cores = max_cores,
     max_array_size = 500,
     setup_lines = hpc_node_setup

@@ -160,4 +160,3 @@ wf <- add_workflow_step(
     "mem-per-cpu" = "5G"
   )
 )
-

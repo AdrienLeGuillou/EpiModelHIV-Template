@@ -29,7 +29,7 @@ calib_object <- list(
     n_sims = n_sims,
     default_proposal = dplyr::select(
       params_df,
-      dplyr::starts_with("prep.start.prob_"),
+      dplyr::starts_with("prep.start.rate_"),
       aids.off.tx.mort.rate,
       dplyr::starts_with("hiv.test.rate_"),
       dplyr::starts_with("tx.init.rate_"),
@@ -44,7 +44,7 @@ calib_object <- list(
       job1 = list(
         targets = "cc.prep.B",
         targets_val = targets["cc.prep.B"],
-        params = c("prep.start.prob_1"),
+        params = c("prep.start.rate_1"),
         initial_proposals = dplyr::tibble(
           prep.start.prob_1 = seq(0.001, 0.01, length.out = n_sims),
         ),
@@ -54,7 +54,7 @@ calib_object <- list(
       job2 = list(
         targets = "cc.prep.H",
         targets_val = targets["cc.prep.H"],
-        params = c("prep.start.prob_2"),
+        params = c("prep.start.rate_2"),
         initial_proposals = dplyr::tibble(
           prep.start.prob_2 = seq(0.001, 0.01, length.out = n_sims),
         ),
@@ -64,7 +64,7 @@ calib_object <- list(
       job3 = list(
         targets = "cc.prep.W",
         targets_val = targets["cc.prep.W"],
-        params = c("prep.start.prob_3"),
+        params = c("prep.start.rate_3"),
         initial_proposals = dplyr::tibble(
           prep.start.prob_3 = seq(0.001, 0.01, length.out = n_sims),
         ),

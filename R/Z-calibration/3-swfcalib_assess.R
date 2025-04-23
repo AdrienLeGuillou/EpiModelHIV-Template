@@ -31,8 +31,47 @@ rmarkdown::render(
 )
 
 # Results ----------------------------------------------------------------------
-# results <- readRDS(fs::path(swfcalib_dir, "results.rds"))
-results <- readRDS("./results.rds")
+results <- readRDS(fs::path(swfcalib_dir, "results.rds"))
+# readr::write_csv(results, "../tst_sk_calib/res_syph.csv")
+
+dlm <- filter(results, .iteration <= 1)
+mod <- lm(cc.prep.B ~ poly(prep.start.rate_1, 2), data = dlm)
+summary(mod)
+
+loss_fun <- function(par, t)  abs(predict(mod, data.frame(prep.start.rate_1 = par)) - t)
+optimize(interval = c(0.001, 0.01), f = loss_fun, t = 0.199)
+
+coefs <- coefficients(mod)
+mutate(
+  dlm,
+  pred = predict(mod)
+) |>
+  ggplot(aes(
+    x = prep.start.rate_1,
+    y = cc.prep.B,
+    col = as.factor(.iteration)
+  )) +
+  geom_point() +
+  geom_hline(yintercept = 0.199) +
+  # geom_smooth() +
+  geom_line(aes(y = pred))
+
+         # prep.start.rate_1 :  0.006533872
+         # prep.start.rate_2 :  0.005214396
+         # prep.start.rate_3 :  0.008204343
+
+
+dlm <- filter(results, .iteration <= 1) |>
+  select(prep.start.rate_1, cc.prep.B)
+
+mod <- lm(cc.prep.B ~ poly(prep.start.rate_1, 2, raw = F), data = dlm)
+summary(mod)
+
+mod <- lm(cc.prep.B ~ prep.start.rate_1 + prep.start.rate_1^2, data = dlm)
+summary(mod)
+
+
+
 
 pu <- results |>
   filter(abs(ir100.gc - 12.81) < 0.1) |>
@@ -130,4 +169,3 @@ plot(mod)
 
 loss_fun <- function(par, t)  abs(predict(mod, data.frame(ugc.prob = par)) - t)
 optimize(interval = c(0.24, 0.3), f = loss_fun, t = 12.81)
-

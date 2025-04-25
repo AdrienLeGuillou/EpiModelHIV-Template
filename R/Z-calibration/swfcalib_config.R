@@ -78,30 +78,30 @@ calib_object <- list(
         targets_val = targets["cc.dx.B"],
         params = c("hiv.test.rate_1"), # target: 0.00385
         initial_proposals = dplyr::tibble(
-          hiv.test.rate_1 = sample(seq(0.001, 0.01, length.out = n_sims)),
+          hiv.test.rate_1 = sample(seq(0.00075, 0.0075, length.out = n_sims)),
         ),
         make_next_proposals = swfcalib::make_shrink_proposer(n_sims, shrink = 2),
-        get_result = swfcalib::determ_poly_end(0.001, poly_n = 5)
+        get_result = swfcalib::determ_poly_end(0.001, poly_n = 3)
       ),
       job2 = list(
         targets = "cc.dx.H",
         targets_val = targets["cc.dx.H"],
         params = c("hiv.test.rate_2"), # target: 0.0038
         initial_proposals = dplyr::tibble(
-          hiv.test.rate_2 = sample(seq(0.001, 0.01, length.out = n_sims)),
+          hiv.test.rate_2 = sample(seq(0.00075, 0.0075, length.out = n_sims)),
         ),
         make_next_proposals = swfcalib::make_shrink_proposer(n_sims, shrink = 2),
-        get_result = swfcalib::determ_poly_end(0.001, poly_n = 5)
+        get_result = swfcalib::determ_poly_end(0.001, poly_n = 3)
         ),
       job3 = list(
         targets = "cc.dx.W",
         targets_val = targets["cc.dx.W"],
         params = c("hiv.test.rate_3"), # target: 0.0069
         initial_proposals = dplyr::tibble(
-          hiv.test.rate_3 = sample(seq(0.001, 0.01, length.out = n_sims)),
+          hiv.test.rate_3 = sample(seq(0.00075, 0.0075, length.out = n_sims)),
         ),
         make_next_proposals = swfcalib::make_shrink_proposer(n_sims, shrink = 2),
-        get_result = swfcalib::determ_poly_end(0.001, poly_n = 5)
+        get_result = swfcalib::determ_poly_end(0.001, poly_n = 3)
       ),
       job6 = list(
         targets = paste0("cc.linked1m.", c("B", "H", "W")),
@@ -122,7 +122,7 @@ calib_object <- list(
         targets_val = targets[paste0("cc.vsupp.", c("B", "H", "W"))],
         params = paste0("tx.halt.partial.rate_", 1:3),
         initial_proposals = dplyr::tibble(
-          tx.halt.partial.rate_1 = sample(seq(0.002, 0.07, length.out = n_sims)),
+          tx.halt.partial.rate_1 = sample(seq(0.001, 0.01, length.out = n_sims)),
           tx.halt.partial.rate_2 = sample(tx.halt.partial.rate_1),
           tx.halt.partial.rate_3 = sample(tx.halt.partial.rate_1)
         ),
@@ -203,4 +203,4 @@ calib_object <- list(
 )
 
 # # Limit the number of waves to run
-calib_object$waves <- calib_object$waves[2]
+calib_object$waves <- calib_object$waves[3]

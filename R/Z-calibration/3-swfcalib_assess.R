@@ -31,34 +31,61 @@ rmarkdown::render(
 )
 
 # Results ----------------------------------------------------------------------
+targets <- EpiModelHIV::get_calibration_targets()
 results <- readRDS(fs::path(swfcalib_dir, "results.rds"))
 # readr::write_csv(results, "../tst_sk_calib/res_syph.csv")
 
-dlm <- filter(results, .iteration <= 1)
-mod <- lm(cc.prep.B ~ poly(prep.start.rate_1, 2), data = dlm)
+dlm <- filter(results, .iteration <= 1) |> sample_n(100)
+p_name <- "tx.init.rate_"
+t_name <- "cc.linked1m."
+d_mod <- tibble(
+  x = unname(unlist(dlm[paste0(p_name, 1)])),
+  y = unname(unlist(dlm[paste0(t_name, c("B", "H", "W")[1])]))
+)
+mod <- lm(y ~ poly(x, 3), data = d_mod)
 summary(mod)
 
-loss_fun <- function(par, t)  abs(predict(mod, data.frame(prep.start.rate_1 = par)) - t)
-optimize(interval = c(0.001, 0.01), f = loss_fun, t = 0.199)
+loss_fun <- function(par, t)  abs(predict(mod, data.frame(x = par)) - t)
+optimize(interval = c(0.1, 0.5), f = loss_fun, t = targets[paste0(t_name, "B")])
 
-coefs <- coefficients(mod)
 mutate(
-  dlm,
+  d_mod,
   pred = predict(mod)
 ) |>
   ggplot(aes(
-    x = prep.start.rate_1,
-    y = cc.prep.B,
-    col = as.factor(.iteration)
+    x = x,
+    y = y
   )) +
   geom_point() +
-  geom_hline(yintercept = 0.199) +
+  geom_hline(yintercept = targets["cc.dx.W"]) +
+  # geom_hline(yintercept = targets["cc.linked1m.H"]) +
+  # geom_hline(yintercept = targets["cc.linked1m.W"]) +
   # geom_smooth() +
   geom_line(aes(y = pred))
 
-         # prep.start.rate_1 :  0.006533872
-         # prep.start.rate_2 :  0.005214396
-         # prep.start.rate_3 :  0.008204343
+
+
+
+# quantile
+
+
+i2r_p <- function(i, p) 1 - (1 - p)^(1 / i)
+r2i_p <- function(r, p) log(1 - p, base = 1 - r)
+i2r_p(52/12, targets[paste0(t_name, "B")])
+i2r_p(52/12, targets[paste0(t_name, "H")])
+i2r_p(52/12, targets[paste0(t_name, "W")])
+
+i2r_p(52/12, 0.8)
+
+p = 0.8
+l = kkk
+
+i2r_p(4, 0.8)
+r2i_p(i2r_p(4, 0.8), 0.8)
+
+
+
+
 
 
 dlm <- filter(results, .iteration <= 1) |>

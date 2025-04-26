@@ -18,9 +18,9 @@ tt.durable.supp.prob_3,0,numeric,assumption,,,,Proportion of White MSM who enter
 tx.init.rate_1,0.2980428,numeric,7.2,,cc.linked1m.B,atlanta,Probability per time step that a Black MSM who has tested positive will initiate treatment.
 tx.init.rate_2,0.3678188,numeric,7.2,,cc.linked1m.H,atlanta,Probability per time step that a Hispanic MSM who has tested positive will initiate treatment.
 tx.init.rate_3,0.3476189,numeric,7.2,,cc.linked1m.W,atlanta,Probability per time step that a White MSM who has tested positive will initiate treatment.
-tx.halt.partial.rate_1,0.00532779300510705,numeric,7.2,,cc.vsupp.B,atlanta,Probability per time step that Black MSM who have started treatment and assigned to the partial VL suppression category will stop treatment.
-tx.halt.partial.rate_2,0.00487215626435732,numeric,7.2,,cc.vsupp.H,atlanta,Probability per time step that Hispanic MSM who have started treatment and assigned to the partial VL suppression category will stop treatment.
-tx.halt.partial.rate_3,0.00269785261583336,numeric,7.2,,cc.vsupp.W,atlanta,Probability per time step that White MSM who have started treatment and assigned to the partial VL suppression category will stop treatment.
+tx.halt.partial.rate_1,0.004960952,numeric,7.2,,cc.vsupp.B,atlanta,Probability per time step that Black MSM who have started treatment and assigned to the partial VL suppression category will stop treatment.
+tx.halt.partial.rate_2,0.004605977,numeric,7.2,,cc.vsupp.H,atlanta,Probability per time step that Hispanic MSM who have started treatment and assigned to the partial VL suppression category will stop treatment.
+tx.halt.partial.rate_3,0.003061697,numeric,7.2,,cc.vsupp.W,atlanta,Probability per time step that White MSM who have started treatment and assigned to the partial VL suppression category will stop treatment.
 tx.halt.full.or_1,0.45,numeric,assumption,,,,Odds ratio comparing the odds of stopping treatment for Black MSM in the full VL suppression category vs. in the partial VL suppression category.
 tx.halt.full.or_2,0.45,numeric,assumption,,,,Odds ratio comparing the odds of stopping treatment for Hispanic MSM in the full VL suppression category vs. in the partial VL suppression category.
 tx.halt.full.or_3,0.45,numeric,assumption,,,,Odds ratio comparing the odds of stopping treatment for White MSM in the full VL suppression category vs. in the partial VL suppression category.

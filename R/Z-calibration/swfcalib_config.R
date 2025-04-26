@@ -132,11 +132,11 @@ calib_object <- list(
     ),
     wave4 = list(
       job1 = list(
-        targets = "ir100.gc",
-        targets_val = targets["ir100.gc"],
-        params = c("ugc.prob"), # target:
+        targets = "ir100.gono",
+        targets_val = targets["ir100.gono"],
+        params = c("gono.uret.prob"), # target:
         initial_proposals = dplyr::tibble(
-          ugc.prob = sample(seq(0.15, 0.3, length.out = n_sims)),
+          gono.uret.prob = sample(seq(0.1, 0.5, length.out = n_sims)),
         ),
         make_next_proposals = swfcalib::make_proposer_se_range(n_sims, retain_prop = 0.3),
         get_result = swfcalib::determ_end_thresh(
@@ -145,11 +145,24 @@ calib_object <- list(
         )
       ),
       job2 = list(
-        targets = "ir100.ct",
-        targets_val = targets["ir100.ct"],
-        params = c("uct.prob"), # target:
+        targets = "ir100.chla",
+        targets_val = targets["ir100.chla"],
+        params = c("chla.uret.prob"), # target:
         initial_proposals = dplyr::tibble(
-          uct.prob = sample(seq(0.10, 0.25, length.out = n_sims)),
+          chla.uret.prob = sample(seq(0.1, 0.5, length.out = n_sims)),
+        ),
+        make_next_proposals = swfcalib::make_proposer_se_range(n_sims, retain_prop = 0.3),
+        get_result = swfcalib::determ_end_thresh(
+          thresholds = 1,
+          n_enough = 100
+        )
+      ),
+      job4 = list(
+        targets = "ir100.syph",
+        targets_val = targets["ir100.syph"],
+        params = c("syph.prob"), # target:
+        initial_proposals = dplyr::tibble(
+          syph.prob = sample(seq(0.1, 0.5, length.out = n_sims)),
         ),
         make_next_proposals = swfcalib::make_proposer_se_range(n_sims, retain_prop = 0.3),
         get_result = swfcalib::determ_end_thresh(
@@ -203,4 +216,4 @@ calib_object <- list(
 )
 
 # # Limit the number of waves to run
-calib_object$waves <- calib_object$waves[3]
+calib_object$waves <- calib_object$waves[4]

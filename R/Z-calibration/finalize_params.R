@@ -10,4 +10,9 @@ params_calib <- read.csv("./params.csv") |>
 final_prms <- left_join(params_df_all, params_calib, by = "param") |>
   select(param, value, type, everything())
 
-readr::write_csv(final_prms, fs::path(input_dir, "model_parameters.csv"))
+
+write.csv(
+  final_prms,
+  fs::path(input_dir, "model_parameters.csv"),
+  row.names = FALSE
+)

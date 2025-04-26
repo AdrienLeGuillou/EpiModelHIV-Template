@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.4.2",
+    "Version": "4.5.0",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -199,7 +199,7 @@
       "Encoding": "UTF-8",
       "Config/testthat/edition": "3",
       "Roxygen": "list(markdown = TRUE)",
-      "Author": "Samuel M. Jenness [cre, aut], Steven M. Goodreau [aut], Adrien Le Guillou [aut] (<https://orcid.org/0000-0002-4791-418X>)",
+      "Author": "Samuel M. Jenness [cre, aut], Steven M. Goodreau [aut], Adrien Le Guillou [aut] (ORCID: <https://orcid.org/0000-0002-4791-418X>)",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteUsername": "EpiModel",
@@ -2603,7 +2603,7 @@
       "VignetteBuilder": "knitr",
       "Language": "en-US",
       "URL": "https://epimodel.github.io/slurmworkflow/",
-      "Author": "Adrien Le Guillou [aut, cre] (<https://orcid.org/0000-0002-4791-418X>)",
+      "Author": "Adrien Le Guillou [aut, cre] (ORCID: <https://orcid.org/0000-0002-4791-418X>)",
       "Maintainer": "Adrien Le Guillou <contact@aleguillou.org>",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
@@ -2749,13 +2749,13 @@
       ],
       "VignetteBuilder": "knitr",
       "URL": "https://epimodel.github.io/swfcalib/",
-      "Author": "Adrien Le Guillou [aut, cre] (<https://orcid.org/0000-0002-4791-418X>)",
+      "Author": "Adrien Le Guillou [aut, cre] (ORCID: <https://orcid.org/0000-0002-4791-418X>)",
       "Maintainer": "Adrien Le Guillou <contact@aleguillou.org>",
       "RemoteType": "github",
       "RemoteUsername": "EpiModel",
       "RemoteRepo": "swfcalib",
       "RemoteRef": "main",
-      "RemoteSha": "b37d195b3bda3158e6902624d76ccc4d28e6782f",
+      "RemoteSha": "312de825d00b8a953345241f861a5347f60b3a1c",
       "RemoteHost": "api.github.com",
       "Remotes": "github::EpiModel/slurmworkflow"
     },

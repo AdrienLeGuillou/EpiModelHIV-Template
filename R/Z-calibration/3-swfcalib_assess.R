@@ -32,15 +32,40 @@ rmarkdown::render(
 
 # Results ----------------------------------------------------------------------
 targets <- EpiModelHIV::get_calibration_targets()
-results <- readRDS(fs::path(swfcalib_dir, "results.rds"))
+results <- readRDS(fs::path(swfcalib_dir, "w4_results.rds"))
 # readr::write_csv(results, "../tst_sk_calib/res_syph.csv")
 
-dlm <- filter(results, .iteration <= 1) |> sample_n(100)
-p_name <- "tx.init.rate_"
-t_name <- "cc.linked1m."
+
+
+ggplot(results,
+       aes(x = gono.uret.prob, y = ir100.gono, col = as.factor(.iteration)))+
+  geom_point() +
+  geom_hline(yintercept = targets[["ir100.gono"]])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+dlm <- filter(results, .iteration <= 10) #|> sample_n(100)
+p_name <- "gono.uret.prob"
+t_name <- "ir100.gono"
 d_mod <- tibble(
-  x = unname(unlist(dlm[paste0(p_name, 1)])),
-  y = unname(unlist(dlm[paste0(t_name, c("B", "H", "W")[1])]))
+  # x = unname(unlist(dlm[paste0(p_name, 1)])),
+  # y = unname(unlist(dlm[paste0(t_name, c("B", "H", "W")[1])]))
+  x = dlm[[p_name]],
+  y = dlm[[t_name]]
 )
 mod <- lm(y ~ poly(x, 3), data = d_mod)
 summary(mod)
@@ -57,11 +82,25 @@ mutate(
     y = y
   )) +
   geom_point() +
-  geom_hline(yintercept = targets["cc.dx.W"]) +
+  geom_hline(yintercept = targets[t_name]) +
   # geom_hline(yintercept = targets["cc.linked1m.H"]) +
   # geom_hline(yintercept = targets["cc.linked1m.W"]) +
   # geom_smooth() +
   geom_line(aes(y = pred))
+
+# range at each iteration
+results |>
+  group_by(.iteration) |>
+  summarize(
+    lo = min(gono.uret.prob),
+    med = median(gono.uret.prob),
+    hi = max(gono.uret.prob)
+  )
+
+results |>
+  filter(abs(ir100.gono - targets[t_name]) < 1) |>
+  select(gono.uret.prob, ir100.gono) |>
+  pull(gono.uret.prob) |> median()
 
 
 

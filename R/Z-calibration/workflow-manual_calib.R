@@ -16,7 +16,7 @@ hpc_context <- TRUE
 source("R/shared_variables.R", local = TRUE)
 source("R/Z-calibration/z-context.R", local = TRUE)
 source("R/hpc_configs.R", local = TRUE)
-max_cores <- 1
+max_cores <- 8
 
 # Process ----------------------------------------------------------------------
 source("R/netsim_settings.R", local = TRUE)
@@ -50,7 +50,7 @@ wf <- add_workflow_step(
     path_to_est, param, init, control,
     scenarios_list = NULL, # scenarios_list,
     output_dir = calib_dir,
-    n_rep = 8,
+    n_rep = 256,
     n_cores = max_cores,
     max_array_size = 500,
     setup_lines = hpc_node_setup

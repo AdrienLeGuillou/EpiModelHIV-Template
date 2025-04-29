@@ -16,4 +16,7 @@ source("R/Z-calibration/z-context.R", local = TRUE)
 source("R/Z-calibration/utils-calib_plots.R", local = TRUE)
 
 # Process ----------------------------------------------------------------------
+if (!fs::dir_exists(calib_plot_dir))
+  fs::dir_create(calib_plot_dir)
+
 for (out_dir in fs::dir_ls(calib_plot_dir)) generate_calib_plots(out_dir)

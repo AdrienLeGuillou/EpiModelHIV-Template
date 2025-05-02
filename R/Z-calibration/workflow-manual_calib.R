@@ -34,7 +34,7 @@ wf <- make_em_workflow("calibration_1", override = TRUE)
 
 # Define calibration scenarios
 # insert test values here
-n_scenarios <- 256
+n_scenarios <- 96
 scenarios_df <- tibble(
   .scenario.id = as.character(seq_len(n_scenarios)),
   .at = 1,

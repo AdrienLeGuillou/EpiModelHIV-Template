@@ -84,9 +84,11 @@ make_calib_plot <- function(d, plot_info) {
   offset <- plot_info$text_offset
   cur_targs <- plot_info$names
 
+  pkgload::load_all("../EpiModel.git/main/")
+
   plot(
     d,
-    xaxt = "n",
+    xaxt = "none",
     y = cur_targs,
     legend = TRUE,
     ylab = plot_info$ylab,
@@ -111,3 +113,6 @@ med_iqr <- function(x, fmtr) {
   vs <- quantile(x, c(0.5, 0.25, 0.75)) |> fmtr()
   paste0(vs[1], " [", vs[2], "-",  vs[3], "]")
 }
+
+p <- calib_plot_infos[["disease.mr100"]]
+make_calib_plot(d_outs, p)

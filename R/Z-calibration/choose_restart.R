@@ -72,10 +72,13 @@ best <- readRDS(fs::path(
 best <- EpiModel::get_sims(best, best_sim$sim)
 
 # Remove all epi except `num`
-best$epi <- list(
-  num = best$epi$num,
-  sim.num = best$epi$sim.num
-)
+# best$epi <- list(
+#   num = best$epi$num,
+#   sim.num = best$epi$sim.num
+# )
+
+# remove calib trackers
+ct <- names(EpiModelHIV::make_calibration_trackers())
+best$epi[ct] <- NULL
 
 saveRDS(best, path_to_restart)
-

@@ -201,11 +201,11 @@
       "Roxygen": "list(markdown = TRUE)",
       "Author": "Samuel M. Jenness [cre, aut], Steven M. Goodreau [aut], Adrien Le Guillou [aut] (ORCID: <https://orcid.org/0000-0002-4791-418X>)",
       "RemoteType": "github",
+      "RemoteHost": "api.github.com",
       "RemoteUsername": "EpiModel",
       "RemoteRepo": "EpiModelHIV-p",
-      "RemoteRef": "v3.2.x",
-      "RemoteSha": "c1368fa30a4ffc82603244259b97c33730c219f6",
-      "RemoteHost": "api.github.com",
+      "RemoteRef": "merge_offscript",
+      "RemoteSha": "83178db643737109ae6698e39f3eddb6ec4caf7b",
       "Remotes": "github::EpiModel/ARTnet@main, github::EpiModel/ARTnetData@main"
     },
     "EpiModelHPC": {

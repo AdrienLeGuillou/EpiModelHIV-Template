@@ -1,7 +1,7 @@
 param,value,type,Appendix.Section,source,relevant.calibration.target,geography,definition
-hiv.test.rate_1,0.001502146,numeric,7.1,,cc.dx.B,atlanta,Mean probability of HIV testing per time step for Black MSM.
-hiv.test.rate_2,0.001471541,numeric,7.1,,cc.dx.H,atlanta,Mean probability of HIV testing per time step for Hispanic MSM.
-hiv.test.rate_3,0.001466421,numeric,7.1,,cc.dx.W,atlanta,Mean probability of HIV testing per time step for White MSM.
+hiv.test.rate_1,0.00278141013714234,numeric,7.1,,cc.dx.B,atlanta,Mean probability of HIV testing per time step for Black MSM.
+hiv.test.rate_2,0.00247564425933642,numeric,7.1,,cc.dx.H,atlanta,Mean probability of HIV testing per time step for Hispanic MSM.
+hiv.test.rate_3,0.00292477834560212,numeric,7.1,,cc.dx.W,atlanta,Mean probability of HIV testing per time step for White MSM.
 hiv.test.late.prob_1,0,numeric,assumption,,,,Proportion of Black MSM who test only during AIDS stage infection.
 hiv.test.late.prob_2,0,numeric,assumption,,,,Proportion of Hispanic MSM who test only during AIDS stage infection.
 hiv.test.late.prob_3,0,numeric,assumption,,,,Proportion of White MSM who test only during AIDS stage infection.
@@ -15,12 +15,12 @@ tt.full.supp.prob_3,1,numeric,assumption,,,,Proportion of White MSM who enter fu
 tt.durable.supp.prob_1,0,numeric,assumption,,,,Proportion of Black MSM who enter durable viral suppression category after ART initiation.
 tt.durable.supp.prob_2,0,numeric,assumption,,,,Proportion of Hispanic MSM who enter durable viral suppression category after ART initiation.
 tt.durable.supp.prob_3,0,numeric,assumption,,,,Proportion of White MSM who enter durable viral suppression category after ART initiation.
-tx.init.rate_1,0.2980428,numeric,7.2,,cc.linked1m.B,atlanta,Probability per time step that a Black MSM who has tested positive will initiate treatment.
-tx.init.rate_2,0.3678188,numeric,7.2,,cc.linked1m.H,atlanta,Probability per time step that a Hispanic MSM who has tested positive will initiate treatment.
-tx.init.rate_3,0.3476189,numeric,7.2,,cc.linked1m.W,atlanta,Probability per time step that a White MSM who has tested positive will initiate treatment.
-tx.halt.partial.rate_1,0.004960952,numeric,7.2,,cc.vsupp.B,atlanta,Probability per time step that Black MSM who have started treatment and assigned to the partial VL suppression category will stop treatment.
-tx.halt.partial.rate_2,0.004605977,numeric,7.2,,cc.vsupp.H,atlanta,Probability per time step that Hispanic MSM who have started treatment and assigned to the partial VL suppression category will stop treatment.
-tx.halt.partial.rate_3,0.003061697,numeric,7.2,,cc.vsupp.W,atlanta,Probability per time step that White MSM who have started treatment and assigned to the partial VL suppression category will stop treatment.
+tx.init.rate_1,0.298361113628911,numeric,7.2,,cc.linked1m.B,atlanta,Probability per time step that a Black MSM who has tested positive will initiate treatment.
+tx.init.rate_2,0.368208639586171,numeric,7.2,,cc.linked1m.H,atlanta,Probability per time step that a Hispanic MSM who has tested positive will initiate treatment.
+tx.init.rate_3,0.347998730409527,numeric,7.2,,cc.linked1m.W,atlanta,Probability per time step that a White MSM who has tested positive will initiate treatment.
+tx.halt.partial.rate_1,0.00532779300510705,numeric,7.2,,cc.vsupp.B,atlanta,Probability per time step that Black MSM who have started treatment and assigned to the partial VL suppression category will stop treatment.
+tx.halt.partial.rate_2,0.00487215626435732,numeric,7.2,,cc.vsupp.H,atlanta,Probability per time step that Hispanic MSM who have started treatment and assigned to the partial VL suppression category will stop treatment.
+tx.halt.partial.rate_3,0.00269785261583336,numeric,7.2,,cc.vsupp.W,atlanta,Probability per time step that White MSM who have started treatment and assigned to the partial VL suppression category will stop treatment.
 tx.halt.full.or_1,0.45,numeric,assumption,,,,Odds ratio comparing the odds of stopping treatment for Black MSM in the full VL suppression category vs. in the partial VL suppression category.
 tx.halt.full.or_2,0.45,numeric,assumption,,,,Odds ratio comparing the odds of stopping treatment for Hispanic MSM in the full VL suppression category vs. in the partial VL suppression category.
 tx.halt.full.or_3,0.45,numeric,assumption,,,,Odds ratio comparing the odds of stopping treatment for White MSM in the full VL suppression category vs. in the partial VL suppression category.
@@ -80,9 +80,9 @@ hiv.dual.rr,0.2,numeric,7.5,,,,"Additive proportional risk, from 0 to 1, for HIV
 hiv.syph.or,2.67,numeric,,,,,Odds ratio comparing the odds of HIV infection given current syphilis to the odds of HIV infection in the absence of current syphilis. (PMC8543214)
 riskh.start,-52,numeric,7.5,,,,Time step at which behavioral risk history assessment occurs.
 prep.start,0,numeric,missing?,"2020 CDC HIV surveillance data , 2017 National HIV Behavioral Surveillance findings",cc.prep.B,,Time step at which the PrEP intervention should start.
-prep.start.rate_1,0.006533872,numeric,missing?,"2020 CDC HIV surveillance data , 2017 National HIV Behavioral Surveillance findings",cc.prep.H,,Probability of starting PrEP given current indications for Black MSM.
-prep.start.rate_2,0.005214396,numeric,missing?,"2020 CDC HIV surveillance data , 2017 National HIV Behavioral Surveillance findings",cc.prep.W,,Probability of starting PrEP given current indications for Hispanic MSM.
-prep.start.rate_3,0.008204343,numeric,missing?,,,,Probability of starting PrEP given current indications for White MSM.
+prep.start.rate_1,0.00554146887680583,numeric,missing?,"2020 CDC HIV surveillance data , 2017 National HIV Behavioral Surveillance findings",cc.prep.H,,Probability of starting PrEP given current indications for Black MSM.
+prep.start.rate_2,0.00423228372076054,numeric,missing?,"2020 CDC HIV surveillance data , 2017 National HIV Behavioral Surveillance findings",cc.prep.W,,Probability of starting PrEP given current indications for Hispanic MSM.
+prep.start.rate_3,0.00662106571520366,numeric,missing?,,,,Probability of starting PrEP given current indications for White MSM.
 prep.adhr.dist_1,0.089,numeric,missing?,,,,"Proportion of men who are low, medium, and high adherent to PrEP for Black MSM."
 prep.adhr.dist_2,0.127,numeric,missing?,,,,"Proportion of men who are low, medium, and high adherent to PrEP for Hispanic MSM."
 prep.adhr.dist_3,0.784,numeric,missing?,50,,,"Proportion of men who are low, medium, and high adherent to PrEP for White MSM."
@@ -96,6 +96,21 @@ prep.tst.int,12.8571,numeric,missing?,,,,Testing interval by time steps for thos
 prep.sti.screen.int,26,numeric,missing?,,,,Time step to initiate PrEP-based STI screening (may be after `prep.start` to stabilize STI incidence during calibration.
 prep.sti.tx.prob,1,numeric,missing?,,,,Probability of any STI treatment given positive screening during PrEP visit.
 prep.risk.reassess.int,52,numeric,7.5,,,,Interval for reassessment of risk indications of active PrEP users. Default of `52` for yearly reassessment when time unit is weekly -  use `Inf` for no reassessment.
+prep.otc.start.rate_1,0.00554146887680583,numeric,missing?,"2020 CDC HIV surveillance data , 2017 National HIV Behavioral Surveillance findings",cc.prep.H,,Probability of starting PrEP given current indications for Black MSM.
+prep.otc.start.rate_2,0.00423228372076054,numeric,missing?,"2020 CDC HIV surveillance data , 2017 National HIV Behavioral Surveillance findings",cc.prep.W,,Probability of starting PrEP given current indications for Hispanic MSM.
+prep.otc.start.rate_3,0.00662106571520366,numeric,missing?,,,,Probability of starting PrEP given current indications for White MSM.
+prep.otc.adhr.dist_1,0.089,numeric,missing?,,,,"Proportion of men who are low, medium, and high adherent to PrEP for Black MSM."
+prep.otc.adhr.dist_2,0.127,numeric,missing?,,,,"Proportion of men who are low, medium, and high adherent to PrEP for Hispanic MSM."
+prep.otc.adhr.dist_3,0.784,numeric,missing?,50,,,"Proportion of men who are low, medium, and high adherent to PrEP for White MSM."
+prep.otc.discont.int_1,33.42,numeric,missing?,https://onlinelibrary.wiley.com/doi/10.1002/jia2.25252,,,Median interval until PrEP discontinuation in time steps for Black MSM. Calculated to get 56% retention 1Y and 41% 2Y
+prep.otc.discont.int_2,57.48,numeric,missing?,https://onlinelibrary.wiley.com/doi/10.1002/jia2.25252,,,Median interval until PrEP discontinuation in time steps for Hispanic MSM. Median interval until PrEP discontinuation in time steps for Black MSM. Calculated to get 56% retention 1Y and 41% 2Y
+prep.otc.discont.int_3,57.39,numeric,missing?,,,,Median interval until PrEP discontinuation in time steps for White MSM. Median interval until PrEP discontinuation in time steps for Black MSM. Calculated to get 56% retention 1Y and 41% 2Y
+prep.otc.tst.int,12.8571,numeric,missing?,,,,Testing interval by time steps for those who are actively on PrEP. This overrides the mean testing interval parameters.
+prep.otc.sti.screen.int,26,numeric,missing?,,,,Time step to initiate PrEP-based STI screening (may be after `prep.start` to stabilize STI incidence during calibration.
+prep.otc.sti.tx.prob,1,numeric,missing?,,,,Probability of any STI treatment given positive screening during PrEP visit.
+prep.otc.risk.reassess.int,52,numeric,7.5,,,,Interval for reassessment of risk indications of active PrEP users. Default of `52` for yearly reassessment when time unit is weekly -  use `Inf` for no reassessment.
+prep.std.switch.otc,0,numeric,missing?,50,,,"Proportion of men who are low, medium, and high adherent to PrEP for White MSM."
+prep.otc.switch.std,0,numeric,missing?,50,,,"Proportion of men who are low, medium, and high adherent to PrEP for White MSM."
 sti.prep.tx.prob,1,numeric,,,,,Probability of any STI treatment given positive screening during PrEP visit.
 sti.screening.dist,stochastic,character,12,,,,"Either `""stochastic""` for random (memoryless) STI screening or `""deterministic""` for screening based on interval since last screening time (1/rates)."
 sti.screen.prep.rate,0.07692308,numeric,12,,,,Rate per time step for asymptomatic urogenital STI screening for MSM not diagnosed with HIV and on PrEP.
@@ -104,7 +119,7 @@ sti.screen.rect.hivneg.prob,0.48,numeric,12,,,,Probability of rectal site screen
 sti.screen.rect.hivpos.prob,0.63,numeric,12,,,,Probability of rectal site screening for any STI given urogenital screening for MSM diagnosed with HIV.
 sti.screen.rect.prep.prob,1,numeric,,,,,Probability of rectal site screening for any STI given  urogenital screening for MSM not diagnosed with HIV and on PrEP.
 sti.cond.eff.or,0.95,numeric,"9.3,9.4",,,,Odds ratio comparing the odds of STI infection from anal sex when a condom is used vs. not used properly (biological efficacy)..
-gono.uret.prob,0.2118131,numeric,9.4,,ir100.gc,atlanta,Probability of urethral gonorrhea infection per act.
+gono.uret.prob,0.20,numeric,9.4,,ir100.gc,atlanta,Probability of urethral gonorrhea infection per act.
 gono.rect.sympt.prob,0.1,numeric,10,,,,Probability of symptoms given infection with rectal gonorrhea.
 gono.uret.sympt.prob,0.9333,numeric,10,,,,Probability of symptoms given infection with urethral gonorrhea.
 gono.tx.recov.int,1.4,numeric,11,,,,Average duration in time steps of treated gonorrhea.
@@ -117,7 +132,7 @@ gono.asympt.tx.prob_2,0.95,numeric,10,,,,Probability of treatment for asymptomat
 gono.asympt.tx.prob_3,0.95,numeric,10,,,,Probability of treatment for asymptomatic gonorrhea for White MSM.
 gono.screen.hivneg.rate,0.008120081,numeric,12,,,,Rate per time step for asymptomatic urogenital gonorrhea screening  for MSM not diagnosed with HIV and not on PrEP.
 gono.screen.hivpos.rate,0.01492537,numeric,12,,,,Rate per time step for asymptomatic urogenital gonorrhea screening for MSM diagnosed with HIV.
-chla.uret.prob,0.1991321,numeric,9.3,,ir100.ct,atlanta,Probability of urethral chlamydia infection per act.
+chla.uret.prob,0.19,numeric,9.3,,ir100.ct,atlanta,Probability of urethral chlamydia infection per act.
 chla.rect.sympt.prob,0.1,numeric,10,,,,Probability of symptoms given infection with rectal chlamydia.
 chla.uret.sympt.prob,0.95,numeric,11,,,,Probability of symptoms given infection with urethral chlamydia.
 chla.tx.recov.int,1.4,numeric,10,,,,Average duration in time steps of treated chlamydia.
@@ -130,7 +145,7 @@ chla.asympt.tx.prob_2,0.95,numeric,10,,,,Probability of treatment for asymptomat
 chla.asympt.tx.prob_3,0.95,numeric,"9.3,9.4",,,,Probability of treatment for asymptomatic chlamydia for White MSM.
 chla.screen.hivneg.rate,0.008120081,numeric,12,,,,Rate per time step for asymptomatic urogenital chlamydia screening for MSM not diagnosed with HIV and not on PrEP.
 chla.screen.hivpos.rate,0.01492537,numeric,12,,,,Rate per time step for asymptomatic urogenital chlamydia screening for MSM diagnosed with HIV.
-syph.prob,0.1137053,numeric,,,,,Probability of syphilis infection per act given that the infected partner is infectious.
+syph.prob,0.115,numeric,,,,,Probability of syphilis infection per act given that the infected partner is infectious.
 syph.sympt.prob_1,0,numeric,,,,,Probability of syphilis symptomes given infection (exposed).
 syph.sympt.prob_2,0.22,numeric,,,,,Probability of syphilis symptomes given infection (primary). prim | sec == 0.4
 syph.sympt.prob_3,0.22,numeric,,,,,Probability of syphilis symptomes given infection (secondary).
@@ -152,3 +167,24 @@ syph.asympt.tx.prob_3,1,numeric,,,,,Probability of treatment initiation upon dia
 syph.screen.hivneg.rate,0.008120081,numeric,,,,,Rate per time step for asymptomatic syphilis screening for MSM not diagnosed with HIV and not on PrEP. (TUITE 2020)
 syph.screen.hivpos.rate,0.01492537,numeric,,,,,Rate per time step for asymptomatic syphilis screening for MSM diagnosed with HIV.(TUITE 2020)
 syph.cond.eff.or,0.7,numeric,8.2,,,,Odds ratio comparing the odds of Syph infection from anal sex when a condom is used properly vs. not used (biological efficacy). https://pmc.ncbi.nlm.nih.gov/articles/PMC4660551/#sec1-4
+gfr.decline.prep.rate_1,0,numeric,,,,,
+gfr.decline.prep.rate_2,0.000096153846153846,numeric,,,,,
+gfr.decline.prep.rate_3,0.000151923076923077,numeric,,,,,
+gfr.decline.prep.rate_4,0.000228846153846154,numeric,,,,,
+gfr.decline.prep.rate_5,0.000398076923076923,numeric,,,,,
+gfr.decline.prep.rate_6,0.000738461538461538,numeric,,,,,
+gfr.decline.prep.rate_7,0.00130576923076923,numeric,,,,,
+gfr.decline.nat.rate,0.0192,numeric,,,,,
+gfr.age.value_1,0.0192,numeric,,,,,
+gfr.age.value_2,0.0192,numeric,,,,,
+gfr.age.value_3,0.0192,numeric,,,,,
+gfr.age.value_4,0.0192,numeric,,,,,
+gfr.age.value_5,0.0192,numeric,,,,,
+gfr.age.value_6,0.0192,numeric,,,,,
+gfr.age.value_7,0.0192,numeric,,,,,
+hbv.start,Inf,numeric,,,,,
+hbv.init.perc_1,0,numeric,,,,,
+hbv.init.perc_2,0.003655,numeric,,,,,
+hbv.init.perc_3,0.003345,numeric,,,,,
+hiv.tx.resist.prep.prob,0.03,numeric,,,,,
+hiv.tx.resist.hiv.prob,0.18,numeric,,,,,

@@ -85,40 +85,26 @@ epi_gfr_lt60_at <- function(races_set) {
   }
 }
 
-tk_list <- list(
-  gfr_ge60__all = epi_gfr_ge60(1:3),
-  gfr_ge60__b = epi_gfr_ge60(1),
-  gfr_ge60__h = epi_gfr_ge60(2),
-  gfr_ge60__w = epi_gfr_ge60(3),
-  gfr_lt60_at__all = epi_gfr_lt60_at(1:3),
-  gfr_lt60_at__b = epi_gfr_lt60_at(1),
-  gfr_lt60_at__h = epi_gfr_lt60_at(2),
-  gfr_lt60_at__w = epi_gfr_lt60_at(3),
-  prep__all = epi_prep(1:3),
-  prep__b = epi_prep(1),
-  prep__h = epi_prep(2),
-  prep__w = epi_prep(3),
-  prep_indic__all = epi_prep_indic(1:3),
-  prep_indic__b = epi_prep_indic(1),
-  prep_indic__h = epi_prep_indic(2),
-  prep_indic__w = epi_prep_indic(3),
-  prep_indic__all = epi_prep_indic(1:3),
-  prep_otc__all = epi_prep_otc(1:3),
-  prep_otc__b = epi_prep_otc(1),
-  prep_otc__h = epi_prep_otc(2),
-  prep_otc__w = epi_prep_otc(3),
-  prep_otc_indic__all = epi_prep_otc_indic(1:3),
-  prep_otc_indic__b = epi_prep_otc_indic(1),
-  prep_otc_indic__h = epi_prep_otc_indic(2),
-  prep_otc_indic__w = epi_prep_otc_indic(3),
-  prep_any__all = epi_prep_any(1:3),
-  prep_any__b = epi_prep_any(1),
-  prep_any__h = epi_prep_any(2),
-  prep_any__w = epi_prep_any(3),
-  prep_both__all = epi_prep_both(1:3),
-  prep_both__b = epi_prep_both(1),
-  prep_both__h = epi_prep_both(2),
-  prep_both__w = epi_prep_both(3),
+make_strat_trackers <- function(base_name, tracker) {
+  rset <- c(1:3, 1, 2, 3)
+  out <- vector(mode = "list", length = 4)
+  names(out) <- paste0(base_name, "__", c("all", "b", "h", "w"))
+  for (i in seq_len(4)) {
+    out[[i]] <- tracker(rset[i])
+  }
+  out
+}
 
-  gfr_otc = epi_gfr_otc(1:3)
-)
+tk_list <- list()
+
+tk_list <- c(tk_list, make_strat_trackers("gfr_ge60", epi_gfr_ge60))
+tk_list <- c(tk_list, make_strat_trackers("gfr_lt60_at", epi_gfr_lt60_at))
+tk_list <- c(tk_list, make_strat_trackers("gfr_otc", epi_gfr_otc))
+
+tk_list <- c(tk_list, make_strat_trackers("prep", epi_prep))
+tk_list <- c(tk_list, make_strat_trackers("prep_indic", epi_prep_indic))
+tk_list <- c(tk_list, make_strat_trackers("prep_otc", epi_prep_otc))
+tk_list <- c(tk_list, make_strat_trackers("prep_otc_indic", epi_prep_otc_indic))
+tk_list <- c(tk_list, make_strat_trackers("prep_any", epi_prep_any))
+tk_list <- c(tk_list, make_strat_trackers("prep_both", epi_prep_both))
+tk_list <- c(tk_list, make_strat_trackers("prep_both", epi_prep_both))

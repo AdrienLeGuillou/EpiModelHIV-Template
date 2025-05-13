@@ -108,16 +108,21 @@ prep.otc.discont.int_3,57.39,numeric,missing?,,,,Median interval until PrEP disc
 prep.otc.tst.int,12.8571,numeric,missing?,,,,Testing interval by time steps for those who are actively on PrEP. This overrides the mean testing interval parameters.
 prep.otc.sti.screen.int,26,numeric,missing?,,,,Time step to initiate PrEP-based STI screening (may be after `prep.start` to stabilize STI incidence during calibration.
 prep.otc.sti.tx.prob,1,numeric,missing?,,,,Probability of any STI treatment given positive screening during PrEP visit.
-prep.otc.risk.reassess.int,52,numeric,7.5,,,,Interval for reassessment of risk indications of active PrEP users. Default of `52` for yearly reassessment when time unit is weekly -  use `Inf` for no reassessment.
-prep.std.switch.otc,0,numeric,missing?,50,,,"Proportion of men who are low, medium, and high adherent to PrEP for White MSM."
-prep.otc.switch.std,0,numeric,missing?,50,,,"Proportion of men who are low, medium, and high adherent to PrEP for White MSM."
+prep.otc.risk.reassess.int,0,numeric,,,,,Interval for reassessment of risk indications of active OTC PrEP users. Default of `52` for yearly reassessment when time unit is weekly -  use `Inf` for no reassessment.
+prep.std.switch.otc.prob,0,numeric,missing?,50,,,"Proportion of men who are low, medium, and high adherent to PrEP for White MSM."
+prep.otc.switch.std.prob,0,numeric,missing?,50,,,"Proportion of men who are low, medium, and high adherent to PrEP for White MSM."
+prep.otc.hard.indications,0,numeric,,,,,"Flag: use the same indications as normal PrEP for OTC PrEP"
+prep.otc.always.sti.tst,0,numeric,,,,,"Flag: Always test for STI on PrEP OTC start"
+prep.otc.always.hiv.tst,0,numeric,,,,,"Flag: Always test for STI on PrEP OTC start"
 sti.prep.tx.prob,1,numeric,,,,,Probability of any STI treatment given positive screening during PrEP visit.
 sti.screening.dist,stochastic,character,12,,,,"Either `""stochastic""` for random (memoryless) STI screening or `""deterministic""` for screening based on interval since last screening time (1/rates)."
 sti.screen.prep.rate,0.07692308,numeric,12,,,,Rate per time step for asymptomatic urogenital STI screening for MSM not diagnosed with HIV and on PrEP.
+sti.screen.prep.otc.rate,0.07692308,numeric,12,,,,Rate per time step for asymptomatic urogenital STI screening for MSM not diagnosed with HIV and on PrEP.
 sti.screen.prep.start,1,numeric,12,,,,Time step to initiate PrEP-based STI screening (may be after `prep.start` to stabilize STI incidence during calibration).
 sti.screen.rect.hivneg.prob,0.48,numeric,12,,,,Probability of rectal site screening for any STI given urogenital screening for MSM not diagnosed with HIV and not on PrEP.
 sti.screen.rect.hivpos.prob,0.63,numeric,12,,,,Probability of rectal site screening for any STI given urogenital screening for MSM diagnosed with HIV.
 sti.screen.rect.prep.prob,1,numeric,,,,,Probability of rectal site screening for any STI given  urogenital screening for MSM not diagnosed with HIV and on PrEP.
+sti.screen.rect.prep.otc.prob,1,numeric,,,,,Probability of rectal site screening for any STI given  urogenital screening for MSM not diagnosed with HIV and on PrEP.
 sti.cond.eff.or,0.95,numeric,"9.3,9.4",,,,Odds ratio comparing the odds of STI infection from anal sex when a condom is used vs. not used properly (biological efficacy)..
 gono.uret.prob,0.20,numeric,9.4,,ir100.gc,atlanta,Probability of urethral gonorrhea infection per act.
 gono.rect.sympt.prob,0.1,numeric,10,,,,Probability of symptoms given infection with rectal gonorrhea.
@@ -174,17 +179,10 @@ gfr.decline.prep.rate_4,0.000228846153846154,numeric,,,,,
 gfr.decline.prep.rate_5,0.000398076923076923,numeric,,,,,
 gfr.decline.prep.rate_6,0.000738461538461538,numeric,,,,,
 gfr.decline.prep.rate_7,0.00130576923076923,numeric,,,,,
-gfr.decline.nat.rate,0.0192,numeric,,,,,
-gfr.age.value_1,0.0192,numeric,,,,,
-gfr.age.value_2,0.0192,numeric,,,,,
-gfr.age.value_3,0.0192,numeric,,,,,
-gfr.age.value_4,0.0192,numeric,,,,,
-gfr.age.value_5,0.0192,numeric,,,,,
-gfr.age.value_6,0.0192,numeric,,,,,
-gfr.age.value_7,0.0192,numeric,,,,,
 hbv.start,Inf,numeric,,,,,
 hbv.init.perc_1,0,numeric,,,,,
 hbv.init.perc_2,0.003655,numeric,,,,,
 hbv.init.perc_3,0.003345,numeric,,,,,
 hiv.tx.resist.prep.prob,0.03,numeric,,,,,
 hiv.tx.resist.hiv.prob,0.18,numeric,,,,,
+prep.otc.hbv.flare.prob,0.01,numeric,,,,,"Probability of an HBV flare when stopping PrEP"

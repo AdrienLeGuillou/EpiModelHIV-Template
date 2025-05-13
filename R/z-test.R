@@ -116,3 +116,39 @@ med_iqr <- function(x, fmtr) {
 
 p <- calib_plot_infos[["disease.mr100"]]
 make_calib_plot(d_outs, p)
+
+
+
+# Observed data
+x_vals <- c(100, 120, 130)
+p_obs  <- c(0.0027, 0.02, 0.084)
+
+# Define the loss function to minimize
+loss_function <- function(params) {
+  mu <- params[1]
+  sigma <- params[2]
+  # Predicted cumulative probabilities under N(mu, sigma)
+  p_pred <- pnorm(x_vals, mean = mu, sd = sigma)
+  # Sum of squared differences
+  sum((p_pred - p_obs)^2)
+}
+
+# Initial guesses for mu and sigma
+init_params <- c(mu = 140, sigma = 10)
+
+# Run the optimizer
+result <- optim(par = init_params, fn = loss_function, method = "L-BFGS-B",
+                lower = c(-Inf, 1e-6))  # Ensure sigma > 0
+
+# Extract results
+mu_est <- result$par[1]
+sigma_est <- result$par[2]
+
+# Print results
+cat("Optimized mean (mu):", mu_est, "\n")
+cat("Optimized standard deviation (sigma):", sigma_est, "\n")
+
+x <- rnorm(1e4, mu_est, sigma_est)
+mean(x < 100)
+mean(x < 120)
+mean(x < 130)

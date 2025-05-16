@@ -48,3 +48,77 @@ ggplot(data.frame(x = x), aes(x = x)) +
   geom_vline(xintercept = 60 + 70) +
   annotate("label", x = 60 + 70, y = 0.02, label = "70yo") +
   annotate("label", x = 60 + 70, y = 0.015, label = mean(x < 60 + 70))
+
+
+ggplot(data.frame(x = x - 19), aes(x = x)) +
+  geom_density()
+
+summary(x-19)
+
+mean((x - 19 - 33) < 60)
+mean((x - 24 - 31) < 60)
+mean((x - 29 - 28) < 60)
+mean((x - 35 - 24.7) < 60)
+mean((x - 45 - 19) < 60)
+mean((x - 55 - 12) < 60)
+
+library(dplyr)
+
+mu_est <- 145
+sigma_est <- 20
+n <- 1e5
+x <- rnorm(n, mu_est, sigma_est)
+age_breaks <- c(15, 20, 25, 30, 40, 50, 66)
+hr_age <- c(1, 1.28, 1.57, 1.63, 2.65, 6.05)
+# hr_age <- rep(1, length(age_breaks))
+gfr_breaks <- c(0, 60, 90, 200)
+hr_gfr <- c(100, 8.34, 1)
+# hr_gfr <- c(1, 1, 1)
+
+d_sample <- tibble(
+  age = sample(15:65, n, replace = T),
+  age_grps = cut(age, age_breaks, right = FALSE, label = FALSE),
+  raw_gfr = x,
+  gfr = raw_gfr - age,
+  gfr_grps = cut(gfr, gfr_breaks, right = FALSE, label = FALSE),
+  prep_gfr = F,
+)
+
+d_sample |>
+  group_by(age_grps) |>
+  summarise(
+    n = n(),
+    gfr_gt90 = mean(gfr_grps == 3) * 100,
+    gfr_lt90 = mean(gfr_grps == 2) * 100,
+    gfr_lt60 = mean(gfr_grps == 1) * 100
+  )
+
+
+base_prob <- 0.00004
+d_exp <- d_sample |>
+  mutate(
+    prep_gfr = runif(n) < base_prob * hr_age[age_grps] * hr_gfr[gfr_grps],
+  )
+# p_gfr <- c(1, 0.0064, 0.0834)
+#
+# d_exp <- d_sample |>
+#   mutate(
+#     prep_gfr = runif(n) < p_gfr[gfr_grps],
+#   )
+d_exp |>
+  group_by(age_grps) |>
+  summarise(ir100 = sum(prep_gfr) / n() * 52 * 100)
+d_exp |>
+  group_by(gfr_grps) |>
+  summarise(ir100 = sum(prep_gfr) / n() * 52 * 100)
+
+
+# quantile - prob (p) that event occurs after interval (i)
+i2r_p <- function(i, p) 1 - (1 - p)^(1 / i)
+r2i_p <- function(r, p) log(1 - p, base = 1 - r)
+
+i2r_p(52, 0.08)
+i2r_p(2 * 52, 0.13)
+i2r_p(3 * 52, 0.25)
+
+0.64 / 100

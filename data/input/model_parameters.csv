@@ -183,6 +183,9 @@ hbv.start,Inf,numeric,,,,,
 hbv.init.perc_1,0,numeric,,,,,
 hbv.init.perc_2,0.003655,numeric,,,,,
 hbv.init.perc_3,0.003345,numeric,,,,,
-hiv.tx.resist.prep.prob,0.03,numeric,,,,,
-hiv.tx.resist.hiv.prob,0.18,numeric,,,,,
+tdf.resist.prep.prob,0.03,numeric,,,,,
+tdf.resist.hiv.prob,0.18,numeric,,,,,
+ftc.resist.prep.prob,0.03,numeric,,,,,
+ftc.resist.hiv.prob,0.18,numeric,,,,,
 prep.otc.hbv.flare.prob,0.01,numeric,,,,,"Probability of an HBV flare when stopping PrEP"
+prep.hbv.flare.prob,0.01,numeric,,,,,"Probability of an HBV flare when stopping PrEP"

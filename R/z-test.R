@@ -152,3 +152,47 @@ x <- rnorm(1e4, mu_est, sigma_est)
 mean(x < 100)
 mean(x < 120)
 mean(x < 130)
+
+
+
+
+# `param` is the original parameter list, p_env is the environment version
+p_env <- as.environment(param)
+
+# Accessing the first parameter
+elt_name <- names(param)[1]
+microbenchmark::microbenchmark(times = 1000L,
+  param[[elt_name]],
+  p_env[[elt_name]]
+)
+#> Unit: nanoseconds
+#>               expr min  lq    mean median    uq   max neval
+#>  param[[elt_name]] 688 742 821.120    769 808.5 14082  1000
+#>  p_env[[elt_name]] 145 165 196.148    189 204.0  3210  1000
+
+elt_name <- names(param)[1]
+bench::mark(iterations = 143,
+  param[[elt_name]],
+  p_env[[elt_name]]
+)
+
+# Accessing the last parameter (117)
+elt_name <- names(param)[length(param)]
+microbenchmark::microbenchmark(times = 1000L,
+  param[[elt_name]],
+  p_env[[elt_name]]
+)
+#> Unit: nanoseconds
+#>               expr  min   lq     mean median   uq   max neval
+#>  param[[elt_name]] 2288 2377 2513.996   2411 2466 22326  1000
+#>  p_env[[elt_name]]  143  168  200.902    188  217  3769  1000
+
+elt_name <- names(param)[length(param)]
+bench::mark(iterations = 143,
+  param[[elt_name]],
+  p_env[[elt_name]]
+) |> select(-expression)
+
+p_env$vital <- TRUE
+
+lapply(p_env, length)

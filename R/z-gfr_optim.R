@@ -122,3 +122,125 @@ i2r_p(2 * 52, 0.13)
 i2r_p(3 * 52, 0.25)
 
 0.64 / 100
+
+
+
+
+
+
+#### With data from DOI: 10.1016/S2352-3018(22)00004-2
+
+library(dplyr)
+library(ggplot2)
+
+d_gfr <- dplyr::tribble(
+  ~age_grp, ~n, ~gfr_ge90, ~gfr_lt90, ~gfr_lt60, ~max_age, ~duration,
+  "15-19", 1156, 95.3, 4.58, 0.09, 19, 5,
+  "20-24", 3631, 88.5, 11.5, 0.03, 24, 5,
+  "25-29", 4253, 83.5, 16.3, 0.21, 29, 5,
+  "30-39", 5751, 74.8, 24.8, 0.37, 39, 10,
+  "40-49", 2584, 64.6, 34.7, 0.70, 49, 10,
+  "50+", 1254, 48.5, 49.7, 1.83, 60, 10
+)
+
+d_gfr <- d_gfr |>
+  mutate(
+    n_gfr_ge90 = round(gfr_ge90 * n / 100),
+    n_gfr_lt90 = round(gfr_lt90 * n / 100),
+    n_gfr_lt60 = round(gfr_lt60 * n / 100)
+  )
+
+glimpse(d_gfr)
+
+
+# Gi: already have G (GFR <90)
+# Gt: target coverage of G
+# Gs: susceptible to G (1 - ini)
+# n: number of steps
+# P: per step prob of G
+#
+# Gt = Gi + Gs * (1 - (1-P)^n)
+# P = 1 - (1 - (Gt - Gi) / Gs)^(1 / n)
+
+get_p <- function(tar, ini, steps) {
+  susc <- 1 - ini
+  1 - (1 - (tar - ini) / susc)^(1 / steps)
+}
+
+get_p(0.05, 0.02, 52 * 10)
+
+d_c <- d_gfr |>
+  select(max_age, duration, starts_with("n")) |>
+  # mutate(regroup = c(1, 1, 1, 2, 2, 3))
+  mutate(regroup = c(1, 1, 1, 3, 4, 5))
+
+d_c <- d_c |>
+  group_by(regroup) |>
+  summarise(
+    max_age = max(max_age),
+    duration = sum(duration),
+    n = sum(n),
+    n_gfr_ge90 = sum(n_gfr_ge90),
+    n_gfr_lt90 = sum(n_gfr_lt90),
+    n_gfr_lt60 = sum(n_gfr_lt60)
+  )
+
+d_c
+
+d_calc90 <- d_c |>
+  mutate(
+    tar = (n - n_gfr_ge90) / n,
+    # tar = n_gfr_lt60 / n,
+    ini = lag(tar, default = 0),
+    steps = duration * 52
+  ) |>
+  select(n, max_age, tar, ini, steps)
+
+d_calc90
+
+Map(get_p, d_calc90$tar, d_calc90$ini, d_calc90$steps)
+
+
+
+
+
+
+n_nodes <- 1e4
+n_steps <- 46 * 52
+gfr.90.decline.rate <- c(1.78e-4, 2.90e-4, 5.51e-4)
+gfr.60.decline.rate <- c(3e-5, 3e-5, 6e-5)
+# gfr.60.decline.rate <- c(1.56e-6, 4.69e-6, 6.41e-6, 22.16e-6)
+
+# Init -------------------------------------------------------------------------
+gfr <- rep(100, n_nodes)
+age <- sample(15:65, n_nodes, replace = TRUE)
+
+# Loop -------------------------------------------------------------------------
+for (at in seq_len(n_steps)) {
+  # aging
+  age <- age + 1 / 52
+  # departure / arrival
+  age_out_ids <- which(age > 65)
+  age[age_out_ids] <- 15
+  gfr[age_out_ids] <- 100
+
+  # gfr decline
+
+  age_grps <- cut(age, c(15, 30, 50, 65), labels = FALSE, right = FALSE)
+
+  # Individual 75 becoming < 60
+  elig_ids <- which(gfr == 75)
+  rates <- gfr.60.decline.rate[age_grps[elig_ids]]
+  decline_60_ids <- elig_ids[runif(length(elig_ids)) < rates]
+  gfr[decline_60_ids] <- 50
+
+  # Individual > 90 becoming < 90 (75)
+  elig_ids <- which(gfr == 100)
+  rates <- gfr.90.decline.rate[age_grps[elig_ids]]
+  decline_90_ids <- elig_ids[runif(length(elig_ids)) < rates]
+  gfr[decline_90_ids] <- 75
+}
+
+# Calc epi ---------------------------------------------------------------------
+tapply(gfr, age_grps, \(x) mean(x < 90))
+tapply(gfr, age_grps, \(x) mean(x < 60))

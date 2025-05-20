@@ -252,3 +252,11 @@ for (at in seq_len(n_steps)) {
 select(d_c, max_age, starts_with("gfr"))
 tapply(gfr, age_grps, \(x) mean(x < 90))
 tapply(gfr, age_grps, \(x) mean(x < 60))
+
+# Recovery after prep: 75% recov in 8 weeks
+#
+# quantile - prob (p) that event occurs after interval (i)
+i2r_p <- function(i, p) 1 - (1 - p)^(1 / i)
+r2i_p <- function(r, p) log(1 - p, base = 1 - r)
+
+i2r_p(8, 0.75)

@@ -171,8 +171,8 @@ get_p(0.05, 0.02, 52 * 10)
 
 d_c <- d_gfr |>
   select(max_age, duration, starts_with("n")) |>
-  # mutate(regroup = c(1, 1, 1, 2, 2, 3))
-  mutate(regroup = c(1, 1, 1, 3, 4, 5))
+  mutate(regroup = c(1, 1, 1, 2, 2, 3))
+  # mutate(regroup = c(1, 1, 1, 3, 4, 5))
 
 d_c <- d_c |>
   group_by(regroup) |>
@@ -182,10 +182,13 @@ d_c <- d_c |>
     n = sum(n),
     n_gfr_ge90 = sum(n_gfr_ge90),
     n_gfr_lt90 = sum(n_gfr_lt90),
-    n_gfr_lt60 = sum(n_gfr_lt60)
+    n_gfr_lt60 = sum(n_gfr_lt60),
+    gfr_ge90 = n_gfr_ge90 / n ,
+    gfr_lt90 = n_gfr_lt90 / n,
+    gfr_lt60 = n_gfr_lt60 / n
   )
 
-d_c
+select(d_c, max_age, starts_with("gfr"))
 
 d_calc90 <- d_c |>
   mutate(
@@ -207,8 +210,8 @@ Map(get_p, d_calc90$tar, d_calc90$ini, d_calc90$steps)
 
 n_nodes <- 1e4
 n_steps <- 46 * 52
-gfr.90.decline.rate <- c(1.78e-4, 2.90e-4, 5.51e-4)
-gfr.60.decline.rate <- c(3e-5, 3e-5, 6e-5)
+gfr.90.decline.rate <- c(2.2e-4, 2.2e-4, 5.0e-4)
+gfr.60.decline.rate <- c(3e-5, 3e-5, 8e-5)
 # gfr.60.decline.rate <- c(1.56e-6, 4.69e-6, 6.41e-6, 22.16e-6)
 
 # Init -------------------------------------------------------------------------
@@ -222,7 +225,11 @@ for (at in seq_len(n_steps)) {
   # departure / arrival
   age_out_ids <- which(age > 65)
   age[age_out_ids] <- 15
-  gfr[age_out_ids] <- 100
+  gfr[age_out_ids] <- sample(
+    c(100, 75),
+    length(age_out_ids), prob = c(0.97, 0.03),
+    replace = TRUE
+  )
 
   # gfr decline
 
@@ -242,5 +249,6 @@ for (at in seq_len(n_steps)) {
 }
 
 # Calc epi ---------------------------------------------------------------------
+select(d_c, max_age, starts_with("gfr"))
 tapply(gfr, age_grps, \(x) mean(x < 90))
 tapply(gfr, age_grps, \(x) mean(x < 60))

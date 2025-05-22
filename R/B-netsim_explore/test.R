@@ -1,4 +1,4 @@
-## 2. Netsim Module Development Script
+# 2. Netsim Module Development Script
 ##
 ## Example interactive epidemic simulation run script with basic
 ## parameterization and all parameters defined in data/input/model_parameters.xlsx`, with example of
@@ -26,24 +26,41 @@ theme_set(theme_light())
 # set prep start to a low value to test the full model in a few steps
 source("R/netsim_settings.R", local = TRUE)
 est <- readRDS(path_to_est)
-
-
 source("./R/utils-epi_debug.R", local = TRUE)
 
 # Control settings
 control <- control_msm(
-  nsteps = year_steps / 4,
-  .tracker.list = tk_list,
+  # .tracker.list = tk_list,
+  nsteps = year_steps / 2,
+  raw.output = TRUE,
+  debug = TRUE
 )
 
 param$hbv.start <- 2
+param$hbv.init.perc <- c(1, 1, 1)
+param$prep.otc.hbv.flare.prob <- 0.5
+param$prep.hbv.flare.prob <- 0.5
+param$gfr.90.decline.rate <- c(0.01, 0.02)
+param$gfr.60.decline.rate <- c(0.01, 0.02)
+
+param$gfr.decline.prep.rate <- 100 * 3.8e-4 # 2 per 100 pyar
+param$gfr.decline.age.gt50.or <- 6
+param$gfr.decline.gfr.lt90.or <- 8.5
+param$gfr.prep.recov.rate <- 0.1591036
+param$tdf.resist.prep.prob <- 0.2
+param$ftc.resist.prep.prob <- 0.2
 
 # Epidemic simulation
-sim <- netsim(est, param, init, control)
+dat_list <- netsim(est, param, init, control)
+cat("\n")
+dat <- dat_list[[1]]
+sim <- process_out.net(dat_list)
 
 # Simulation exploration (tidyverse)
 d_sim <- as_tibble(sim)
-glimpse(d_sim)
+glimpse(tail(d_sim, 15))
+
+d_sim$stop_std_prep
 
 
 d_sim |>

@@ -172,13 +172,14 @@ syph.asympt.tx.prob_3,1,numeric,,,,,Probability of treatment initiation upon dia
 syph.screen.hivneg.rate,0.008120081,numeric,,,,,Rate per time step for asymptomatic syphilis screening for MSM not diagnosed with HIV and not on PrEP. (TUITE 2020)
 syph.screen.hivpos.rate,0.01492537,numeric,,,,,Rate per time step for asymptomatic syphilis screening for MSM diagnosed with HIV.(TUITE 2020)
 syph.cond.eff.or,0.7,numeric,8.2,,,,Odds ratio comparing the odds of Syph infection from anal sex when a condom is used properly vs. not used (biological efficacy). https://pmc.ncbi.nlm.nih.gov/articles/PMC4660551/#sec1-4
-gfr.decline.prep.rate_1,0,numeric,,,,,
-gfr.decline.prep.rate_2,0.000096153846153846,numeric,,,,,
-gfr.decline.prep.rate_3,0.000151923076923077,numeric,,,,,
-gfr.decline.prep.rate_4,0.000228846153846154,numeric,,,,,
-gfr.decline.prep.rate_5,0.000398076923076923,numeric,,,,,
-gfr.decline.prep.rate_6,0.000738461538461538,numeric,,,,,
-gfr.decline.prep.rate_7,0.00130576923076923,numeric,,,,,
+gfr.90.decline.rate_1,2.2e-4,numeric,,,,,
+gfr.90.decline.rate_2,5.0e-4,numeric,,,,,
+gfr.60.decline.rate_1,3e-5,numeric,,,,,
+gfr.60.decline.rate_2,8e-5,numeric,,,,,
+gfr.decline.prep.rate,3.8e-4,numeric,,,,,"2 per 100 pyar / 52"
+gfr.decline.age.gt50.or,6,numeric,,,,,
+gfr.decline.gfr.lt90.or,8.5,numeric,,,,,
+gfr.prep.recov.rate,0.1591036,numeric,,,,,
 hbv.start,Inf,numeric,,,,,
 hbv.init.perc_1,0,numeric,,,,,
 hbv.init.perc_2,0.003655,numeric,,,,,

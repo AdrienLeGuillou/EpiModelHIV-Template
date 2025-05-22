@@ -47,8 +47,27 @@ param$gfr.decline.prep.rate <- 100 * 3.8e-4 # 2 per 100 pyar
 param$gfr.decline.age.gt50.or <- 6
 param$gfr.decline.gfr.lt90.or <- 8.5
 param$gfr.prep.recov.rate <- 0.1591036
-param$tdf.resist.prep.prob <- 0.2
-param$ftc.resist.prep.prob <- 0.2
+
+param$tdf.resist.prep.prob <- 0.03
+param$tdf.resist.hiv.prob <- 0.18
+param$ftc.resist.prep.prob <- 0.03
+param$ftc.resist.hiv.prob <- 0.18
+
+param$sti.screen.rect.prep.otc.prob <- 1
+param$sti.screen.prep.otc.rate <- 0.07692308
+
+param$prep.otc.start.rate <- c(0.00554146, 0.004232283, 0.0066210)
+param$prep.otc.adhr.dist <- c(0.089, 0.127, 0.784)
+param$prep.otc.discont.int <- c(33.42, 57.48, 57.39)
+param$prep.otc.tst.int <- 12.8571
+param$prep.otc.sti.screen.int <- 26
+param$prep.otc.sti.tx.prob <- 1
+param$prep.otc.risk.reassess.int <- 0
+param$prep.std.switch.otc.prob <- 0
+param$prep.otc.switch.std.prob <- 0
+param$prep.otc.hard.indications <- 0
+param$prep.otc.always.sti.tst <- 0
+param$prep.otc.always.hiv.tst <- 0
 
 # Epidemic simulation
 dat_list <- netsim(est, param, init, control)

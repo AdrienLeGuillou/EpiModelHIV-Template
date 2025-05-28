@@ -33,43 +33,74 @@ control <- control_msm(
   # .tracker.list = tk_list,
   nsteps = year_steps * 20,
   raw.output = TRUE,
+  verbose = FALSE,
   debug = TRUE
 )
 
 # PrEP OTC
-param$prep.otc.start.rate <- c(0.00554146, 0.004232283, 0.0066210)
-param$prep.otc.adhr.dist <- c(0.089, 0.127, 0.784)
-param$prep.otc.discont.int <- c(33.42, 57.48, 57.39)
-param$prep.otc.tst.int <- 12.8571
-param$prep.otc.sti.screen.int <- 26
-param$prep.otc.sti.tx.prob <- 1
-param$prep.otc.risk.reassess.int <- 0
-  param$prep.otc.risk.reassess.int <- param$prep.risk.reassess.int
-param$prep.std.switch.otc.prob <- 0.02
-param$prep.otc.switch.std.prob <- 0.04
-param$prep.otc.hard.indications <- 1
-param$prep.otc.always.sti.tst <- 1
-param$prep.otc.always.hiv.tst <- 1
-param$sti.screen.prep.otc.rate <- 0.07692308
-param$sti.screen.rect.prep.otc.prob <- 1
-param$sti.prep.otc.tx.prob <- 1
-# GFR
-param$gfr.90.decline.rate <- c(0.001, 0.002)
-param$gfr.60.decline.rate <- c(0.001, 0.002)
-param$gfr.decline.prep.rate <- 10 * 3.8e-4 # 2 per 100 pyar
-param$gfr.decline.age.gt50.or <- 6
-param$gfr.decline.gfr.lt90.or <- 8.5
-param$gfr.prep.recov.rate <- 0.1591036
-# HBV
+# param$prep.otc.start.rate <- c(0.00554146, 0.004232283, 0.0066210)
+# param$prep.otc.adhr.dist <- c(0.089, 0.127, 0.784)
+# param$prep.otc.discont.int <- c(33.42, 57.48, 57.39)
+# param$prep.otc.tst.int <- 12.8571
+# param$prep.otc.sti.screen.int <- 26
+# param$prep.otc.sti.tx.prob <- 1
+# param$prep.otc.risk.reassess.int <- 0
+#   param$prep.otc.risk.reassess.int <- param$prep.risk.reassess.int
+# param$prep.std.switch.otc.prob <- 0.02
+# param$prep.otc.switch.std.prob <- 0.04
+# param$prep.otc.hard.indications <- 1
+# param$prep.otc.always.sti.tst <- 1
+# param$prep.otc.always.hiv.tst <- 1
+# param$sti.screen.prep.otc.rate <- 0.07692308
+# param$sti.screen.rect.prep.otc.prob <- 1
+# param$sti.prep.otc.tx.prob <- 1
+# # GFR
+# param$gfr.90.decline.rate <- c(0.001, 0.002)
+# param$gfr.60.decline.rate <- c(0.001, 0.002)
+# param$gfr.decline.prep.rate <- 10 * 3.8e-4 # 2 per 100 pyar
+# param$gfr.decline.age.gt50.or <- 6
+# param$gfr.decline.gfr.lt90.or <- 8.5
+# param$gfr.prep.recov.rate <- 0.1591036
+# # HBV
+# param$hbv.start <- 2
+# param$hbv.init.perc <- c(0.7, 0.6, 0.5)
+# param$prep.otc.hbv.flare.prob <- 0.75
+# param$prep.hbv.flare.prob <- 0.5
+# # Resist
+# param$tdf.resist.prep.prob <- 0.9
+# param$tdf.resist.hiv.prob <- 0.9
+# param$ftc.resist.prep.prob <- 0.7
+# param$ftc.resist.hiv.prob <- 0.7
+
+### Only PrEP STD or only PrEP OTC
+param$prep.start.rate <- rep(0.01, 3)
+param$prep.otc.start.rate <- rep(0.01, 3)
+param$prep.otc.hard.indications <- 0
+param$sti.screen.prep.otc.rate <- 0.07692308 ## NOTE: This one is 3 month (13 weeks)
+param$prep.otc.sti.screen.int <- 26 ########### TODO: this one is never used!!
+# No other tests than PrEP for HIV and STIs
+param$hiv.test.rate <- rep(0, 3)
+param$gono.screen.hivneg.rate <- 0
+param$gono.screen.hivpos.rate <- 0
+param$chla.screen.hivneg.rate <- 0
+param$chla.screen.hivpos.rate <- 0
+param$syph.screen.hivneg.rate <- 0
+param$syph.screen.hivpos.rate <- 0
 param$hbv.start <- 2
 param$hbv.init.perc <- c(0.7, 0.6, 0.5)
 param$prep.otc.hbv.flare.prob <- 0.75
 param$prep.hbv.flare.prob <- 0.5
-# Resist
-param$tdf.resist.prep.prob <- 0.9
-param$tdf.resist.hiv.prob <- 0.9
-param$ftc.resist.prep.prob <- 0.7
-param$ftc.resist.hiv.prob <- 0.7
+param$gfr.90.decline.rate <- c(0.001, 0.002)
+param$gfr.60.decline.rate <- c(0.001, 0.002)
+param$gfr.decline.prep.rate <- 10 * 3.8e-4 # 2 per 100 pyar
+param$gfr.decline.age.gt50.or <- 6 * 5
+param$gfr.decline.gfr.lt90.or <- 8.5
+param$gfr.prep.recov.rate <- 0.1591036
+
+i2r_p <- function(i, p) 1 - (1 - p)^(1 / i)
+r2i_p <- function(r, p) log(1 - p, base = 1 - r)
+
+r2i_p(0.07692308, 0.5)
 
 # Epidemic simulation
 dat_list <- netsim(est, param, init, control)
@@ -80,6 +111,11 @@ sim <- process_out.net(dat_list)
 # Simulation exploration (tidyverse)
 d_sim <- as_tibble(sim)
 glimpse(tail(d_sim, 15))
+
+d_sim |>
+  tail(15) |>
+  select(starts_with("dbg_")) |>
+  glimpse()
 
 # GFR --------------------------------------------------------------------------
 
@@ -228,6 +264,14 @@ ggplot(aes(x = time, y = value, col = name)) +
   geom_line() +
   geom_smooth()
 
+# OTC stop due to GFR
+d_sim |>
+  select(time, starts_with(c("dbg_prep_otc_gfr"))) |>
+  pivot_longer(-time) |>
+ggplot(aes(x = time, y = value, col = name)) +
+  geom_line() +
+  geom_smooth()
+
 # PrEP STD ---------------------------------------------------------------------
 #
 # STD Episodes
@@ -266,6 +310,14 @@ ggplot(aes(x = time, y = value, col = name)) +
 # STD starts and stop
 d_sim |>
   select(time, starts_with(c("dbg_prep_st"))) |>
+  pivot_longer(-time) |>
+ggplot(aes(x = time, y = value, col = name)) +
+  geom_line() +
+  geom_smooth()
+
+# PrEP stop due to GFR
+d_sim |>
+  select(time, starts_with(c("dbg_prep_gfr"))) |>
   pivot_longer(-time) |>
 ggplot(aes(x = time, y = value, col = name)) +
   geom_line() +

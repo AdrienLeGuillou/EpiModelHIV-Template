@@ -28,8 +28,10 @@ est <- readRDS(path_to_est)
 
 # Control settings
 control <- control_msm(
-  nsteps = year_steps / 2,
-  .tracker.list = EpiModelHIV::make_calibration_trackers(),
+  nsteps = year_steps * 1,
+  debug = TRUE,
+  verbose = FALSE,
+  # .tracker.list = EpiModelHIV::make_calibration_trackers(),
 )
 
 # Epidemic simulation
@@ -37,6 +39,7 @@ sim <- netsim(est, param, init, control)
 
 # Simulation exploration (tidyverse)
 d_sim <- as_tibble(sim)
+tail(d_sim) |> glimpse()
 
 d_sim$ir100.gono
 mutate_calibration_targets(d_sim) |> pull(ir100.gono)

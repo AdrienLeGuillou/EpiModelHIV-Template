@@ -10,19 +10,78 @@
 mutate_outcomes <- function(d) {
   d |>
     mutate(
-      lst_ir100_b = ir100.B,
-      lst_ir100_h = ir100.H,
-      lst_ir100_w = ir100.W,
-      cml_incid_b = incid.B,
-      cml_incid_h = incid.H,
-      cml_incid_w = incid.W
+      # HIV
+      lst_ir100 = ir100,
+      cml_incid = incid,
+
+      ## STIs
+      lst_ir100_gono = ir100.gono,
+      cml_incid_gono = incid.gono,
+      lst_ir100_gc = ir100.gc,
+      lst_ir100_chla = ir100.chla,
+      cml_incid_chla = incid.chla,
+
+      ## Clinical PrEP
+      lst_prep_cov = prepCurr / prep.indic,
+      lst_prep_elig = prep.indic,
+      lst_prep_mean_dur = prep.dur.mean,
+      lst_prep_mean_eps = dbg_prep_eps_mean,
+      # lst_prep_mean_dur_rng
+      # lst_prep_mean_dur_inelig
+      # lst_prep_ir100
+      # cml_prep_incid
+
+      # OTC PrEP
+      lst_prep_otc_cov = prep.otcCurr / prep.otc.indic,
+      lst_prep_otc_elig = prep.otc.indic,
+      lst_prep_otc_mean_dur = prep.otc.dur.mean,
+      lst_prep_otc_mean_eps = dbg_prep_otc_eps_mean,
+      # lst_prep_otc_mean_dur_rng
+      # lst_prep_otc_mean_dur_inelig
+      # lst_prep_otc_ir100
+      # cml_prep_otc_incid
+      # GFR --------------------------------------------------------------------
+      lst_gfr90_15_30 = `dbg_gfr90_prop_[15,30)`,
+      lst_gfr60_15_30 = `dbg_gfr60_prop_[15,30)`,
+      lst_gfr90_30_50 = `dbg_gfr90_prop_[30,50)`,
+      lst_gfr60_30_50 = `dbg_gfr60_prop_[30,50)`,
+      lst_gfr90_50_65 = `dbg_gfr90_prop_[50,65)`,
+      lst_gfr60_50_65 = `dbg_gfr60_prop_[50,65)`,
+      lst_gfr_drop_ir100 = dbg_gfr_drop / num * 100 * 52,
+      cml_gfr_drop = dbg_gfr_drop,
+      cml_gfr_drop_gfr90 = dbg_gfr_drop_gfr90,
+      cml_gfr_drop_yo50 = dbg_gfr_drop_yo50,
+      # HBV --------------------------------------------------------------------
+      lst_hbv_flare_ir100 =
+        (dbg_hbv_flares_std + dbg_hbv_flares_otc) / num * 100 * 52,
+      lst_hbv_flare_otc_ir100 = dbg_hbv_flares_otc / num * 100 * 52,
+      lst_hbv_flare_std_ir100 = dbg_hbv_flares_std / num * 100 * 52,
+      cml_hbv_flare = (dbg_hbv_flares_std + dbg_hbv_flares_otc),
+      cml_hbv_flare_otc = dbg_hbv_flares_otc,
+      cml_hbv_flare_std = dbg_hbv_flares_std,
+      # Resistance -------------------------------------------------------------
+      cml_resist = any.resist.incid,
+      cml_resist_tdf = tdf.resist.incid,
+      cml_resist_ftc = ftc.resist.incid,
+      lst_resist_prev = any.resist.prev,
+      lst_resist_tdf_prev = tdf.resist.prev,
+      lst_resist_ftc_prev = ftc.resist.prev,
+      #
+      # TODO: separate OTC prep from STD prep?
+      #
+      # cml_resist_prep
+      # cml_resist_prep_tdf
+      # cml_resist_prep_ftc
+      # cml_resist_hiv
+      # cml_resist_hiv_tdf
+      # cml_resist_hiv_ftc
     )
 }
 
 make_d_ref <- function(file_path) {
   readRDS(file_path) |>
     mutate_outcomes() |>
-    filter(time >= max(time) - 10 * 52) |>
+    filter(time >= max(time) - 10 * year_steps) |>
     select(batch_number, sim, starts_with("cml_incid")) |>
     group_by(batch_number, sim) |>
     summarize(across(everything(), \(x) sum(x, na.rm = TRUE))) |>
@@ -45,7 +104,7 @@ mutate_pia <- function(d, var, var_nia, var_pia) {
 # make the outcomes calculated on the same year
 make_last_year_outcomes <- function(d) {
   d |>
-    filter(time >= max(time) - 52) |>
+    filter(time >= max(time) - year_steps) |>
     group_by(scenario_name, batch_number, sim) |>
     summarise(across(starts_with("lst_"), \(x) mean(x, na.rm = TRUE))) |>
     ungroup()
@@ -94,4 +153,3 @@ process_one_scenario_plots <- function(scenario_infos, d_ref) {
     separate_wider_delim(scenario_name, "_", names = c(NA, "test", NA, "treat")) |>
     mutate(test = as.numeric(test), treat = as.numeric(treat))
 }
-

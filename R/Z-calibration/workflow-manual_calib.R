@@ -24,6 +24,7 @@ source("R/netsim_settings.R", local = TRUE)
 # Control settings
 control <- control_msm(
   nsteps = calibration_end,
+  debug = TRUE,
   .tracker.list = EpiModelHIV::make_calibration_trackers()
 )
 
@@ -50,7 +51,7 @@ wf <- add_workflow_step(
     path_to_est, param, init, control,
     scenarios_list = NULL, # scenarios_list,
     output_dir = calib_dir,
-    n_rep = 256,
+    n_rep = 64,
     n_cores = max_cores,
     max_array_size = 500,
     setup_lines = hpc_node_setup

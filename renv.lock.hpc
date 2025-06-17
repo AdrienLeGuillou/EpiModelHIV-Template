@@ -2534,11 +2534,11 @@
       "Author": "Adrien Le Guillou [aut, cre] (ORCID: <https://orcid.org/0000-0002-4791-418X>)",
       "Maintainer": "Adrien Le Guillou <contact@aleguillou.org>",
       "RemoteType": "github",
-      "RemoteHost": "api.github.com",
       "RemoteUsername": "EpiModel",
       "RemoteRepo": "slurmworkflow",
       "RemoteRef": "main",
-      "RemoteSha": "04935f0cd2ea9f0c468a4627eb7363e0a84415fe"
+      "RemoteSha": "a3b9816dd0624cabd97c19cae31797876f187246",
+      "RemoteHost": "api.github.com"
     },
     "statnet.common": {
       "Package": "statnet.common",

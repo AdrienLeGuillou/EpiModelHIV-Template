@@ -13,11 +13,16 @@ mutate_outcomes <- function(d) {
       # HIV
       lst_ir100 = ir100,
       cml_incid = incid,
+      lst_ir100_b = ir100.B,
+      cml_incid_b = incid.B,
+      lst_ir100_h = ir100.H,
+      cml_incid_h = incid.H,
+      lst_ir100_w = ir100.W,
+      cml_incid_w = incid.W,
 
       ## STIs
       lst_ir100_gono = ir100.gono,
       cml_incid_gono = incid.gono,
-      lst_ir100_gc = ir100.gc,
       lst_ir100_chla = ir100.chla,
       cml_incid_chla = incid.chla,
 
@@ -42,10 +47,10 @@ mutate_outcomes <- function(d) {
       # cml_prep_otc_incid
       # GFR --------------------------------------------------------------------
       lst_gfr90_15_30 = `dbg_gfr90_prop_[15,30)`,
-      lst_gfr60_15_30 = `dbg_gfr60_prop_[15,30)`,
       lst_gfr90_30_50 = `dbg_gfr90_prop_[30,50)`,
-      lst_gfr60_30_50 = `dbg_gfr60_prop_[30,50)`,
       lst_gfr90_50_65 = `dbg_gfr90_prop_[50,65)`,
+      lst_gfr60_15_30 = `dbg_gfr60_prop_[15,30)`,
+      lst_gfr60_30_50 = `dbg_gfr60_prop_[30,50)`,
       lst_gfr60_50_65 = `dbg_gfr60_prop_[50,65)`,
       lst_gfr_drop_ir100 = dbg_gfr_drop / num * 100 * 52,
       cml_gfr_drop = dbg_gfr_drop,
@@ -63,6 +68,8 @@ mutate_outcomes <- function(d) {
       cml_resist = any.resist.incid,
       cml_resist_tdf = tdf.resist.incid,
       cml_resist_ftc = ftc.resist.incid,
+      cml_resist_prep = any.resist.prep.incid,
+      cml_resist_hiv = any.resist.hiv.incid,
       lst_resist_prev = any.resist.prev,
       lst_resist_tdf_prev = tdf.resist.prev,
       lst_resist_ftc_prev = ftc.resist.prev,

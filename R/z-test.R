@@ -1,20 +1,38 @@
 # Scratchpad for interactive testing before integration in a script
-rmarkdown::render(
-  "R/Z-calibration/calibration_values.Rmd",
-  output_file = "calibration_report.html",
-  knit_root_dir = getwd(),
-  output_dir = "./"
-)
+
+# rmarkdown::render(
+#   "R/Z-calibration/calibration_values.Rmd",
+#   output_file = "calibration_report.html",
+#   knit_root_dir = getwd(),
+#   output_dir = "./"
+# )
 
 source("R/shared_variables.R", local = TRUE)
 
 library(dplyr)
-library(EpiModelHIV)
+library(tidyr)
+library(ggplot2)
+pkgload::load_all(EMHIVp_dir)
+# library(EpiModelHIV)
 
 context <- "hpc"
 source("R/netsim_settings.R", local = TRUE)
 
-d_calib <- readRDS(fs::path(calib_dir, "merged_tibbles", "df__empty_scenario.rds"))
+d_calib <- readRDS(fs::path(scenarios_dir, "merged_tibbles", "df__empty_scenario.rds"))
+source("./R/F-intervention_scenarios/outcomes.R", local = TRUE)
+d_table <- mutate_outcomes(d_calib) |>
+  mutate(scenario_name = "empty")
+source("R/F-intervention_scenarios/labels.R", local = TRUE)
+format_table(d_table, var_labels, format_patterns) |>
+  as.list()
+
+
+
+
+
+
+
+
 targets <- EpiModelHIV::get_calibration_targets()
 
 d_outs <- EpiModelHIV::mutate_calibration_targets(d_calib) |>
@@ -23,6 +41,7 @@ d_outs <- EpiModelHIV::mutate_calibration_targets(d_calib) |>
   as.epi.data.frame()
 
 races <- c("B", "H", "W")
+gfr_age_grp <- c("[15,30)", "[30,50)", "[50,65)")
 calib_plot_infos <- list(
   cc.dx = list(
     names = paste0("cc.dx.", races),
@@ -71,6 +90,18 @@ calib_plot_infos <- list(
     ylab = "Population",
     text_offset = 500,
     fmt_target = scales::number_format(1)
+  ),
+  gfr_90 = list(
+    names = paste0("dbg_gfr90_prop_",  gfr_age_grp),
+    ylab = "Proportion",
+    text_offset = 0.01,
+    fmt_target = scales::percent_format(0.01)
+  ),
+  gfr_60 = list(
+    names = paste0("dbg_gfr60_prop_",  gfr_age_grp),
+    ylab = "Proportion",
+    text_offset = 0.001,
+    fmt_target = scales::percent_format(0.01)
   )
 )
 
@@ -114,7 +145,7 @@ med_iqr <- function(x, fmtr) {
   paste0(vs[1], " [", vs[2], "-",  vs[3], "]")
 }
 
-p <- calib_plot_infos[["disease.mr100"]]
+p <- calib_plot_infos[["gfr_60"]]
 make_calib_plot(d_outs, p)
 
 

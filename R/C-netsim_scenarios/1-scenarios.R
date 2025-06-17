@@ -20,6 +20,7 @@ source("R/netsim_settings.R", local = TRUE)
 # Control settings
 control <- control_msm(
   nsteps = year_steps * 4,
+  debug = TRUE,
   .tracker.list = EpiModelHIV::make_calibration_trackers()
 )
 
@@ -57,5 +58,5 @@ fs::dir_ls(scenarios_dir)
 EpiModelHPC::merge_netsim_scenarios_tibble(
   sim_dir = scenarios_dir,
   output_dir = fs::path(scenarios_dir, "merged_tibbles"),
-  steps_to_keep = year_steps * 1
+  steps_to_keep = year_steps * 4
 )

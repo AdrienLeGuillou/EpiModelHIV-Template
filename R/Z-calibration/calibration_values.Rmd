@@ -21,6 +21,7 @@ source("R/netsim_settings.R", local = TRUE)
 d_outs <- readRDS(fs::path(calib_dir, "merged_tibbles", "df__calib_plot.rds"))
 
 races <- c("B", "H", "W")
+gfr_age_grp <- c("[15,30)", "[30,50)", "[50,65)")
 calib_plot_infos <- list(
   cc.dx = list(
     names = paste0("cc.dx.", races),
@@ -69,6 +70,18 @@ calib_plot_infos <- list(
     ylab = "Population",
     text_offset = 500,
     fmt_target = scales::number_format(1)
+  ),
+  gfr_90 = list(
+    names = paste0("dbg_gfr90_prop_",  gfr_age_grp),
+    ylab = "Proportion",
+    text_offset = 0.01,
+    fmt_target = scales::percent_format(0.01)
+  ),
+  gfr_60 = list(
+    names = paste0("dbg_gfr60_prop_",  gfr_age_grp),
+    ylab = "Proportion",
+    text_offset = 0.001,
+    fmt_target = scales::percent_format(0.01)
   )
 )
 

@@ -27,8 +27,7 @@ mail_user <- "aleguil@emory.edu"
 #   )
 #
 #   # Update RENV on the HPC
-#   wf <- slurmworkflow::add_workflow_step(
-#     wf_summary = wf,
+#   wf <- slurmworkflow::add_workflow_step( wf_summary = wf,
 #     step_tmpl = EpiModelHPC::step_tmpl_renv_restore(
 #       git_branch = current_git_branch,
 #       setup_lines = hpc_node_setup

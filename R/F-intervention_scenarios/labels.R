@@ -92,7 +92,7 @@ format_patterns <- list(
     fun = scales::label_number(0.01)
   ),
   perc = list(
-    patterns = c("cml_pia", "lst_.*_prev"),
+    patterns = c("cml_pia", "lst_.*_prev", "lst_.*_cov", "lst_gfr[69].*"),
     fun = scales::label_percent(0.1)
   ),
   default = list(

@@ -88,11 +88,11 @@ names(fmts) <- names(var_labels)
 
 format_patterns <- list(
   small_num = list(
-    patterns = c("lst_ir100", "cml_nnt"),
+    patterns = c("lst_ir100", "lst_.*_ir100", "cml_nnt"),
     fun = scales::label_number(0.01)
   ),
   perc = list(
-    patterns = c("cml_pia"),
+    patterns = c("cml_pia", "lst_.*_prev"),
     fun = scales::label_percent(0.1)
   ),
   default = list(

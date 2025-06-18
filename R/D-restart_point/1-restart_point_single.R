@@ -20,6 +20,7 @@ source("R/netsim_settings.R", local = TRUE)
 # Control settings
 control <- control_msm(
   nsteps = calibration_end,
+  debug = TRUE,
   .tracker.list = EpiModelHIV::make_calibration_trackers()
 )
 

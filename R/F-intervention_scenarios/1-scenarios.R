@@ -20,10 +20,11 @@ source("R/netsim_settings.R", local = TRUE)
 
 # Control settings
 control <- control_msm(
-  start               = restart_time,
-  nsteps              = intervention_end,
-  initialize.FUN      = reinit_msm,
-  verbose             = FALSE
+  start          = restart_time,
+  nsteps         = intervention_end,
+  initialize.FUN = reinit_msm,
+  debug          = TRUE,
+  verbose        = FALSE
 )
 
 # Define test scenarios
@@ -32,11 +33,14 @@ scenarios_df <- readr::read_csv(fs::path(input_dir, "scenarios.csv"))
 glimpse(scenarios_df)
 scenarios_list <- EpiModel::create_scenario_list(scenarios_df)
 
+param$hbv.start <- 2
+
 EpiModelHPC::netsim_scenarios(
   path_to_restart, param, init, control,
-  scenarios_list = scenarios_list,
-  n_rep = 8,
-  n_cores = 4,
+  # scenarios_list = scenarios_list,
+  scenarios_list = NULL,
+  n_rep = 16,
+  n_cores = 8,
   output_dir = scenarios_dir
 )
 fs::dir_ls(scenarios_dir)

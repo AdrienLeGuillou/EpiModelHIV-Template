@@ -70,9 +70,9 @@ mutate_outcomes <- function(d) {
       cml_resist_ftc = ftc.resist.incid,
       cml_resist_prep = any.resist.prep.incid,
       cml_resist_hiv = any.resist.hiv.incid,
-      lst_resist_prev = any.resist.prev,
-      lst_resist_tdf_prev = tdf.resist.prev,
-      lst_resist_ftc_prev = ftc.resist.prev,
+      lst_resist_prev = any.resist.prev / num,
+      lst_resist_tdf_prev = tdf.resist.prev / num,
+      lst_resist_ftc_prev = ftc.resist.prev / num,
       #
       # TODO: separate OTC prep from STD prep?
       #

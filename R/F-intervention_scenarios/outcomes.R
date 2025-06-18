@@ -89,11 +89,11 @@ make_d_ref <- function(file_path) {
   readRDS(file_path) |>
     mutate_outcomes() |>
     filter(time >= max(time) - 10 * year_steps) |>
-    select(batch_number, sim, starts_with("cml_incid")) |>
-    group_by(batch_number, sim) |>
+    select(sim, starts_with("cml_incid")) |>
+    group_by(sim) |>
     summarize(across(everything(), \(x) sum(x, na.rm = TRUE))) |>
     ungroup() |>
-    select(-c(batch_number, sim)) |>
+    select(-sim) |>
     summarize(across(everything(), \(x) median(x, na.rm = TRUE)))
 }
 
@@ -112,7 +112,7 @@ mutate_pia <- function(d, var, var_nia, var_pia) {
 make_last_year_outcomes <- function(d) {
   d |>
     filter(time >= max(time) - year_steps) |>
-    group_by(scenario_name, batch_number, sim) |>
+    group_by(scenario_name, sim) |>
     summarise(across(starts_with("lst_"), \(x) mean(x, na.rm = TRUE))) |>
     ungroup()
 }
@@ -121,7 +121,7 @@ make_last_year_outcomes <- function(d) {
 make_cumulative_outcomes <- function(d) {
   d |>
     filter(time >= intervention_start) |>
-    group_by(scenario_name, batch_number, sim) |>
+    group_by(scenario_name, sim) |>
     summarise(across(starts_with("cml_"), \(x) sum(x, na.rm = TRUE))) |>
     ungroup()
 }
@@ -138,7 +138,7 @@ process_one_scenario <- function(scenario_infos, d_ref) {
   d_last <- make_last_year_outcomes(d_sim)
   d_cum <- make_cumulative_outcomes(d_sim)
 
-  d <- left_join(d_last, d_cum, by = c("scenario_name", "batch_number", "sim"))
+  d <- left_join(d_last, d_cum, by = c("scenario_name", "sim"))
 
   for (pop in c("b", "h", "w")) {
     d <- mutate_nia_pia(

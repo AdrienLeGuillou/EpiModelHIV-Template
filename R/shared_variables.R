@@ -17,9 +17,9 @@ intervention_start <- restart_time + 5 * year_steps
 intervention_end   <- intervention_start + 10 * year_steps
 
 # Paths to files and directories
-input_dir      <- "data/input/"
-run_dir        <- "data/run/"
-output_dir     <- "data/output/"
+input_dir  <- "data/input/"
+run_dir    <- "data/run/"
+output_dir <- "data/output/"
 
 est_dir        <- paste0(run_dir, "estimates/")
 diag_dir       <- paste0(run_dir, "diagnostics/")

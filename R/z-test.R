@@ -27,8 +27,10 @@ format_table(d_table, var_labels, format_patterns) |>
   as.list()
 
 
+d_calib |> tail(10 * year_steps) |> pull(dbg_hbv_flares_std) |> sum()
+d_calib |> tail(10 * year_steps) |> pull(dbg_hbv_flares_otc) |> sum()
 
-
+d_table$cml_hbv_flare
 
 
 

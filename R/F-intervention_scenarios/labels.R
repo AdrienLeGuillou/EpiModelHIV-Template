@@ -163,7 +163,7 @@ make_formatters <- function(var_labels, format_patterns) {
 sum_quants <- function(d, ql = 0.025, qm = 0.5, qh = 0.975) {
   d |>
     ungroup() |>
-    select(-c(batch_number, sim)) |>
+    select(-sim) |>
     group_by(scenario_name) |>
     summarise(across(
       everything(),

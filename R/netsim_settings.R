@@ -13,11 +13,12 @@ params_df <- read.csv(fs::path(input_dir, "model_parameters.csv")) |>
 
 # `netsim` Parameters
 param <- param.net(
-  data.frame.params   = params_df,
-  netstats            = netstats,
-  epistats            = epistats,
-  prep.start          = prep_start,
-  riskh.start         = prep_start - year_steps
+  data.frame.params = params_df,
+  netstats          = netstats,
+  epistats          = epistats,
+  prep.start        = prep_start,
+  riskh.start       = prep_start - year_steps,
+  hbv.start         = intervention_start
 )
 
 # Initial conditions (default prevalence initialized in epistats)

@@ -33,8 +33,7 @@ scenarios_df <- readr::read_csv(fs::path(input_dir, "scenarios.csv"))
 glimpse(scenarios_df)
 scenarios_list <- EpiModel::create_scenario_list(scenarios_df)
 
-param$hbv.start <- intervention_start
-param$hbv.init.perc <- c(0.7, 0.6, 0.5)
+# param$hbv.init.perc <- c(0.7, 0.6, 0.5)
 
 EpiModelHPC::netsim_scenarios(
   path_to_restart, param, init, control,

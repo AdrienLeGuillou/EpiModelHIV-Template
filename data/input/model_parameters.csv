@@ -95,9 +95,9 @@ prep.discont.int_3,57.39,numeric,missing?,,,,Median interval until PrEP disconti
 prep.tst.int,12.8571,numeric,missing?,,,,Testing interval by time steps for those who are actively on PrEP. This overrides the mean testing interval parameters.
 prep.sti.tx.prob,1,numeric,missing?,,,,Probability of any STI treatment given positive screening during PrEP visit.
 prep.risk.reassess.int,52,numeric,7.5,,,,Interval for reassessment of risk indications of active PrEP users. Default of `52` for yearly reassessment when time unit is weekly -  use `Inf` for no reassessment.
-prep.otc.start.rate_1,0.00554146887680583,numeric,missing?,"2020 CDC HIV surveillance data , 2017 National HIV Behavioral Surveillance findings",cc.prep.H,,Probability of starting PrEP given current indications for Black MSM.
-prep.otc.start.rate_2,0.00423228372076054,numeric,missing?,"2020 CDC HIV surveillance data , 2017 National HIV Behavioral Surveillance findings",cc.prep.W,,Probability of starting PrEP given current indications for Hispanic MSM.
-prep.otc.start.rate_3,0.00662106571520366,numeric,missing?,,,,Probability of starting PrEP given current indications for White MSM.
+prep.otc.start.rate_1,0,numeric,missing?,"2020 CDC HIV surveillance data , 2017 National HIV Behavioral Surveillance findings",cc.prep.H,,Probability of starting PrEP given current indications for Black MSM.
+prep.otc.start.rate_2,0,numeric,missing?,"2020 CDC HIV surveillance data , 2017 National HIV Behavioral Surveillance findings",cc.prep.W,,Probability of starting PrEP given current indications for Hispanic MSM.
+prep.otc.start.rate_3,0,numeric,missing?,,,,Probability of starting PrEP given current indications for White MSM.
 prep.otc.adhr.dist_1,0.089,numeric,missing?,,,,"Proportion of men who are low, medium, and high adherent to PrEP for Black MSM."
 prep.otc.adhr.dist_2,0.127,numeric,missing?,,,,"Proportion of men who are low, medium, and high adherent to PrEP for Hispanic MSM."
 prep.otc.adhr.dist_3,0.784,numeric,missing?,50,,,"Proportion of men who are low, medium, and high adherent to PrEP for White MSM."

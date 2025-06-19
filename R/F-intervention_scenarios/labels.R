@@ -25,6 +25,8 @@ var_labels <- c(
   "cml_incid_gono"    = "Gono Cumulative Incidence All (10y)",
   "cml_incid_chla"    = "Chla Cumulative Incidence All (10y)",
 
+  "lst_prep_any"      = "Any PrEP Number (ly)",
+
   "lst_prep_cov"      = "Clinical PrEP Coverage (ly)",
   "lst_prep_elig"     = "Clinical PrEP Eligibles (ly)",
   "lst_prep_mean_dur" = "Clinical PrEP Mean Duration (ly)",
@@ -63,7 +65,7 @@ var_labels <- c(
   "lst_resist_tdf_prev" = "TDF resistance Prevalence (ly)",
   "lst_resist_ftc_prev" = "FTC resistance Prevalence (ly)",
 
-  "num" = "num"
+  "lst_num" = "num"
 )
 
 unused_labels <- c(

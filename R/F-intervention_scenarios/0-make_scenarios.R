@@ -47,13 +47,34 @@ sc_ls[["baseline"]] <- tibble(
 sc_ls[["otc_same"]] <- tibble(
   .scenario.id    = paste0("otc_same_", 1),
   .at             = intervention_start,
+  prep.otc.start.rate_1 = param$prep.start.rate[1],
+  prep.otc.start.rate_2 = param$prep.start.rate[2],
+  prep.otc.start.rate_3 = param$prep.start.rate[3],
+  prep.otc.adhr.dist_1 = param$prep.adhr.dist[1],
+  prep.otc.adhr.dist_2 = param$prep.adhr.dist[2],
+  prep.otc.adhr.dist_3 = param$prep.adhr.dist[3],
+  prep.otc.discont.int_1 = param$prep.discont.int[1],
+  prep.otc.discont.int_2 = param$prep.discont.int[2],
+  prep.otc.discont.int_3 = param$prep.discont.int[3],
+  prep.otc.tst.int = param$prep.tst.int,
+  prep.otc.sti.tx.prob = param$prep.sti.tx.prob,
+  prep.otc.risk.reassess.int = param$prep.risk.reassess.int,
+  prep.std.switch.otc.prob = 0,
+  prep.otc.switch.std.prob = 0,
   prep.otc.hard.indications = 1,
   prep.otc.always.sti.tst = 1,
   prep.otc.always.hiv.tst = 1,
-  prep.otc.start.rate_1 = param$prep.start.rate[1],
-  prep.otc.start.rate_2 = param$prep.start.rate[2],
-  prep.otc.start.rate_3 = param$prep.start.rate[3]
+  sti.prep.otc.tx.prob = param$sti.prep.tx.prob,
+  sti.screen.prep.otc.rate = param$sti.screen.prep.rate,
+  sti.screen.rect.prep.otc.prob = param$sti.screen.rect.prep.prob,
+  prep.otc.hbv.flare.prob = param$prep.hbv.flare.prob,
 )
+# NOTE: Other parameters worth mentionning:
+#
+# Last on the CSV file:
+#   - gfr.*
+#   - hbv.*
+#   - (tdf|ftc).*
 
 sc_ls[["otc_relaxed"]] <- tibble(
   .scenario.id    = paste0("otc_relaxed_", 1),

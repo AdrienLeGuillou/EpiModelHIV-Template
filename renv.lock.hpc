@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.5.0",
+    "Version": "4.5.1",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -201,11 +201,11 @@
       "Roxygen": "list(markdown = TRUE)",
       "Author": "Samuel M. Jenness [cre, aut], Steven M. Goodreau [aut], Adrien Le Guillou [aut] (ORCID: <https://orcid.org/0000-0002-4791-418X>)",
       "RemoteType": "github",
-      "RemoteHost": "api.github.com",
       "RemoteUsername": "EpiModel",
       "RemoteRepo": "EpiModelHIV-p",
       "RemoteRef": "merge_offscript",
-      "RemoteSha": "5c909eb43c23ccc2749013b05496e29d1f9321b4",
+      "RemoteSha": "5513327670c2401914e8e4b2e1be422e6dd96537",
+      "RemoteHost": "api.github.com",
       "Remotes": "github::EpiModel/ARTnet@main, github::EpiModel/ARTnetData@main"
     },
     "EpiModelHPC": {
@@ -859,29 +859,29 @@
     },
     "ergm": {
       "Package": "ergm",
-      "Version": "4.8.1",
+      "Version": "4.9.0",
       "Source": "Repository",
-      "Date": "2025-01-20",
+      "Date": "2025-06-09",
       "Title": "Fit, Simulate and Diagnose Exponential-Family Models for Networks",
-      "Authors@R": "c( person(c(\"Mark\", \"S.\"), \"Handcock\", role=c(\"aut\"), email=\"handcock@stat.ucla.edu\"), person(c(\"David\", \"R.\"), \"Hunter\", role=c(\"aut\"), email=\"dhunter@stat.psu.edu\"), person(c(\"Carter\", \"T.\"), \"Butts\", role=c(\"aut\"), email=\"buttsc@uci.edu\"), person(c(\"Steven\", \"M.\"), \"Goodreau\", role=c(\"aut\"), email=\"goodreau@u.washington.edu\"), person(c(\"Pavel\", \"N.\"), \"Krivitsky\", role=c(\"aut\",\"cre\"), email=\"pavel@statnet.org\", comment=c(ORCID=\"0000-0002-9101-3362\")), person(\"Martina\", \"Morris\", role=c(\"aut\"), email=\"morrism@u.washington.edu\"), person(\"Li\",\"Wang\",role=c(\"ctb\"),email=\"lxwang@gmail.com\"), person(\"Kirk\",\"Li\",role=c(\"ctb\"),email=\"kirkli@u.washington.edu\"), person(\"Skye\", \"Bender-deMoll\", role=c(\"ctb\"), email=\"skyebend@u.washington.edu\"), person(\"Chad\", \"Klumb\", role=c(\"ctb\"), email=\"cklumb@gmail.com\"), person(\"Michał\", \" Bojanowski\", role=c(\"ctb\"), email=\"michal2992@gmail.com\", comment=c(ORCID=\"0000-0001-7503-852X\")), person(\"Ben\", \"Bolker\", role=c(\"ctb\"), email=\"bbolker+lme4@gmail.com\"), person(\"Christian\", \"Schmid\", role=c(\"ctb\"), email=\"songhyo86@gmail.com\"), person(\"Joyce\", \"Cheng\", role=c(\"ctb\"), email=\"joyce.cheng@student.unsw.edu.au\"), person(\"Arya\", \"Karami\", role=c(\"ctb\"), email=\"a.karami@unsw.edu.au\"), person(\"Adrien\", \"Le Guillou\", role=c(\"ctb\"), email=\"git@aleguillou.org\", comment=c(ORCID=\"0000-0002-4791-418X\")))",
+      "Authors@R": "c( person(c(\"Mark\", \"S.\"), \"Handcock\", role=c(\"aut\"), email=\"handcock@stat.ucla.edu\"), person(c(\"David\", \"R.\"), \"Hunter\", role=c(\"aut\"), email=\"dhunter@stat.psu.edu\"), person(c(\"Carter\", \"T.\"), \"Butts\", role=c(\"aut\"), email=\"buttsc@uci.edu\"), person(c(\"Steven\", \"M.\"), \"Goodreau\", role=c(\"aut\"), email=\"goodreau@u.washington.edu\"), person(c(\"Pavel\", \"N.\"), \"Krivitsky\", role=c(\"aut\", \"cre\"), email=\"pavel@statnet.org\", comment=c(ORCID=\"0000-0002-9101-3362\")), person(\"Martina\", \"Morris\", role=c(\"aut\"), email=\"morrism@u.washington.edu\"), person(\"Li\", \"Wang\", role=c(\"ctb\"), email=\"lxwang@gmail.com\"), person(\"Kirk\", \"Li\", role=c(\"ctb\"), email=\"kirkli@u.washington.edu\"), person(\"Skye\", \"Bender-deMoll\", role=c(\"ctb\"), email=\"skyebend@u.washington.edu\"), person(\"Chad\", \"Klumb\", role=c(\"ctb\"), email=\"cklumb@gmail.com\"), person(\"Michał\", \"Bojanowski\", role=c(\"ctb\"), email=\"michal2992@gmail.com\", comment=c(ORCID=\"0000-0001-7503-852X\")), person(\"Ben\", \"Bolker\", role=c(\"ctb\"), email=\"bbolker+lme4@gmail.com\"), person(\"Christian\", \"Schmid\", role=c(\"ctb\"), email=\"songhyo86@gmail.com\"), person(\"Joyce\", \"Cheng\", role=c(\"ctb\"), email=\"joyce.cheng@student.unsw.edu.au\"), person(\"Arya\", \"Karami\", role=c(\"ctb\"), email=\"a.karami@unsw.edu.au\"), person(\"Adrien\", \"Le Guillou\", role=c(\"ctb\"), email=\"git@aleguillou.org\", comment=c(ORCID=\"0000-0002-4791-418X\")))",
       "Depends": [
-        "R (>= 4.1)",
+        "R (>= 4.2)",
         "network (>= 1.19.0)"
       ],
       "Imports": [
         "robustbase (>= 0.99-4-1)",
         "coda (>= 0.19-4.1)",
         "trust (>= 0.1-8)",
-        "lpSolveAPI (>= 5.5.2.0-17.12)",
-        "statnet.common (>= 4.11.0)",
-        "rle (>= 0.9.2)",
-        "purrr (>= 1.0.2)",
-        "rlang (>= 1.1.4)",
+        "lpSolveAPI (>= 5.5.2.0-17.14)",
+        "statnet.common (>= 4.12.0)",
+        "rle (>= 0.10.0)",
+        "purrr (>= 1.0.4)",
+        "rlang (>= 1.1.6)",
         "memoise (>= 2.0.1)",
         "tibble (>= 3.2.1)",
         "magrittr (>= 2.0.3)",
-        "Rdpack (>= 2.6.2)",
-        "knitr (>= 1.49)",
+        "Rdpack (>= 2.6.4)",
+        "knitr (>= 1.50)",
         "stringr (>= 1.5.1)",
         "parallel",
         "methods"
@@ -890,7 +890,7 @@
         "latticeExtra (>= 0.6-30)",
         "sna (>= 2.8)",
         "rmarkdown (>= 2.29)",
-        "testthat (>= 3.2.2)",
+        "testthat (>= 3.2.3)",
         "ergm.count (>= 4.1.2)",
         "withr (>= 3.0.2)",
         "covr (>= 3.6.4)",
@@ -912,32 +912,33 @@
       "Config/testthat/edition": "3",
       "Config/build/clean-inst-doc": "FALSE",
       "Encoding": "UTF-8",
-      "Collate": "'InitErgmConstraint.R' 'InitErgmConstraint.blockdiag.R' 'InitErgmConstraint.hints.R' 'InitErgmConstraint.operator.R' 'InitErgmProposal.R' 'InitErgmProposal.dyadnoise.R' 'InitErgmReference.R' 'ergm-deprecated.R' 'InitErgmTerm.R' 'InitErgmTerm.auxnet.R' 'InitErgmTerm.bipartite.R' 'InitErgmTerm.bipartite.degree.R' 'InitErgmTerm.blockop.R' 'InitErgmTerm.coincidence.R' 'InitErgmTerm.dgw_sp.R' 'InitErgmTerm.diversity.R' 'InitErgmTerm.extra.R' 'InitErgmTerm.indices.R' 'InitErgmTerm.interaction.R' 'InitErgmTerm.operator.R' 'InitErgmTerm.projection.R' 'InitErgmTerm.spcache.R' 'InitErgmTerm.test.R' 'InitErgmTerm.transitiveties.R' 'InitWtErgmProposal.R' 'InitWtErgmTerm.R' 'InitWtErgmTerm.operator.R' 'InitWtErgmTerm.test.R' 'anova.ergm.R' 'anova.ergmlist.R' 'approx.hotelling.diff.test.R' 'as.network.numeric.R' 'build_term_index.R' 'check.ErgmTerm.R' 'control.ergm.R' 'control.ergm.bridge.R' 'control.gof.R' 'control.logLik.ergm.R' 'control.san.R' 'control.simulate.R' 'data.R' 'ergm-defunct.R' 'ergm-internal.R' 'ergm-options.R' 'ergm-package.R' 'ergm-terms-index.R' 'ergm.CD.fixed.R' 'ergm.Cprepare.R' 'ergm.MCMCse.R' 'ergm.MCMLE.R' 'ergm.R' 'ergm.allstats.R' 'ergm.auxstorage.R' 'ergm.bounddeg.R' 'ergm.bridge.R' 'ergm.design.R' 'ergm.errors.R' 'ergm.estimate.R' 'ergm.eta.R' 'ergm.etagrad.R' 'ergm.etagradmult.R' 'ergm.etamap.R' 'ergm.geodistn.R' 'ergm.getCDsample.R' 'ergm.getMCMCsample.R' 'ergm.getnetwork.R' 'ergm.initialfit.R' 'ergm.llik.R' 'ergm.llik.obs.R' 'ergm.logitreg.R' 'ergm.mple.R' 'ergm.pen.glm.R' 'ergm.phase12.R' 'ergm.pl.R' 'ergm.san.R' 'ergm.stepping.R' 'ergm.stocapprox.R' 'ergm.utility.R' 'ergmMPLE.R' 'ergm_estfun.R' 'ergm_keyword.R' 'ergm_model.R' 'ergm_model.utils.R' 'ergm_mplecov.R' 'ergm_proposal.R' 'ergm_response.R' 'ergm_state.R' 'ergmlhs.R' 'formula.utils.R' 'get.node.attr.R' 'godfather.R' 'gof.ergm.R' 'is.curved.R' 'is.dyad.independent.R' 'is.inCH.R' 'is.na.ergm.R' 'is.valued.R' 'logLik.ergm.R' 'mcmc.diagnostics.ergm.R' 'network.list.R' 'network.update.R' 'nonidentifiability.R' 'nparam.R' 'obs.constraints.R' 'parallel.utils.R' 'param_names.R' 'predict.ergm.R' 'print.ergm.R' 'print.network.list.R' 'print.summary.ergm.R' 'rank_test.ergm.R' 'rlebdm.R' 'simulate.ergm.R' 'simulate.formula.R' 'summary.ergm.R' 'summary.ergm_model.R' 'summary.network.list.R' 'summary.statistics.network.R' 'to_ergm_Cdouble.R' 'vcov.ergm.R' 'wtd.median.R' 'zzz.R'",
+      "Collate": "'InitErgmConstraint.R' 'InitErgmConstraint.blockdiag.R' 'InitErgmConstraint.hints.R' 'InitErgmConstraint.operator.R' 'InitErgmProposal.R' 'InitErgmProposal.dyadnoise.R' 'InitErgmReference.R' 'InitErgmTerm.R' 'InitErgmTerm.auxnet.R' 'InitErgmTerm.bipartite.R' 'InitErgmTerm.bipartite.degree.R' 'InitErgmTerm.blockop.R' 'InitErgmTerm.coincidence.R' 'InitErgmTerm.dgw_sp.R' 'InitErgmTerm.diversity.R' 'InitErgmTerm.extra.R' 'InitErgmTerm.indices.R' 'InitErgmTerm.interaction.R' 'InitErgmTerm.operator.R' 'InitErgmTerm.projection.R' 'InitErgmTerm.spcache.R' 'InitErgmTerm.test.R' 'InitErgmTerm.transitiveties.R' 'InitWtErgmProposal.R' 'InitWtErgmTerm.R' 'InitWtErgmTerm.auxnet.R' 'InitWtErgmTerm.operator.R' 'InitWtErgmTerm.test.R' 'anova.ergm.R' 'approx.hotelling.diff.test.R' 'as.network.numeric.R' 'build_term_index.R' 'check.ErgmTerm.R' 'control.ergm.R' 'control.ergm.bridge.R' 'control.ergm3.R' 'control.gof.R' 'control.logLik.ergm.R' 'control.san.R' 'control.simulate.R' 'data.R' 'ergm-defunct.R' 'ergm-deprecated.R' 'ergm-internal.R' 'ergm-options.R' 'ergm-package.R' 'ergm-terms-index.R' 'ergm.CD.fixed.R' 'ergm.MCMCse.R' 'ergm.MCMLE.R' 'ergm.R' 'ergm.allstats.R' 'ergm.auxstorage.R' 'ergm.bounddeg.R' 'ergm.bridge.R' 'ergm.design.R' 'ergm.errors.R' 'ergm.estimate.R' 'ergm.eta.R' 'ergm.etamap.R' 'ergm.geodistn.R' 'ergm.getCDsample.R' 'ergm.getMCMCsample.R' 'ergm.getnetwork.R' 'ergm.initialfit.R' 'ergm.llik.R' 'ergm.llik.obs.R' 'ergm.logitreg.R' 'ergm.mple.R' 'ergm.pen.glm.R' 'ergm.pl.R' 'ergm.san.R' 'ergm.stepping.R' 'ergm.stocapprox.R' 'ergm.utility.R' 'ergmMPLE.R' 'ergm_estfun.R' 'ergm_keyword.R' 'ergm_model.R' 'ergm_model.utils.R' 'ergm_mplecov.R' 'ergm_proposal.R' 'ergm_response.R' 'ergm_state.R' 'ergmlhs.R' 'formula.utils.R' 'get.node.attr.R' 'godfather.R' 'gof.ergm.R' 'is.curved.R' 'is.dyad.independent.R' 'is.na.ergm.R' 'is.valued.R' 'logLik.ergm.R' 'mcmc.diagnostics.ergm.R' 'network.list.R' 'network.update.R' 'nonidentifiability.R' 'nparam.R' 'obs.constraints.R' 'parallel.utils.R' 'param_names.R' 'predict.ergm.R' 'print.ergm.R' 'rank_test.ergm.R' 'to_ergm_Cdouble.R' 'rlebdm.R' 'simulate.ergm.R' 'simulate.formula.R' 'summary.ergm.R' 'summary.ergm_model.R' 'summary.statistics.network.R' 'vcov.ergm.R' 'wtd.median.R' 'zzz.R'",
       "NeedsCompilation": "yes",
-      "Author": "Mark S. Handcock [aut], David R. Hunter [aut], Carter T. Butts [aut], Steven M. Goodreau [aut], Pavel N. Krivitsky [aut, cre] (<https://orcid.org/0000-0002-9101-3362>), Martina Morris [aut], Li Wang [ctb], Kirk Li [ctb], Skye Bender-deMoll [ctb], Chad Klumb [ctb], Michał Bojanowski [ctb] (<https://orcid.org/0000-0001-7503-852X>), Ben Bolker [ctb], Christian Schmid [ctb], Joyce Cheng [ctb], Arya Karami [ctb], Adrien Le Guillou [ctb] (<https://orcid.org/0000-0002-4791-418X>)",
+      "Author": "Mark S. Handcock [aut], David R. Hunter [aut], Carter T. Butts [aut], Steven M. Goodreau [aut], Pavel N. Krivitsky [aut, cre] (ORCID: <https://orcid.org/0000-0002-9101-3362>), Martina Morris [aut], Li Wang [ctb], Kirk Li [ctb], Skye Bender-deMoll [ctb], Chad Klumb [ctb], Michał Bojanowski [ctb] (ORCID: <https://orcid.org/0000-0001-7503-852X>), Ben Bolker [ctb], Christian Schmid [ctb], Joyce Cheng [ctb], Arya Karami [ctb], Adrien Le Guillou [ctb] (ORCID: <https://orcid.org/0000-0002-4791-418X>)",
       "Maintainer": "Pavel N. Krivitsky <pavel@statnet.org>",
       "Repository": "CRAN"
     },
     "ergm.multi": {
       "Package": "ergm.multi",
-      "Version": "0.2.1.1",
+      "Version": "0.3.0",
       "Source": "Repository",
-      "Date": "2024-02-20",
+      "Date": "2025-06-14",
       "Title": "Fit, Simulate and Diagnose Exponential-Family Models for Multiple or Multilayer Networks",
       "Authors@R": "c(person(c(\"Pavel\", \"N.\"), \"Krivitsky\", role=c(\"aut\",\"cre\"), email=\"pavel@statnet.org\", comment=c(ORCID=\"0000-0002-9101-3362\")), person(c(\"Mark\", \"S.\"), \"Handcock\", role=c(\"ctb\"), email=\"handcock@stat.ucla.edu\"), person(c(\"David\", \"R.\"), \"Hunter\", role=c(\"ctb\"), email=\"dhunter@stat.psu.edu\"), person(\"Chad\", \"Klumb\", role=c(\"ctb\"), email=\"cklumb@gmail.com\"), person(\"Pietro\", \"Coletti\", role=c(\"ctb\"), email=\"pietro.coletti@uhasselt.be\"), person(\"Joyce\", \"Cheng\", role=c(\"ctb\"), email=\"joyce.cheng@student.unsw.edu.au\"))",
       "Depends": [
-        "R (>= 3.5.0)",
-        "ergm (>= 4.6.0)",
-        "network (>= 1.18.2)"
+        "R (>= 4.2.0)",
+        "ergm (>= 4.9.0)",
+        "network (>= 1.19.0)"
       ],
       "Imports": [
-        "statnet.common (>= 4.9.0)",
-        "rlang (>= 1.1.3)",
-        "purrr (>= 1.0.2)",
-        "tibble (>= 3.2.1)",
-        "glue (>= 1.7.0)",
-        "rle (>= 0.9.2)",
-        "Rdpack (>= 2.6)",
+        "statnet.common (>= 4.12.0)",
+        "rlang (>= 1.1.6)",
+        "purrr (>= 1.0.4)",
+        "tibble (>= 3.3.0)",
+        "glue (>= 1.8.0)",
+        "rle (>= 0.10.0)",
+        "Rdpack (>= 2.6.4)",
+        "networkLite (>= 1.1.0)",
         "Matrix",
         "methods",
         "parallel"
@@ -946,13 +947,14 @@
         "ergm"
       ],
       "Suggests": [
-        "rmarkdown (>= 2.25)",
-        "knitr (>= 1.45)",
+        "rmarkdown (>= 2.29)",
+        "knitr (>= 1.50)",
         "dplyr (>= 1.1.4)",
-        "testthat (>= 3.2.1)",
-        "ggplot2 (>= 3.4.4)",
-        "ggrepel (>= 0.9.5)",
-        "generics (>= 0.1.3)"
+        "testthat (>= 3.2.3)",
+        "ggplot2 (>= 3.5.2)",
+        "ggrepel (>= 0.9.6)",
+        "Rglpk",
+        "generics (>= 0.1.4)"
       ],
       "RdMacros": "Rdpack",
       "BugReports": "https://github.com/statnet/ergm.multi/issues",
@@ -960,12 +962,12 @@
       "License": "GPL-3 + file LICENSE",
       "URL": "https://statnet.org",
       "VignetteBuilder": "rmarkdown, knitr",
-      "RoxygenNote": "7.3.1",
+      "RoxygenNote": "7.3.2.9000",
       "Config/testthat/parallel": "true",
       "Config/testthat/edition": "3",
       "Encoding": "UTF-8",
       "NeedsCompilation": "yes",
-      "Author": "Pavel N. Krivitsky [aut, cre] (<https://orcid.org/0000-0002-9101-3362>), Mark S. Handcock [ctb], David R. Hunter [ctb], Chad Klumb [ctb], Pietro Coletti [ctb], Joyce Cheng [ctb]",
+      "Author": "Pavel N. Krivitsky [aut, cre] (ORCID: <https://orcid.org/0000-0002-9101-3362>), Mark S. Handcock [ctb], David R. Hunter [ctb], Chad Klumb [ctb], Pietro Coletti [ctb], Joyce Cheng [ctb]",
       "Maintainer": "Pavel N. Krivitsky <pavel@statnet.org>",
       "Repository": "CRAN"
     },
@@ -1002,37 +1004,6 @@
       "NeedsCompilation": "no",
       "Author": "Hadley Wickham [aut, cre], Yihui Xie [aut] (<https://orcid.org/0000-0003-0645-5666>), Michael Lawrence [ctb], Thomas Kluyver [ctb], Jeroen Ooms [ctb], Barret Schloerke [ctb], Adam Ryczkowski [ctb], Hiroaki Yutani [ctb], Michel Lang [ctb], Karolis Koncevičius [ctb], Posit Software, PBC [cph, fnd]",
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
-      "Repository": "CRAN"
-    },
-    "fansi": {
-      "Package": "fansi",
-      "Version": "1.0.6",
-      "Source": "Repository",
-      "Title": "ANSI Control Sequence Aware String Functions",
-      "Description": "Counterparts to R string manipulation functions that account for the effects of ANSI text formatting control sequences.",
-      "Authors@R": "c( person(\"Brodie\", \"Gaslam\", email=\"brodie.gaslam@yahoo.com\", role=c(\"aut\", \"cre\")), person(\"Elliott\", \"Sales De Andrade\", role=\"ctb\"), person(family=\"R Core Team\", email=\"R-core@r-project.org\", role=\"cph\", comment=\"UTF8 byte length calcs from src/util.c\" ))",
-      "Depends": [
-        "R (>= 3.1.0)"
-      ],
-      "License": "GPL-2 | GPL-3",
-      "URL": "https://github.com/brodieG/fansi",
-      "BugReports": "https://github.com/brodieG/fansi/issues",
-      "VignetteBuilder": "knitr",
-      "Suggests": [
-        "unitizer",
-        "knitr",
-        "rmarkdown"
-      ],
-      "Imports": [
-        "grDevices",
-        "utils"
-      ],
-      "RoxygenNote": "7.2.3",
-      "Encoding": "UTF-8",
-      "Collate": "'constants.R' 'fansi-package.R' 'internal.R' 'load.R' 'misc.R' 'nchar.R' 'strwrap.R' 'strtrim.R' 'strsplit.R' 'substr2.R' 'trimws.R' 'tohtml.R' 'unhandled.R' 'normalize.R' 'sgr.R'",
-      "NeedsCompilation": "yes",
-      "Author": "Brodie Gaslam [aut, cre], Elliott Sales De Andrade [ctb], R Core Team [cph] (UTF8 byte length calcs from src/util.c)",
-      "Maintainer": "Brodie Gaslam <brodie.gaslam@yahoo.com>",
       "Repository": "CRAN"
     },
     "farver": {
@@ -1157,7 +1128,7 @@
     },
     "future": {
       "Package": "future",
-      "Version": "1.49.0",
+      "Version": "1.58.0",
       "Source": "Repository",
       "Title": "Unified Parallel and Distributed Processing in R for Everyone",
       "Depends": [
@@ -1195,15 +1166,15 @@
     },
     "future.apply": {
       "Package": "future.apply",
-      "Version": "1.11.3",
+      "Version": "1.20.0",
       "Source": "Repository",
       "Title": "Apply Function to Elements in Parallel using Futures",
       "Depends": [
         "R (>= 3.2.0)",
-        "future (>= 1.28.0)"
+        "future (>= 1.49.0)"
       ],
       "Imports": [
-        "globals (>= 0.16.1)",
+        "globals",
         "parallel",
         "utils"
       ],
@@ -1211,7 +1182,7 @@
         "datasets",
         "stats",
         "tools",
-        "listenv (>= 0.8.0)",
+        "listenv",
         "R.rsp",
         "markdown"
       ],
@@ -1222,9 +1193,11 @@
       "LazyLoad": "TRUE",
       "URL": "https://future.apply.futureverse.org, https://github.com/futureverse/future.apply",
       "BugReports": "https://github.com/futureverse/future.apply/issues",
+      "Language": "en-US",
+      "Encoding": "UTF-8",
       "RoxygenNote": "7.3.2",
       "NeedsCompilation": "no",
-      "Author": "Henrik Bengtsson [aut, cre, cph] (<https://orcid.org/0000-0002-7579-5165>), R Core Team [cph, ctb]",
+      "Author": "Henrik Bengtsson [aut, cre, cph] (ORCID: <https://orcid.org/0000-0002-7579-5165>), R Core Team [cph, ctb]",
       "Maintainer": "Henrik Bengtsson <henrikb@braju.com>",
       "Repository": "CRAN"
     },
@@ -1610,9 +1583,9 @@
     },
     "lattice": {
       "Package": "lattice",
-      "Version": "0.22-6",
+      "Version": "0.22-7",
       "Source": "Repository",
-      "Date": "2024-03-20",
+      "Date": "2025-03-31",
       "Priority": "recommended",
       "Title": "Trellis Graphics for R",
       "Authors@R": "c(person(\"Deepayan\", \"Sarkar\", role = c(\"aut\", \"cre\"), email = \"deepayan.sarkar@r-project.org\", comment = c(ORCID = \"0000-0003-4107-1553\")), person(\"Felix\", \"Andrews\", role = \"ctb\"), person(\"Kevin\", \"Wright\", role = \"ctb\", comment = \"documentation\"), person(\"Neil\", \"Klepeis\", role = \"ctb\"), person(\"Johan\", \"Larsson\", role = \"ctb\", comment = \"miscellaneous improvements\"), person(\"Zhijian (Jason)\", \"Wen\", role = \"cph\", comment = \"filled contour code\"), person(\"Paul\", \"Murrell\", role = \"ctb\", email = \"paul@stat.auckland.ac.nz\"), person(\"Stefan\", \"Eng\", role = \"ctb\", comment = \"violin plot improvements\"), person(\"Achim\", \"Zeileis\", role = \"ctb\", comment = \"modern colors\"), person(\"Alexandre\", \"Courtiol\", role = \"ctb\", comment = \"generics for larrows, lpolygon, lrect and lsegments\") )",
@@ -1849,10 +1822,9 @@
     },
     "mgcv": {
       "Package": "mgcv",
-      "Version": "1.9-1",
+      "Version": "1.9-3",
       "Source": "Repository",
-      "Author": "Simon Wood <simon.wood@r-project.org>",
-      "Maintainer": "Simon Wood <simon.wood@r-project.org>",
+      "Authors@R": "person(given = \"Simon\", family = \"Wood\", role = c(\"aut\", \"cre\"), email = \"simon.wood@r-project.org\")",
       "Title": "Mixed GAM Computation Vehicle with Automatic Smoothness Estimation",
       "Description": "Generalized additive (mixed) models, some of their extensions and  other generalized ridge regression with multiple smoothing  parameter estimation by (Restricted) Marginal Likelihood,  Generalized Cross Validation and similar, or using iterated  nested Laplace approximation for fully Bayesian inference. See  Wood (2017) <doi:10.1201/9781315370279> for an overview.  Includes a gam() function, a wide variety of smoothers, 'JAGS'  support and distributions beyond the exponential family.",
       "Priority": "recommended",
@@ -1877,6 +1849,8 @@
       "ByteCompile": "yes",
       "License": "GPL (>= 2)",
       "NeedsCompilation": "yes",
+      "Author": "Simon Wood [aut, cre]",
+      "Maintainer": "Simon Wood <simon.wood@r-project.org>",
       "Repository": "CRAN"
     },
     "network": {
@@ -2010,7 +1984,7 @@
     },
     "parallelly": {
       "Package": "parallelly",
-      "Version": "1.44.0",
+      "Version": "1.45.0",
       "Source": "Repository",
       "Title": "Enhancing the 'parallel' Package",
       "Imports": [
@@ -2030,6 +2004,7 @@
       "ByteCompile": "TRUE",
       "URL": "https://parallelly.futureverse.org, https://github.com/futureverse/parallelly",
       "BugReports": "https://github.com/futureverse/parallelly/issues",
+      "Language": "en-US",
       "Encoding": "UTF-8",
       "RoxygenNote": "7.3.2",
       "NeedsCompilation": "yes",
@@ -2372,9 +2347,9 @@
     },
     "rle": {
       "Package": "rle",
-      "Version": "0.9.2",
+      "Version": "0.10.0",
       "Source": "Repository",
-      "Date": "2020-09-21",
+      "Date": "2025-05-28",
       "Title": "Common Functions for Run-Length Encoded Vectors",
       "Authors@R": "person(\"Pavel N.\", \"Krivitsky\", role=c(\"aut\",\"cre\"), email=\"pavel@statnet.org\", comment=c(ORCID=\"0000-0002-9101-3362\"))",
       "Description": "Common 'base' and 'stats' methods for 'rle' objects, aiming to make it possible to treat them transparently as vectors.",
@@ -2387,13 +2362,13 @@
       "Copyright": "file inst/COPYRIGHT",
       "BugReports": "https://github.com/statnet/rle/issues",
       "License": "GPL-3",
-      "RoxygenNote": "7.1.1",
+      "RoxygenNote": "7.3.2.9000",
       "Encoding": "UTF-8",
       "Suggests": [
         "covr"
       ],
       "NeedsCompilation": "yes",
-      "Author": "Pavel N. Krivitsky [aut, cre] (<https://orcid.org/0000-0002-9101-3362>)",
+      "Author": "Pavel N. Krivitsky [aut, cre] (ORCID: <https://orcid.org/0000-0002-9101-3362>)",
       "Maintainer": "Pavel N. Krivitsky <pavel@statnet.org>",
       "Repository": "CRAN"
     },
@@ -2542,14 +2517,14 @@
     },
     "statnet.common": {
       "Package": "statnet.common",
-      "Version": "4.11.0",
+      "Version": "4.12.0",
       "Source": "Repository",
-      "Date": "2024-12-29",
+      "Date": "2025-05-30",
       "Title": "Common R Scripts and Utilities Used by the Statnet Project Software",
-      "Authors@R": "c( person(c(\"Pavel\", \"N.\"), \"Krivitsky\", role=c(\"aut\",\"cre\"), email=\"pavel@statnet.org\", comment=c(ORCID=\"0000-0002-9101-3362\", affiliation=\"University of New South Wales\")), person(\"Skye\", \"Bender-deMoll\", role=c(\"ctb\"), email=\"skyebend@uw.edu\"), person(\"Chad\", \"Klumb\", role=c(\"ctb\"), email=\"cklumb@gmail.com\", comment=c(affiliation=\"University of Washington\")))",
+      "Authors@R": "c( person(c(\"Pavel\", \"N.\"), \"Krivitsky\", role=c(\"aut\",\"cre\"), email=\"pavel@statnet.org\", comment=c(ORCID=\"0000-0002-9101-3362\", affiliation=\"University of New South Wales\")), person(\"Skye\", \"Bender-deMoll\", role=c(\"ctb\"), email=\"skyebend@uw.edu\"), person(\"Chad\", \"Klumb\", role=c(\"ctb\"), email=\"cklumb@gmail.com\", comment=c(affiliation=\"University of Washington\")), person(\"Michał\", \"Bojanowski\", role=c(\"ctb\"), email=\"michal2992@gmail.com\", comment=c(ORCID=\"0000-0001-7503-852X\")))",
       "Description": "Non-statistical utilities used by the software developed by the Statnet Project. They may also be of use to others.",
       "Depends": [
-        "R (>= 3.5)"
+        "R (>= 4.1)"
       ],
       "Imports": [
         "utils",
@@ -2566,11 +2541,13 @@
       "Encoding": "UTF-8",
       "Suggests": [
         "covr",
+        "roxygen2",
         "rlang (>= 1.1.1)",
+        "purrr",
         "MASS"
       ],
       "NeedsCompilation": "yes",
-      "Author": "Pavel N. Krivitsky [aut, cre] (<https://orcid.org/0000-0002-9101-3362>, University of New South Wales), Skye Bender-deMoll [ctb], Chad Klumb [ctb] (University of Washington)",
+      "Author": "Pavel N. Krivitsky [aut, cre] (ORCID: <https://orcid.org/0000-0002-9101-3362>, affiliation: University of New South Wales), Skye Bender-deMoll [ctb], Chad Klumb [ctb] (affiliation: University of Washington), Michał Bojanowski [ctb] (ORCID: <https://orcid.org/0000-0001-7503-852X>)",
       "Maintainer": "Pavel N. Krivitsky <pavel@statnet.org>",
       "Repository": "CRAN"
     },
@@ -2689,22 +2666,22 @@
     },
     "tergm": {
       "Package": "tergm",
-      "Version": "4.2.1",
+      "Version": "4.2.2",
       "Source": "Repository",
-      "Date": "2024-10-08",
+      "Date": "2025-06-15",
       "Title": "Fit, Simulate and Diagnose Models for Network Evolution Based on Exponential-Family Random Graph Models",
       "Authors@R": "c( person(c(\"Pavel\", \"N.\"), \"Krivitsky\", role=c(\"aut\",\"cre\"), email=\"pavel@statnet.org\", comment=c(ORCID=\"0000-0002-9101-3362\")), person(c(\"Mark\", \"S.\"), \"Handcock\", role=c(\"aut\",\"ths\"), email=\"handcock@stat.ucla.edu\"), person(c(\"David\", \"R.\"), \"Hunter\", role=c(\"ctb\"), email=\"dhunter@stat.psu.edu\"), person(c(\"Steven\", \"M.\"), \"Goodreau\", role=c(\"ctb\",\"ths\"), email=\"goodreau@u.washington.edu\"), person(\"Martina\", \"Morris\", role=c(\"ctb\",\"ths\"), email=\"morrism@u.washington.edu\"), person(c(\"Nicole\", \"Bohme\"), \"Carnegie\", role=c(\"ctb\"), email=\"nicole.carnegie@nyu.edu\"), person(c(\"Carter\", \"T.\"), \"Butts\", role=c(\"ctb\"), email=\"buttsc@uci.edu\"), person(\"Ayn\", \"Leslie-Cook\", role=c(\"ctb\"), email=\"aynlc3@uw.edu\"), person(\"Skye\", \"Bender-deMoll\", role=c(\"ctb\"), email=\"skyebend@skyeome.net\"), person(\"Li\",\"Wang\",role=c(\"ctb\"),email=\"lxwang@gmail.com\"), person(\"Kirk\",\"Li\",role=c(\"ctb\"),email=\"kirkli@uw.edu\"), person(\"Chad\", \"Klumb\", role=c(\"ctb\"), email=\"cklumb@gmail.com\"), person(\"Adrien\", \"Le Guillou\", role=c(\"ctb\"), email=\"git@aleguillou.org\", comment=c(ORCID=\"0000-0002-4791-418X\")))",
       "Depends": [
-        "ergm (>= 4.7.0)",
-        "network (>= 1.18.2)",
-        "networkDynamic (>= 0.11.4)"
+        "ergm (>= 4.9.0)",
+        "network (>= 1.19.0)",
+        "networkDynamic (>= 0.11.5)"
       ],
       "Imports": [
-        "robustbase (>= 0.95)",
+        "robustbase (>= 0.99-4-1)",
         "coda (>= 0.19-4.1)",
-        "statnet.common (>= 4.10.0)",
-        "ergm.multi (>= 0.2.1)",
-        "purrr (>= 1.0.2)",
+        "statnet.common (>= 4.12.0)",
+        "ergm.multi (>= 0.3.0)",
+        "purrr (>= 1.0.4)",
         "methods",
         "utils",
         "nlme",
@@ -2714,13 +2691,13 @@
         "ergm"
       ],
       "Suggests": [
-        "rmarkdown (>= 2.28)",
-        "knitr (>= 1.48)",
-        "tibble (>= 3.2.1)",
-        "testthat (>= 3.2.1.1)",
+        "rmarkdown (>= 2.29)",
+        "knitr (>= 1.50)",
+        "tibble (>= 3.3.0)",
+        "testthat (>= 3.2.3)",
         "covr (>= 3.6.4)",
-        "networkLite (>= 1.0.5)",
-        "rlang",
+        "networkLite (>= 1.1.0)",
+        "rlang (>= 1.1.6)",
         "lattice",
         "parallel"
       ],
@@ -2734,13 +2711,13 @@
       "Config/testthat/edition": "3",
       "Encoding": "UTF-8",
       "NeedsCompilation": "yes",
-      "Author": "Pavel N. Krivitsky [aut, cre] (<https://orcid.org/0000-0002-9101-3362>), Mark S. Handcock [aut, ths], David R. Hunter [ctb], Steven M. Goodreau [ctb, ths], Martina Morris [ctb, ths], Nicole Bohme Carnegie [ctb], Carter T. Butts [ctb], Ayn Leslie-Cook [ctb], Skye Bender-deMoll [ctb], Li Wang [ctb], Kirk Li [ctb], Chad Klumb [ctb], Adrien Le Guillou [ctb] (<https://orcid.org/0000-0002-4791-418X>)",
+      "Author": "Pavel N. Krivitsky [aut, cre] (ORCID: <https://orcid.org/0000-0002-9101-3362>), Mark S. Handcock [aut, ths], David R. Hunter [ctb], Steven M. Goodreau [ctb, ths], Martina Morris [ctb, ths], Nicole Bohme Carnegie [ctb], Carter T. Butts [ctb], Ayn Leslie-Cook [ctb], Skye Bender-deMoll [ctb], Li Wang [ctb], Kirk Li [ctb], Chad Klumb [ctb], Adrien Le Guillou [ctb] (ORCID: <https://orcid.org/0000-0002-4791-418X>)",
       "Maintainer": "Pavel N. Krivitsky <pavel@statnet.org>",
       "Repository": "CRAN"
     },
     "tibble": {
       "Package": "tibble",
-      "Version": "3.2.1",
+      "Version": "3.3.0",
       "Source": "Repository",
       "Title": "Simple Data Frames",
       "Authors@R": "c(person(given = \"Kirill\", family = \"M\\u00fcller\", role = c(\"aut\", \"cre\"), email = \"kirill@cynkra.com\", comment = c(ORCID = \"0000-0002-1416-3412\")), person(given = \"Hadley\", family = \"Wickham\", role = \"aut\", email = \"hadley@rstudio.com\"), person(given = \"Romain\", family = \"Francois\", role = \"ctb\", email = \"romain@r-enthusiasts.com\"), person(given = \"Jennifer\", family = \"Bryan\", role = \"ctb\", email = \"jenny@rstudio.com\"), person(given = \"RStudio\", role = c(\"cph\", \"fnd\")))",
@@ -2752,7 +2729,7 @@
         "R (>= 3.4.0)"
       ],
       "Imports": [
-        "fansi (>= 0.4.0)",
+        "cli",
         "lifecycle (>= 1.0.0)",
         "magrittr",
         "methods",
@@ -2760,7 +2737,7 @@
         "pkgconfig",
         "rlang (>= 1.0.2)",
         "utils",
-        "vctrs (>= 0.4.2)"
+        "vctrs (>= 0.5.0)"
       ],
       "Suggests": [
         "bench",
@@ -2768,9 +2745,6 @@
         "blob",
         "brio",
         "callr",
-        "cli",
-        "covr",
-        "crayon (>= 1.3.4)",
         "DiagrammeR",
         "dplyr",
         "evaluate",
@@ -2781,9 +2755,7 @@
         "htmltools",
         "knitr",
         "lubridate",
-        "mockr",
         "nycflights13",
-        "pkgbuild",
         "pkgload",
         "purrr",
         "rmarkdown",
@@ -2794,7 +2766,7 @@
       ],
       "VignetteBuilder": "knitr",
       "Encoding": "UTF-8",
-      "RoxygenNote": "7.2.3",
+      "RoxygenNote": "7.3.2.9000",
       "Config/testthat/edition": "3",
       "Config/testthat/parallel": "true",
       "Config/testthat/start-first": "vignette-formats, as_tibble, add, invariants",
@@ -2803,7 +2775,7 @@
       "Config/autostyle/rmd": "false",
       "Config/Needs/website": "tidyverse/tidytemplate",
       "NeedsCompilation": "yes",
-      "Author": "Kirill Müller [aut, cre] (<https://orcid.org/0000-0002-1416-3412>), Hadley Wickham [aut], Romain Francois [ctb], Jennifer Bryan [ctb], RStudio [cph, fnd]",
+      "Author": "Kirill Müller [aut, cre] (ORCID: <https://orcid.org/0000-0002-1416-3412>), Hadley Wickham [aut], Romain Francois [ctb], Jennifer Bryan [ctb], RStudio [cph, fnd]",
       "Maintainer": "Kirill Müller <kirill@cynkra.com>",
       "Repository": "CRAN"
     },
@@ -2923,14 +2895,14 @@
     },
     "utf8": {
       "Package": "utf8",
-      "Version": "1.2.5",
+      "Version": "1.2.6",
       "Source": "Repository",
       "Title": "Unicode Text Processing",
-      "Authors@R": "c(person(given = c(\"Patrick\", \"O.\"), family = \"Perry\", role = c(\"aut\", \"cph\")), person(given = \"Kirill\", family = \"M\\u00fcller\", role = \"cre\", email = \"kirill@cynkra.com\"), person(given = \"Unicode, Inc.\", role = c(\"cph\", \"dtc\"), comment = \"Unicode Character Database\"))",
+      "Authors@R": "c(person(given = c(\"Patrick\", \"O.\"), family = \"Perry\", role = c(\"aut\", \"cph\")), person(given = \"Kirill\", family = \"M\\u00fcller\", role = \"cre\", email = \"kirill@cynkra.com\", comment = c(ORCID = \"0000-0002-1416-3412\")), person(given = \"Unicode, Inc.\", role = c(\"cph\", \"dtc\"), comment = \"Unicode Character Database\"))",
       "Description": "Process and print 'UTF-8' encoded international text (Unicode). Input, validate, normalize, encode, format, and display.",
       "License": "Apache License (== 2.0) | file LICENSE",
-      "URL": "https://ptrckprry.com/r-utf8/, https://github.com/patperry/r-utf8",
-      "BugReports": "https://github.com/patperry/r-utf8/issues",
+      "URL": "https://krlmlr.github.io/utf8/, https://github.com/krlmlr/utf8",
+      "BugReports": "https://github.com/krlmlr/utf8/issues",
       "Depends": [
         "R (>= 2.10)"
       ],
@@ -2948,7 +2920,7 @@
       "Encoding": "UTF-8",
       "RoxygenNote": "7.3.2.9000",
       "NeedsCompilation": "yes",
-      "Author": "Patrick O. Perry [aut, cph], Kirill Müller [cre], Unicode, Inc. [cph, dtc] (Unicode Character Database)",
+      "Author": "Patrick O. Perry [aut, cph], Kirill Müller [cre] (ORCID: <https://orcid.org/0000-0002-1416-3412>), Unicode, Inc. [cph, dtc] (Unicode Character Database)",
       "Maintainer": "Kirill Müller <kirill@cynkra.com>",
       "Repository": "CRAN"
     },

@@ -39,14 +39,17 @@ source("R/netsim_settings.R", local = TRUE)
 #   }
 # }
 
-sc_ls <- list()
+sc_df_ls <- list()
 
-sc_ls[["baseline"]] <- tibble(
+sc_df_ls[["baseline"]] <- tibble(
   .scenario.id    = paste0("baseline"),
   .at             = intervention_start,
+  prep.otc.start.rate_1 = 0,
+  prep.otc.start.rate_2 = 0,
+  prep.otc.start.rate_3 = 0,
 )
 
-sc_ls[["otc_same"]] <- tibble(
+sc_df_ls[["otc_same"]] <- tibble(
   .scenario.id    = paste0("otc_same_", 1),
   .at             = intervention_start,
   prep.otc.start.rate_1 = param$prep.start.rate[1],
@@ -78,7 +81,7 @@ sc_ls[["otc_same"]] <- tibble(
 #   - hbv.*
 #   - (tdf|ftc).*
 
-sc_ls[["only_otc_same"]] <- tibble(
+sc_df_ls[["only_otc_same"]] <- tibble(
   .scenario.id    = paste0("only_otc_same_", 1),
   .at             = intervention_start,
   prep.start.rate_1 = 0,
@@ -113,7 +116,7 @@ sc_ls[["only_otc_same"]] <- tibble(
 #   - hbv.*
 #   - (tdf|ftc).*
 
-sc_ls[["otc_relaxed"]] <- tibble(
+sc_df_ls[["otc_relaxed"]] <- tibble(
   .scenario.id    = paste0("otc_relaxed_", 1),
   .at             = intervention_start,
   prep.otc.hard.indications = 0,
@@ -124,7 +127,7 @@ sc_ls[["otc_relaxed"]] <- tibble(
   prep.otc.start.rate_3 = param$prep.start.rate[3]
 )
 
-sc_ls[["only_otc_relaxed"]] <- tibble(
+sc_df_ls[["only_otc_relaxed"]] <- tibble(
   .scenario.id    = paste0("only_otc_relaxed_", 1),
   .at             = intervention_start,
   prep.start.rate_1 = 0,
@@ -138,7 +141,7 @@ sc_ls[["only_otc_relaxed"]] <- tibble(
   prep.otc.start.rate_3 = param$prep.start.rate[3]
 )
 
-sc_ls[["otc_free"]] <- tibble(
+sc_df_ls[["otc_free"]] <- tibble(
   .scenario.id    = paste0("otc_free_", 1),
   .at             = intervention_start,
   prep.otc.hard.indications = 0,
@@ -149,7 +152,7 @@ sc_ls[["otc_free"]] <- tibble(
   prep.otc.start.rate_3 = param$prep.start.rate[3]
 )
 
-sc_ls[["only_otc_free"]] <- tibble(
+sc_df_ls[["only_otc_free"]] <- tibble(
   .scenario.id    = paste0("only_otc_free_", 1),
   .at             = intervention_start,
   prep.start.rate_1 = 0,
@@ -163,7 +166,7 @@ sc_ls[["only_otc_free"]] <- tibble(
   prep.otc.start.rate_3 = param$prep.start.rate[3]
 )
 
-sc_ls[["otc_switch2otc"]] <- tibble(
+sc_df_ls[["otc_switch2otc"]] <- tibble(
   .scenario.id    = paste0("otc_switch2otc_", 1),
   .at             = intervention_start,
   prep.otc.hard.indications = 0,
@@ -176,8 +179,8 @@ sc_ls[["otc_switch2otc"]] <- tibble(
   prep.otc.switch.std.prob = 0
 )
 
-sc_ls[["otc_switch2std"]] <- tibble(
-  .scenario.id    = paste0("otc_switch2std_", 1),
+sc_df_ls[["otc_switch2std"]] <- tibble(
+  .scenario.id    = paste0("otc_switch2std_", 1:2),
   .at             = intervention_start,
   prep.otc.hard.indications = 0,
   prep.otc.always.sti.tst = 0,
@@ -186,8 +189,10 @@ sc_ls[["otc_switch2std"]] <- tibble(
   prep.otc.start.rate_2 = param$prep.start.rate[2],
   prep.otc.start.rate_3 = param$prep.start.rate[3],
   prep.std.switch.otc.prob = 0,
-  prep.otc.switch.std.prob = 0.05
+  prep.otc.switch.std.prob = c(0.05, 0.01)
 )
 
-sc_df <- bind_rows(sc_ls)
-readr::write_csv(sc_df, "data/input/scenarios.csv")
+# sc_df <- bind_rows(sc_ls)
+# readr::write_csv(sc_df, "data/input/scenarios.csv")
+sc_ls <- lapply(sc_df_ls, EpiModel::create_scenario_list)
+scenarios_list <- Reduce(c, sc_ls, init = list())

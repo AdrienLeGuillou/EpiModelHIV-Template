@@ -24,10 +24,12 @@ source("R/netsim_settings.R", local = TRUE)
 
 # Control settings
 control <- control_msm(
-  start               = restart_time,
-  nsteps              = intervention_end,
-  initialize.FUN      = reinit_msm,
-  verbose             = FALSE
+  start          = restart_time,
+  nsteps         = intervention_end,
+  initialize.FUN = reinit_msm,
+  debug          = TRUE,
+  .tracker.list  = EpiModelHIV::make_calibration_trackers(),
+  verbose        = FALSE
 )
 
 # Workflow creation

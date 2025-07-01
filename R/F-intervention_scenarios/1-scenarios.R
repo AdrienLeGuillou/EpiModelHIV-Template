@@ -11,6 +11,7 @@ library(EpiModelHIV)
 library(dplyr)
 
 source("R/shared_variables.R", local = TRUE)
+hpc_context = TRUE
 source("R/F-intervention_scenarios/z-context.R", local = TRUE)
 
 # Process ----------------------------------------------------------------------
@@ -21,29 +22,39 @@ source("R/netsim_settings.R", local = TRUE)
 # Control settings
 control <- control_msm(
   start          = restart_time,
-  nsteps         = intervention_end,
+  nsteps         = restart_time + 10, #intervention_end,
   initialize.FUN = reinit_msm,
   debug          = TRUE,
-  verbose        = FALSE
+  .tracker.list  = EpiModelHIV::make_calibration_trackers(),
+  verbose        = TRUE
 )
 
 # Define test scenarios
-scenarios_df <- readr::read_csv(fs::path(input_dir, "scenarios.csv"))
-
-glimpse(scenarios_df)
-scenarios_list <- EpiModel::create_scenario_list(scenarios_df)
+# scenarios_df <- readr::read_csv(fs::path(input_dir, "scenarios.csv"))
+#
+# glimpse(scenarios_df)
+# scenarios_list <- EpiModel::create_scenario_list(scenarios_df)
+source("./R/F-intervention_scenarios/0-make_scenarios.R", local = TRUE)
 
 # param$hbv.init.perc <- c(0.7, 0.6, 0.5)
 
 EpiModelHPC::netsim_scenarios(
   path_to_restart, param, init, control,
-  # scenarios_list = scenarios_list,
-  scenarios_list = NULL,
-  n_rep = 1,
-  n_cores = 1,
+  scenarios_list = scenarios_list[1],
+  # scenarios_list = NULL,
+  n_rep = 2,
+  n_cores = 2,
   output_dir = scenarios_dir
 )
 fs::dir_ls(scenarios_dir)
+
+est <- readRDS(path_to_restart)
+est$epi <- list()
+saveRDS(est, path_to_restart)
+
+control$nsims = 2
+control$ncores = 2
+netsim(est, param, init, control)
 
 # merge the simulations. Keeping one `tibble` per scenario
 EpiModelHPC::merge_netsim_scenarios_tibble(

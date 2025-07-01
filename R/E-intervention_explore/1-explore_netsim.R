@@ -26,7 +26,7 @@ print(init)
 # Module function defaults defined in ?control_msm
 control <- control_msm(
   start               = restart_time,
-  nsteps              = restart_time + year_steps * 4,
+  nsteps              = intervention_start + year_steps * 1,
   initialize.FUN      = reinit_msm
 )
 print(control)

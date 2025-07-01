@@ -41,8 +41,8 @@ source("R/netsim_settings.R", local = TRUE)
 
 sc_df_ls <- list()
 
-sc_df_ls[["baseline"]] <- tibble(
-  .scenario.id    = paste0("baseline"),
+sc_df_ls[["no_otc"]] <- tibble(
+  .scenario.id    = paste0("no_otc"),
   .at             = intervention_start,
   prep.otc.start.rate_1 = 0,
   prep.otc.start.rate_2 = 0,

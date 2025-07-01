@@ -49,6 +49,10 @@ var_labels <- c(
   "cml_gfr_drop_gfr90" = "Cumulative GFR drop prev GFR < 90  (10y)",
   "cml_gfr_drop_yo50" = "Cumulative GFR drop age > 50yo (10y)",
 
+  "lst_prep_any_gfr_lt60" = "Proportion of PrEP user (any) with GFR < 60 (ly)",
+  "lst_prep_std" = "Proportion of PrEP user (std) with GFR < 60 (ly)",
+  "lst_prep_otc_gfr_lt60" = "Proportion of PrEP user (otc) with GFR < 60 (ly)",
+
   "lst_hbv_flare_ir100"     = "HBV Flares IR100 (ly)",
   "lst_hbv_flare_otc_ir100" = "HBV Flares IR100 - OTC PrEP(ly)",
   "lst_hbv_flare_std_ir100" = "HBV Flares IR100 - STD PrEP(ly)",
@@ -90,8 +94,12 @@ names(fmts) <- names(var_labels)
 
 format_patterns <- list(
   small_num = list(
-    patterns = c("lst_ir100", "lst_.*_ir100", "cml_nnt"),
+    patterns = c("lst_ir100", "lst_.*_ir100", "cml_nnt", ".*_mean_eps"),
     fun = scales::label_number(0.01)
+  ),
+  small_perc = list(
+    patterns = c("lst_resist.*_prev"),
+    fun = scales::label_percent(0.01)
   ),
   perc = list(
     patterns = c("cml_pia", "lst_.*_prev", "lst_.*_cov", "lst_gfr[69].*"),

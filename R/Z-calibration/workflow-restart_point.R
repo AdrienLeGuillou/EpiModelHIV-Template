@@ -23,6 +23,7 @@ source("R/netsim_settings.R", local = TRUE)
 # Control settings
 control <- control_msm(
   nsteps = calibration_end,
+  debug          = TRUE,
   .tracker.list = EpiModelHIV::make_calibration_trackers()
 )
 
@@ -34,7 +35,7 @@ wf <- add_workflow_step(
     path_to_est, param, init, control,
     scenarios_list = NULL,
     output_dir = calib_dir,
-    n_rep = 256,
+    n_rep = 32,
     n_cores = max_cores,
     max_array_size = 500,
     setup_lines = hpc_node_setup
@@ -79,17 +80,17 @@ wf <- add_workflow_step(
   )
 )
 
-wf <- add_workflow_step(
-  wf_summary = wf,
-  step_tmpl = step_tmpl_do_call_script(
-    r_script = "R/Z-calibration/process_calib_plots.R",
-    args = list(hpc_context = TRUE, scenario = "empty_scenario"),
-    setup_lines = hpc_node_setup
-  ),
-  sbatch_opts = list(
-    "mail-type" = "END",
-    "cpus-per-task" = max_cores,
-    "time" = "02:00:00",
-    "mem-per-cpu" = "5G"
-  )
-)
+# wf <- add_workflow_step(
+#   wf_summary = wf,
+#   step_tmpl = step_tmpl_do_call_script(
+#     r_script = "R/Z-calibration/process_calib_plots.R",
+#     args = list(hpc_context = TRUE, scenario = "empty_scenario"),
+#     setup_lines = hpc_node_setup
+#   ),
+#   sbatch_opts = list(
+#     "mail-type" = "END",
+#     "cpus-per-task" = max_cores,
+#     "time" = "02:00:00",
+#     "mem-per-cpu" = "5G"
+#   )
+# )

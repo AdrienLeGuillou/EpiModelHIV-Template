@@ -11,7 +11,7 @@ library(EpiModelHIV)
 library(dplyr)
 
 source("R/shared_variables.R", local = TRUE)
-hpc_context = TRUE
+# hpc_context = TRUE
 source("R/F-intervention_scenarios/z-context.R", local = TRUE)
 
 # Process ----------------------------------------------------------------------

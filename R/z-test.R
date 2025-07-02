@@ -12,7 +12,5 @@ source("R/shared_variables.R", local = TRUE)
 library(dplyr)
 library(tidyr)
 
-d <- readRDS("./data/run/scenarios/merged_tibbles/df__no_otc.rds")
-d <- readRDS("./data/run/scenarios/merged_tibbles/df__otc_free_1.rds")
-
-glimpse(d)
+est <- readRDS("./data/run/estimates/restart-hpc.rds")
+est$run$sim1$attr$syph.inf|> mean()

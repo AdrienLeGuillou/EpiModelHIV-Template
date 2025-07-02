@@ -22,3 +22,10 @@ d_outs <- EpiModelHIV::mutate_calibration_targets(d_calib) |>
   EpiModel::as.epi.data.frame()
 
 saveRDS(d_outs, fs::path(calib_dir, "merged_tibbles", "df__calib_plot.rds"))
+
+# rmarkdown::render(
+#   "R/Z-calibration/calibration_values.Rmd",
+#   output_file = "calibration_report.html",
+#   knit_root_dir = getwd(),
+#   output_dir = "./"
+# )

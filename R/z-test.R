@@ -12,5 +12,15 @@ source("R/shared_variables.R", local = TRUE)
 library(dplyr)
 library(tidyr)
 
-est <- readRDS("./data/run/estimates/restart-hpc.rds")
-est$run$sim1$attr$syph.inf|> mean()
+sim <- readRDS("./data/run/scenarios/sim__only_otc_same_1__1.rds")
+sim <- readRDS("./data/run/scenarios/sim__only_otc_free_1__1.rds")
+d <- as_tibble(sim$run$sim1$attr)
+
+d |>
+  filter(
+    prep.otc == 1,
+    gfr < 90
+  )
+
+d <- as_tibble(sim)
+d$dbg_prep_otc_gfr_stop |> tail(50)

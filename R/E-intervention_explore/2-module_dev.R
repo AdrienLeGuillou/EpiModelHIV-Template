@@ -26,10 +26,16 @@ orig <- readRDS(path_to_restart)
 
 # Control settings
 control <- control_msm(
+  verbose = FALSE,
   start               = restart_time,
   nsteps              = restart_time + year_steps * 3,
   initialize.FUN      = reinit_msm
 )
+
+source("./R/F-intervention_scenarios/0-make_scenarios.R", local = TRUE)
+scenar <- scenarios_list[["only_otc_same_1"]]
+scenar[[".param.updater.list"]][[1]]$at <- restart_time + 1
+param <- use_scenario(param, scenar)
 
 # Epidemic simulation
 sim <- netsim(orig, param, init, control)

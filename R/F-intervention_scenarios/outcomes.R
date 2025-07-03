@@ -64,9 +64,9 @@ mutate_outcomes <- function(d) {
 
       # HBV --------------------------------------------------------------------
       lst_hbv_flare_ir100 =
-        (dbg_hbv_flares_std + dbg_hbv_flares_otc) / num * 100 * 52,
-      lst_hbv_flare_otc_ir100 = dbg_hbv_flares_otc / num * 100 * 52,
-      lst_hbv_flare_std_ir100 = dbg_hbv_flares_std / num * 100 * 52,
+        (dbg_hbv_flares_std + dbg_hbv_flares_otc) / num * 1e5 * 52,
+      lst_hbv_flare_otc_ir100k = dbg_hbv_flares_otc / num * 1e5 * 52,
+      lst_hbv_flare_std_ir100k = dbg_hbv_flares_std / num * 1e5 * 52,
       cml_hbv_flare = (dbg_hbv_flares_std + dbg_hbv_flares_otc),
       cml_hbv_flare_otc = dbg_hbv_flares_otc,
       cml_hbv_flare_std = dbg_hbv_flares_std,

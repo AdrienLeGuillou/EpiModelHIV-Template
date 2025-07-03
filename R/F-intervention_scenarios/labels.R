@@ -32,8 +32,7 @@ var_labels <- c(
   "lst_prep_mean_dur" = "Clinical PrEP Mean Duration (ly)",
   "lst_prep_mean_eps" = "Clinical PrEP Mean Number of Unique Episodes (ly)",
 
-  "lst_prep_otc_cov"      = "OTC PrEP Coverage (ly)",
-  "lst_prep_otc_elig"     = "OTC PrEP Eligibles (ly)",
+  "lst_prep_otc_cov"      = "OTC PrEP Coverage (ly)", "lst_prep_otc_elig"     = "OTC PrEP Eligibles (ly)",
   "lst_prep_otc_mean_dur" = "OTC PrEP Mean Duration (ly)",
   "lst_prep_otc_mean_eps" = "OTC PrEP Mean Number of Unique Episodes (ly)",
 
@@ -53,9 +52,9 @@ var_labels <- c(
   "lst_prep_std" = "Proportion of PrEP user (std) with GFR < 60 (ly)",
   "lst_prep_otc_gfr_lt60" = "Proportion of PrEP user (otc) with GFR < 60 (ly)",
 
-  "lst_hbv_flare_ir100"     = "HBV Flares IR100 (ly)",
-  "lst_hbv_flare_otc_ir100" = "HBV Flares IR100 - OTC PrEP(ly)",
-  "lst_hbv_flare_std_ir100" = "HBV Flares IR100 - STD PrEP(ly)",
+  "lst_hbv_flare_ir100k"     = "HBV Flares IR100k (ly)",
+  "lst_hbv_flare_otc_ir100k" = "HBV Flares IR100k - OTC PrEP(ly)",
+  "lst_hbv_flare_std_ir100k" = "HBV Flares IR100k - STD PrEP(ly)",
   "cml_hbv_flare"           = "HBV Flares Cumulative (10y)",
   "cml_hbv_flare_otc"       = "HBV Flares Cumulative - OTC PrEP(10y)",
   "cml_hbv_flare_std"       = "HBV Flares Cumulative - STD PrEP(10y)",

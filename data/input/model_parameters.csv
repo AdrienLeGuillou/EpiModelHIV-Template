@@ -110,6 +110,7 @@ prep.otc.risk.reassess.int,0,numeric,,,,,Interval for reassessment of risk indic
 prep.std.switch.otc.prob,0,numeric,missing?,50,,,"Proportion of men who are low, medium, and high adherent to PrEP for White MSM."
 prep.otc.switch.std.prob,0,numeric,missing?,50,,,"Proportion of men who are low, medium, and high adherent to PrEP for White MSM."
 prep.otc.hard.indications,0,numeric,,,,,"Flag: use the same indications as normal PrEP for OTC PrEP"
+prep.otc.gfr.stop,0,numeric,,,,,"Flag: use the same gfr.stopping rules as normal PrEP for OTC PrEP - share same test date and gfr ref value with normal prep"
 prep.otc.always.sti.tst,0,numeric,,,,,"Flag: Always test for STI on PrEP OTC start"
 prep.otc.always.hiv.tst,0,numeric,,,,,"Flag: Always test for STI on PrEP OTC start"
 sti.prep.otc.tx.prob,1,numeric,,,,,Probability of any STI treatment given positive screening during PrEP visit.

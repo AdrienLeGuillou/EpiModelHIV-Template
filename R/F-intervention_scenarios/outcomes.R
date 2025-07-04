@@ -59,7 +59,7 @@ mutate_outcomes <- function(d) {
       cml_gfr_drop_yo50 = dbg_gfr_drop_yo50,
 
       lst_prep_any_gfr_lt60 = prep_any_gfr_lt60,
-      lst_prep_std = prep_std_gfr_lt60,
+      lst_prep_std_gfr_lt60 = prep_std_gfr_lt60,
       lst_prep_otc_gfr_lt60 = prep_otc_gfr_lt60,
 
       # HBV --------------------------------------------------------------------

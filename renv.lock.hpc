@@ -2657,11 +2657,11 @@
       "Author": "Adrien Le Guillou [aut, cre] (ORCID: <https://orcid.org/0000-0002-4791-418X>)",
       "Maintainer": "Adrien Le Guillou <contact@aleguillou.org>",
       "RemoteType": "github",
-      "RemoteUsername": "EpiModel",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "epimodel",
       "RemoteRepo": "swfcalib",
       "RemoteRef": "main",
-      "RemoteSha": "312de825d00b8a953345241f861a5347f60b3a1c",
-      "RemoteHost": "api.github.com",
+      "RemoteSha": "397cde3a0a82487aa216b130f20f5d8393a010bf",
       "Remotes": "github::EpiModel/slurmworkflow"
     },
     "tergm": {

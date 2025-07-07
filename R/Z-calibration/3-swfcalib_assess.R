@@ -32,15 +32,15 @@ rmarkdown::render(
 
 # Results ----------------------------------------------------------------------
 targets <- EpiModelHIV::get_calibration_targets()
-results <- readRDS(fs::path(swfcalib_dir, "w4_results.rds"))
+results <- readRDS(fs::path(swfcalib_dir, "results.rds"))
 # readr::write_csv(results, "../tst_sk_calib/res_syph.csv")
 
 
 
 ggplot(results,
-       aes(x = gono.uret.prob, y = ir100.gono, col = as.factor(.iteration)))+
+       aes(x = hiv.test.rate_1 , y = cc.dx.B, col = as.factor(.iteration)))+
   geom_point() +
-  geom_hline(yintercept = targets[["ir100.gono"]])
+  geom_hline(yintercept = targets[["cc.dx.B"]])
 
 n_it <- 10
 

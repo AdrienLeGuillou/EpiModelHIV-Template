@@ -32,4 +32,6 @@ fs::file_copy(
 # renv::install("Epimodel/ARTnetData")
 
 # If you don't have access to ARTnetData, comment this line
-if (FALSE) library(ARTnetData)
+if (FALSE) {
+  library(ARTnetData)
+}

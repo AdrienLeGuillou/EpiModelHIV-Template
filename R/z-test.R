@@ -49,3 +49,7 @@ prev = 0.2 # target
 prep_odd = prev / (prev * p_stop + (1 - prev))
 prep_start = p_stop * prep_odd
 prep_start
+
+         prep.start.rate_1 :  0.005755714
+         prep.start.rate_2 :  0.004652033
+         prep.start.rate_3 :  0.007371017

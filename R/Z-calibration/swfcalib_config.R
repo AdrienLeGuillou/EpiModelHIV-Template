@@ -72,57 +72,57 @@ calib_object <- list(
     #     get_result = swfcalib::determ_poly_end(0.001, poly_n = 3)
     #   )
     # ),
-    wave2 = list(
-      job1 = list(
-        targets = "cc.dx.B",
-        targets_val = targets["cc.dx.B"],
-        params = c("hiv.test.rate_1"), # target: 0.00385
-        initial_proposals = dplyr::tibble(
-          hiv.test.rate_1 = sample(seq(0.0005, 0.002, length.out = n_sims)),
-        ),
-        make_next_proposals = swfcalib::make_shrink_proposer(n_sims, shrink = 2),
-        get_result = swfcalib::determ_poly_end(0.001, poly_n = 3)
-      ),
-      job2 = list(
-        targets = "cc.dx.H",
-        targets_val = targets["cc.dx.H"],
-        params = c("hiv.test.rate_2"), # target: 0.0038
-        initial_proposals = dplyr::tibble(
-          hiv.test.rate_2 = sample(seq(0.0005, 0.002, length.out = n_sims)),
-        ),
-        make_next_proposals = swfcalib::make_shrink_proposer(n_sims, shrink = 2),
-        get_result = swfcalib::determ_poly_end(0.001, poly_n = 3)
-        ),
-      job3 = list(
-        targets = "cc.dx.W",
-        targets_val = targets["cc.dx.W"],
-        params = c("hiv.test.rate_3"), # target: 0.0069
-        initial_proposals = dplyr::tibble(
-          hiv.test.rate_3 = sample(seq(0.0005, 0.002, length.out = n_sims)),
-        ),
-        make_next_proposals = swfcalib::make_shrink_proposer(n_sims, shrink = 2),
-        get_result = swfcalib::determ_poly_end(0.001, poly_n = 3)
-      )#,
-      # job6 = list(
-      #   targets = paste0("cc.linked1m.", c("B", "H", "W")),
-      #   targets_val = targets[paste0("cc.linked1m.", c("B", "H", "W"))],
-      #   params = paste0("tx.init.rate_", 1:3),
-      #   initial_proposals = dplyr::tibble(
-      #     tx.init.rate_1 = sample(seq(0.1, 0.5, length.out = n_sims)),
-      #     tx.init.rate_2 = sample(tx.init.rate_1),
-      #     tx.init.rate_3 = sample(tx.init.rate_1),
-      #   ),
-      #   make_next_proposals = swfcalib::make_shrink_proposer(n_sims, shrink = 2),
-      #   get_result = swfcalib::determ_poly_end(0.001, poly_n = 3)
-      # )
-    ),
+    # wave2 = list(
+    #   job1 = list(
+    #     targets = "cc.dx.B",
+    #     targets_val = targets["cc.dx.B"],
+    #     params = c("hiv.test.rate_1"), # target: 0.00385
+    #     initial_proposals = dplyr::tibble(
+    #       hiv.test.rate_1 = sample(seq(0.0005, 0.002, length.out = n_sims)),
+    #     ),
+    #     make_next_proposals = swfcalib::make_shrink_proposer(n_sims, shrink = 2),
+    #     get_result = swfcalib::determ_poly_end(0.001, poly_n = 3)
+    #   ),
+    #   job2 = list(
+    #     targets = "cc.dx.H",
+    #     targets_val = targets["cc.dx.H"],
+    #     params = c("hiv.test.rate_2"), # target: 0.0038
+    #     initial_proposals = dplyr::tibble(
+    #       hiv.test.rate_2 = sample(seq(0.0005, 0.002, length.out = n_sims)),
+    #     ),
+    #     make_next_proposals = swfcalib::make_shrink_proposer(n_sims, shrink = 2),
+    #     get_result = swfcalib::determ_poly_end(0.001, poly_n = 3)
+    #     ),
+    #   job3 = list(
+    #     targets = "cc.dx.W",
+    #     targets_val = targets["cc.dx.W"],
+    #     params = c("hiv.test.rate_3"), # target: 0.0069
+    #     initial_proposals = dplyr::tibble(
+    #       hiv.test.rate_3 = sample(seq(0.0005, 0.002, length.out = n_sims)),
+    #     ),
+    #     make_next_proposals = swfcalib::make_shrink_proposer(n_sims, shrink = 2),
+    #     get_result = swfcalib::determ_poly_end(0.001, poly_n = 3)
+    #   )#,
+    #   # job6 = list(
+    #   #   targets = paste0("cc.linked1m.", c("B", "H", "W")),
+    #   #   targets_val = targets[paste0("cc.linked1m.", c("B", "H", "W"))],
+    #   #   params = paste0("tx.init.rate_", 1:3),
+    #   #   initial_proposals = dplyr::tibble(
+    #   #     tx.init.rate_1 = sample(seq(0.1, 0.5, length.out = n_sims)),
+    #   #     tx.init.rate_2 = sample(tx.init.rate_1),
+    #   #     tx.init.rate_3 = sample(tx.init.rate_1),
+    #   #   ),
+    #   #   make_next_proposals = swfcalib::make_shrink_proposer(n_sims, shrink = 2),
+    #   #   get_result = swfcalib::determ_poly_end(0.001, poly_n = 3)
+    #   # )
+    # ),
     wave3 = list(
       job1 = list(
         targets = paste0("cc.vsupp.", c("B", "H", "W")),
         targets_val = targets[paste0("cc.vsupp.", c("B", "H", "W"))],
         params = paste0("tx.halt.partial.rate_", 1:3),
         initial_proposals = dplyr::tibble(
-          tx.halt.partial.rate_1 = sample(seq(0.001, 0.004, length.out = n_sims)),
+          tx.halt.partial.rate_1 = sample(seq(0.001, 0.01, length.out = n_sims)),
           tx.halt.partial.rate_2 = sample(tx.halt.partial.rate_1),
           tx.halt.partial.rate_3 = sample(tx.halt.partial.rate_1)
         ),

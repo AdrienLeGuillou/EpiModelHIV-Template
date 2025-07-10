@@ -42,6 +42,8 @@ mutate_outcomes <- function(d) {
       lst_prep_otc_mean_dur = prep.otc.dur.mean,
       lst_prep_otc_mean_eps = dbg_prep_otc_eps_mean,
       lst_prep_any = prepCurr + prep.otcCurr,
+
+      lst_prep_otc_std_indic_cov = prep.otc.std.indic,
       # lst_prep_otc_mean_dur_rng
       # lst_prep_otc_mean_dur_inelig
       # lst_prep_otc_ir100

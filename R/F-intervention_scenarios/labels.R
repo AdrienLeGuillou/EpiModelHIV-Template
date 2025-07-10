@@ -32,9 +32,11 @@ var_labels <- c(
   "lst_prep_mean_dur" = "Clinical PrEP Mean Duration (ly)",
   "lst_prep_mean_eps" = "Clinical PrEP Mean Number of Unique Episodes (ly)",
 
-  "lst_prep_otc_cov"      = "OTC PrEP Coverage (ly)", "lst_prep_otc_elig"     = "OTC PrEP Eligibles (ly)",
+  "lst_prep_otc_cov"      = "OTC PrEP Coverage (ly)",
+  "lst_prep_otc_elig"     = "OTC PrEP Eligibles (ly)",
   "lst_prep_otc_mean_dur" = "OTC PrEP Mean Duration (ly)",
   "lst_prep_otc_mean_eps" = "OTC PrEP Mean Number of Unique Episodes (ly)",
+  "lst_prep_otc_std_indic_cov" = "OTC PrEP users indicated to Clinical PrEP (ly)",
 
   "lst_gfr90_15_30" = "Proportion of [15, 30) with GFR < 90 (ly)",
   "lst_gfr90_30_50" = "Proportion of [30, 50) with GFR < 90 (ly)",

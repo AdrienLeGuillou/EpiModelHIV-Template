@@ -33,7 +33,7 @@ d_calibs <- fs::path(calib_dir, "merged_tibbles", "df__empty_scenario.rds")
 d_dist <- readRDS(d_calibs) |>
   dplyr::filter(time >= max(time) - calib_steps) |>
   EpiModelHIV::mutate_calibration_distances() |>
-  dplyr::select(batch_number, sim, dplyr::any_of(names(targets)))
+  dplyr::select(batch_number, sim = sim_number, dplyr::any_of(names(targets)))
 
 d_dist <- d_dist |>
   dplyr::group_by(batch_number, sim) |>

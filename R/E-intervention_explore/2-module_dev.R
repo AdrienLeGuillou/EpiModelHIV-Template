@@ -10,6 +10,7 @@
 library(dplyr)
 library(ggplot2)
 
+hpc_context = TRUE
 source("R/shared_variables.R", local = TRUE)
 source("R/B-netsim_explore/z-context.R")
 
@@ -36,6 +37,9 @@ source("./R/F-intervention_scenarios/0-make_scenarios.R", local = TRUE)
 scenar <- scenarios_list[["only_otc_same_1"]]
 scenar[[".param.updater.list"]][[1]]$at <- restart_time + 1
 param <- use_scenario(param, scenar)
+
+param$prep.otc.gfr.high.risk.int
+param$prep.otc.gfr.low.risk.int
 
 # Epidemic simulation
 sim <- netsim(orig, param, init, control)

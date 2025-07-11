@@ -105,7 +105,6 @@ prep.otc.discont.int_1,33.42,numeric,missing?,https://onlinelibrary.wiley.com/do
 prep.otc.discont.int_2,57.48,numeric,missing?,https://onlinelibrary.wiley.com/doi/10.1002/jia2.25252,,,Median interval until PrEP discontinuation in time steps for Hispanic MSM. Median interval until PrEP discontinuation in time steps for Black MSM. Calculated to get 56% retention 1Y and 41% 2Y
 prep.otc.discont.int_3,57.39,numeric,missing?,,,,Median interval until PrEP discontinuation in time steps for White MSM. Median interval until PrEP discontinuation in time steps for Black MSM. Calculated to get 56% retention 1Y and 41% 2Y
 prep.otc.tst.int,12.8571,numeric,missing?,,,,Testing interval by time steps for those who are actively on PrEP. This overrides the mean testing interval parameters.
-prep.otc.sti.tx.prob,1,numeric,missing?,,,,Probability of any STI treatment given positive screening during PrEP visit.
 prep.otc.risk.reassess.int,0,numeric,,,,,Interval for reassessment of risk indications of active OTC PrEP users. Default of `52` for yearly reassessment when time unit is weekly -  use `Inf` for no reassessment.
 prep.std.switch.otc.prob,0,numeric,missing?,50,,,"Proportion of men who are low, medium, and high adherent to PrEP for White MSM."
 prep.otc.switch.std.prob,0,numeric,missing?,50,,,"Proportion of men who are low, medium, and high adherent to PrEP for White MSM."

@@ -18,9 +18,9 @@ tt.durable.supp.prob_3,0,numeric,assumption,,,,Proportion of White MSM who enter
 tx.init.rate_1,0.298361113628911,numeric,7.2,,cc.linked1m.B,atlanta,Probability per time step that a Black MSM who has tested positive will initiate treatment.
 tx.init.rate_2,0.368208639586171,numeric,7.2,,cc.linked1m.H,atlanta,Probability per time step that a Hispanic MSM who has tested positive will initiate treatment.
 tx.init.rate_3,0.347998730409527,numeric,7.2,,cc.linked1m.W,atlanta,Probability per time step that a White MSM who has tested positive will initiate treatment.
-tx.halt.partial.rate_1,0.00532779300510705,numeric,7.2,,cc.vsupp.B,atlanta,Probability per time step that Black MSM who have started treatment and assigned to the partial VL suppression category will stop treatment.
-tx.halt.partial.rate_2,0.00487215626435732,numeric,7.2,,cc.vsupp.H,atlanta,Probability per time step that Hispanic MSM who have started treatment and assigned to the partial VL suppression category will stop treatment.
-tx.halt.partial.rate_3,0.00269785261583336,numeric,7.2,,cc.vsupp.W,atlanta,Probability per time step that White MSM who have started treatment and assigned to the partial VL suppression category will stop treatment.
+tx.halt.partial.rate_1,0.004940529,numeric,7.2,,cc.vsupp.B,atlanta,Probability per time step that Black MSM who have started treatment and assigned to the partial VL suppression category will stop treatment.
+tx.halt.partial.rate_2,0.004585209,numeric,7.2,,cc.vsupp.H,atlanta,Probability per time step that Hispanic MSM who have started treatment and assigned to the partial VL suppression category will stop treatment.
+tx.halt.partial.rate_3,0.003044416,numeric,7.2,,cc.vsupp.W,atlanta,Probability per time step that White MSM who have started treatment and assigned to the partial VL suppression category will stop treatment.
 tx.halt.full.or_1,0.45,numeric,assumption,,,,Odds ratio comparing the odds of stopping treatment for Black MSM in the full VL suppression category vs. in the partial VL suppression category.
 tx.halt.full.or_2,0.45,numeric,assumption,,,,Odds ratio comparing the odds of stopping treatment for Hispanic MSM in the full VL suppression category vs. in the partial VL suppression category.
 tx.halt.full.or_3,0.45,numeric,assumption,,,,Odds ratio comparing the odds of stopping treatment for White MSM in the full VL suppression category vs. in the partial VL suppression category.
@@ -69,9 +69,9 @@ hiv.circ.prob_3,0.918,numeric,5.2,19,,,Probability that a White new arrival in t
 acts.aids.vl,5.75,numeric,4,17,,,Viral load level after which sexual act rate goes to zero.
 acts.scale,1,numeric,4,,,,Scalar for main/casual act rate for model calibration.
 cond.scale,1,numeric,4,,,,Scalar for condom use probability for model calibration.
-hiv.trans.scale_1,3.47101560667349,numeric,8.2,Rosenberg 2018 (Ann Epi),I.prev.dx.H,,Relative scalar on base infection probabilities for model calibration for Black men.
-hiv.trans.scale_2,0.512976760905261,numeric,8.2,Rosenberg 2018 (Ann Epi),I.prev.dx.W,,Relative scalar on base infection probabilities for model calibration for Hispanic men.
-hiv.trans.scale_3,0.457558450979665,numeric,8.2,,,,Relative scalar on base infection probabilities for model calibration for White men.
+hiv.trans.scale_1,3.435097,numeric,8.2,Rosenberg 2018 (Ann Epi),I.prev.dx.H,,Relative scalar on base infection probabilities for model calibration for Black men.
+hiv.trans.scale_2,0.5543284,numeric,8.2,Rosenberg 2018 (Ann Epi),I.prev.dx.W,,Relative scalar on base infection probabilities for model calibration for Hispanic men.
+hiv.trans.scale_3,0.4912001,numeric,8.2,,,,Relative scalar on base infection probabilities for model calibration for White men.
 hiv.gono.rect.or,2.78,numeric,8.2,,,,Odds ratio comparing the odds of HIV infection given current rectal gonorrhea to the odds of HIV infection in the absence of current rectal gonorrhea.
 hiv.gono.uret.or,1.73,numeric,8.2,,,,Odds ratio comparing the odds of HIV infection given current urethral gonorrhea to the odds of HIV infection in the absence of current urethral gonorrhea.
 hiv.chla.rect.or,2.78,numeric,8.2,,,,Odds ratio comparing the odds of HIV infection given current rectal chlamydia to the odds of HIV infection in the absence of current rectal chlamydia.
@@ -124,7 +124,7 @@ sti.screen.rect.hivpos.prob,0.63,numeric,12,,,,Probability of rectal site screen
 sti.screen.rect.prep.prob,1,numeric,,,,,Probability of rectal site screening for any STI given  urogenital screening for MSM not diagnosed with HIV and on PrEP.
 sti.screen.rect.prep.otc.prob,1,numeric,,,,,Probability of rectal site screening for any STI given  urogenital screening for MSM not diagnosed with HIV and on PrEP.
 sti.cond.eff.or,0.95,numeric,"9.3,9.4",,,,Odds ratio comparing the odds of STI infection from anal sex when a condom is used vs. not used properly (biological efficacy)..
-gono.uret.prob,0.20,numeric,9.4,,ir100.gc,atlanta,Probability of urethral gonorrhea infection per act.
+gono.uret.prob,0.2126815,numeric,9.4,,ir100.gc,atlanta,Probability of urethral gonorrhea infection per act.
 gono.rect.sympt.prob,0.1,numeric,10,,,,Probability of symptoms given infection with rectal gonorrhea.
 gono.uret.sympt.prob,0.9333,numeric,10,,,,Probability of symptoms given infection with urethral gonorrhea.
 gono.tx.recov.int,1.4,numeric,11,,,,Average duration in time steps of treated gonorrhea.
@@ -137,7 +137,7 @@ gono.asympt.tx.prob_2,0.95,numeric,10,,,,Probability of treatment for asymptomat
 gono.asympt.tx.prob_3,0.95,numeric,10,,,,Probability of treatment for asymptomatic gonorrhea for White MSM.
 gono.screen.hivneg.rate,0.008120081,numeric,12,,,,Rate per time step for asymptomatic urogenital gonorrhea screening  for MSM not diagnosed with HIV and not on PrEP.
 gono.screen.hivpos.rate,0.01492537,numeric,12,,,,Rate per time step for asymptomatic urogenital gonorrhea screening for MSM diagnosed with HIV.
-chla.uret.prob,0.19,numeric,9.3,,ir100.ct,atlanta,Probability of urethral chlamydia infection per act.
+chla.uret.prob,0.199282,numeric,9.3,,ir100.ct,atlanta,Probability of urethral chlamydia infection per act.
 chla.rect.sympt.prob,0.1,numeric,10,,,,Probability of symptoms given infection with rectal chlamydia.
 chla.uret.sympt.prob,0.95,numeric,11,,,,Probability of symptoms given infection with urethral chlamydia.
 chla.tx.recov.int,1.4,numeric,10,,,,Average duration in time steps of treated chlamydia.

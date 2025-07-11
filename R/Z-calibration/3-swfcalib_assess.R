@@ -20,6 +20,7 @@ source("R/Z-calibration/z-context.R", local = TRUE)
 theme_set(theme_light())
 
 # SWFCalib Assessment ----------------------------------------------------------
+source("R/shared_variables.R", local = TRUE)
 swfcalib::render_assessment(fs::path(swfcalib_dir, "assessments.rds"))
 
 # Finalized calibration assessment  --------------------------------------------
@@ -243,7 +244,7 @@ results |>
   select(se, everything()) |>
   arrange(se) |>
   filter(B < 0.02, H < 0.02, W < 0.01) |>
-  summarise(across(starts_with("hiv.trans"), median))
+  summarise(across(starts_with("hiv.trans"), median)) |> as.list()
 
 co <- readRDS("./calib_object.rds")
 
@@ -269,24 +270,3 @@ plot(mod)
 
 loss_fun <- function(par, t)  abs(predict(mod, data.frame(ugc.prob = par)) - t)
 optimize(interval = c(0.24, 0.3), f = loss_fun, t = 12.81)
-
-         # prep.start.rate_1 :  0.005755714
-         # prep.start.rate_2 :  0.004652033
-         # prep.start.rate_3 :  0.007371017
-         # aids.off.tx.mort.rate :  0.0005365056
-         # hiv.test.rate_1 :  0.0007933985
-         # hiv.test.rate_2 :  0.0009140537
-         # hiv.test.rate_3 :  0.0005744848
-         # tx.init.rate_1 :  0.2983611
-         # tx.init.rate_2 :  0.3682086
-         # tx.init.rate_3 :  0.3479987
-         # gono.uret.prob :  0.2
-         # chla.uret.prob :  0.19
-         # syph.prob :  0.115
-         # tx.halt.partial.rate_1 :  0.005327793
-         # tx.halt.partial.rate_2 :  0.004872156
-         # tx.halt.partial.rate_3 :  0.002697853
-         # hiv.trans.scale_1 :  3.471016
-         # hiv.trans.scale_2 :  0.5129768
-         # hiv.trans.scale_3 :  0.4575585
-         # a.rate :  0.0004228442

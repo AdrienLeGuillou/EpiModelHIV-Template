@@ -16,6 +16,12 @@ source("R/F-intervention_scenarios/z-context.R", local = TRUE)
 
 source("R/netsim_settings.R", local = TRUE)
 
+prob_to_log_odds <- function(p) log(p / (1 - p))
+log_odds_to_prob <- function(x) 1 / (1 + exp(-x))
+apply_odds_ratio <- function(p, or) {
+  log_odds_to_prob(prob_to_log_odds(p) + log(or))
+}
+
 # # Utility functions
 # apply_or <- function(p, or) plogis(qlogis(p) + log(or))
 # ors <- c(lo = 1 / 4, base = 1, hi = 4)
@@ -42,19 +48,32 @@ source("R/netsim_settings.R", local = TRUE)
 sc_df_ls <- list()
 
 sc_df_ls[["no_otc"]] <- tibble(
-  .scenario.id    = paste0("no_otc"),
-  .at             = intervention_start,
+  .scenario.id = paste0("no_otc"),
+  .at = intervention_start,
   prep.otc.start.rate_1 = 0,
   prep.otc.start.rate_2 = 0,
   prep.otc.start.rate_3 = 0,
 )
 
+ors <- c(1.5, 2.0)
+sc_df_ls[["no_otc_prep_or"]] <- tibble(
+  .scenario.id = paste0("no_otc_prep_or", c("15", "20")),
+  .at = intervention_start,
+  prep.otc.start.rate_1 = 0,
+  prep.otc.start.rate_2 = 0,
+  prep.otc.start.rate_3 = 0,
+  prep.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
+  prep.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
+  prep.start.rate_3 = apply_odds_ratio(pram$prep.start.rate[3], ors)
+)
+
+ors <- c(0.5, 2 / 3, 1, 1.5, 2.0)
 sc_df_ls[["otc_same"]] <- tibble(
-  .scenario.id    = paste0("otc_same_", 1),
-  .at             = intervention_start,
-  prep.otc.start.rate_1 = param$prep.start.rate[1],
-  prep.otc.start.rate_2 = param$prep.start.rate[2],
-  prep.otc.start.rate_3 = param$prep.start.rate[3],
+  .scenario.id = paste0("otc_same_", c("05", "06", "10", "15", "20")),
+  .at = intervention_start,
+  prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
+  prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
+  prep.otc.start.rate_3 = apply_odds_ratio(pram$prep.start.rate[3], ors),
   prep.otc.adhr.dist_1 = param$prep.adhr.dist[1],
   prep.otc.adhr.dist_2 = param$prep.adhr.dist[2],
   prep.otc.adhr.dist_3 = param$prep.adhr.dist[3],
@@ -75,16 +94,38 @@ sc_df_ls[["otc_same"]] <- tibble(
   sti.screen.rect.prep.otc.prob = param$sti.screen.rect.prep.prob,
   prep.otc.hbv.flare.prob = param$prep.hbv.flare.prob,
 )
-# NOTE: Other parameters worth mentionning:
-#
-# Last on the CSV file:
-#   - gfr.*
-#   - hbv.*
-#   - (tdf|ftc).*
+
+ors <- c(0.5, 2 / 3, 1, 1.5, 2.0)
+sc_df_ls[["otc_relaxed"]] <- tibble(
+  .scenario.id = paste0("otc_relaxed_", c("05", "06", "10", "15", "20")),
+  .at = intervention_start,
+  prep.otc.hard.indications = 0,
+  prep.otc.gfr.stop = 1,
+  prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
+  prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
+  prep.otc.start.rate_3 = apply_odds_ratio(pram$prep.start.rate[3], ors),
+  prep.otc.adhr.dist_1 = param$prep.adhr.dist[1],
+  prep.otc.adhr.dist_2 = param$prep.adhr.dist[2],
+  prep.otc.adhr.dist_3 = param$prep.adhr.dist[3],
+  prep.otc.discont.int_1 = param$prep.discont.int[1],
+  prep.otc.discont.int_2 = param$prep.discont.int[2],
+  prep.otc.discont.int_3 = param$prep.discont.int[3],
+  prep.otc.tst.int = param$prep.tst.int,
+  prep.otc.sti.tx.prob = param$prep.sti.tx.prob,
+  prep.otc.risk.reassess.int = param$prep.risk.reassess.int,
+  prep.std.switch.otc.prob = 0,
+  prep.otc.switch.std.prob = 0,
+  prep.otc.always.sti.tst = 1,
+  prep.otc.always.hiv.tst = 1,
+  sti.prep.otc.tx.prob = param$sti.prep.tx.prob,
+  sti.screen.prep.otc.rate = param$sti.screen.prep.rate,
+  sti.screen.rect.prep.otc.prob = param$sti.screen.rect.prep.prob,
+  prep.otc.hbv.flare.prob = param$prep.hbv.flare.prob,
+)
 
 sc_df_ls[["only_otc_same"]] <- tibble(
-  .scenario.id    = paste0("only_otc_same_", 1),
-  .at             = intervention_start,
+  .scenario.id = paste0("only_otc_same_", 1),
+  .at = intervention_start,
   prep.start.rate_1 = 0,
   prep.start.rate_2 = 0,
   prep.start.rate_3 = 0,
@@ -111,41 +152,84 @@ sc_df_ls[["only_otc_same"]] <- tibble(
   sti.screen.rect.prep.otc.prob = param$sti.screen.rect.prep.prob,
   prep.otc.hbv.flare.prob = param$prep.hbv.flare.prob,
 )
-# NOTE: Other parameters worth mentionning:
-#
-# Last on the CSV file:
-#   - gfr.*
-#   - hbv.*
-#   - (tdf|ftc).*
 
-sc_df_ls[["otc_relaxed"]] <- tibble(
-  .scenario.id    = paste0("otc_relaxed_", 1),
-  .at             = intervention_start,
+ors <- c(0.5, 2 / 3, 1, 1.5, 2.0)
+sc_df_ls[["only_otc_relaxed_base"]] <- tibble(
+  .scenario.id = paste0(
+    "only_otc_relaxed_base_",
+    c("05", "06", "10", "15", "20")
+  ),
+  .at = intervention_start,
   prep.otc.hard.indications = 0,
-  prep.otc.always.sti.tst = 1,
-  prep.otc.always.hiv.tst = 1,
-  prep.otc.start.rate_1 = param$prep.start.rate[1],
-  prep.otc.start.rate_2 = param$prep.start.rate[2],
-  prep.otc.start.rate_3 = param$prep.start.rate[3]
-)
-
-sc_df_ls[["only_otc_relaxed"]] <- tibble(
-  .scenario.id    = paste0("only_otc_relaxed_", 1),
-  .at             = intervention_start,
+  prep.otc.gfr.stop = 1,
   prep.start.rate_1 = 0,
   prep.start.rate_2 = 0,
   prep.start.rate_3 = 0,
-  prep.otc.hard.indications = 0,
+  # TODO: pick the value that leads to the same *number* of PrEP users
+  prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
+  prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
+  prep.otc.start.rate_3 = apply_odds_ratio(pram$prep.start.rate[3], ors),
+  prep.otc.adhr.dist_1 = param$prep.adhr.dist[1],
+  prep.otc.adhr.dist_2 = param$prep.adhr.dist[2],
+  prep.otc.adhr.dist_3 = param$prep.adhr.dist[3],
+  prep.otc.discont.int_1 = param$prep.discont.int[1],
+  prep.otc.discont.int_2 = param$prep.discont.int[2],
+  prep.otc.discont.int_3 = param$prep.discont.int[3],
+  prep.otc.tst.int = param$prep.tst.int,
+  prep.otc.sti.tx.prob = param$prep.sti.tx.prob,
+  prep.otc.risk.reassess.int = param$prep.risk.reassess.int,
+  prep.std.switch.otc.prob = 0,
+  prep.otc.switch.std.prob = 0,
   prep.otc.always.sti.tst = 1,
   prep.otc.always.hiv.tst = 1,
-  prep.otc.start.rate_1 = param$prep.start.rate[1],
-  prep.otc.start.rate_2 = param$prep.start.rate[2],
-  prep.otc.start.rate_3 = param$prep.start.rate[3]
+  sti.prep.otc.tx.prob = param$sti.prep.tx.prob,
+  sti.screen.prep.otc.rate = param$sti.screen.prep.rate,
+  sti.screen.rect.prep.otc.prob = param$sti.screen.rect.prep.prob,
+  prep.otc.hbv.flare.prob = param$prep.hbv.flare.prob,
 )
 
+or_same <- 2 / 3 # NOTE: assumed OR to get to the same N_on_PrEP
+ors <- c(0.75, 0.5, 0.25)
+sc_df_ls[["only_otc_relaxed_disc"]] <- tibble(
+  .scenario.id = paste0("only_otc_relaxed_disc_", c("75", "50", "25")),
+  .at = intervention_start,
+  prep.otc.hard.indications = 0,
+  prep.otc.gfr.stop = 1,
+  prep.start.rate_1 = 0,
+  prep.start.rate_2 = 0,
+  prep.start.rate_3 = 0,
+  # TODO: pick the value that leads to the same *number* of PrEP users
+  prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], or_same),
+  prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], or_same),
+  prep.otc.start.rate_3 = apply_odds_ratio(pram$prep.start.rate[3], or_same),
+  prep.otc.adhr.dist_1 = param$prep.adhr.dist[1],
+  prep.otc.adhr.dist_2 = param$prep.adhr.dist[2],
+  prep.otc.adhr.dist_3 = param$prep.adhr.dist[3],
+  prep.otc.discont.int_1 = apply_odds_ratio(param$prep.discont.int[1], ors),
+  prep.otc.discont.int_2 = apply_odds_ratio(param$prep.discont.int[2], ors),
+  prep.otc.discont.int_3 = apply_odds_ratio(param$prep.discont.int[3], ors),
+  prep.otc.tst.int = param$prep.tst.int,
+  prep.otc.sti.tx.prob = param$prep.sti.tx.prob,
+  prep.otc.risk.reassess.int = param$prep.risk.reassess.int,
+  prep.std.switch.otc.prob = 0,
+  prep.otc.switch.std.prob = 0,
+  prep.otc.always.sti.tst = 1,
+  prep.otc.always.hiv.tst = 1,
+  sti.prep.otc.tx.prob = param$sti.prep.tx.prob,
+  sti.screen.prep.otc.rate = param$sti.screen.prep.rate,
+  sti.screen.rect.prep.otc.prob = param$sti.screen.rect.prep.prob,
+  prep.otc.hbv.flare.prob = param$prep.hbv.flare.prob,
+)
+
+# TODO: high adherence scenarios:
+#   1. define new adhr dist
+#   2. implement adhr reassign (upon restart, not interv)
+
+
+
 sc_df_ls[["otc_free"]] <- tibble(
-  .scenario.id    = paste0("otc_free_", 1),
-  .at             = intervention_start,
+  .scenario.id = paste0("otc_free_", 1),
+  .at = intervention_start,
   prep.otc.hard.indications = 0,
   prep.otc.always.sti.tst = 0,
   prep.otc.always.hiv.tst = 0,
@@ -155,8 +239,8 @@ sc_df_ls[["otc_free"]] <- tibble(
 )
 
 sc_df_ls[["only_otc_free"]] <- tibble(
-  .scenario.id    = paste0("only_otc_free_", 1),
-  .at             = intervention_start,
+  .scenario.id = paste0("only_otc_free_", 1),
+  .at = intervention_start,
   prep.start.rate_1 = 0,
   prep.start.rate_2 = 0,
   prep.start.rate_3 = 0,
@@ -169,8 +253,8 @@ sc_df_ls[["only_otc_free"]] <- tibble(
 )
 
 sc_df_ls[["otc_switch2otc"]] <- tibble(
-  .scenario.id    = paste0("otc_switch2otc_", 1),
-  .at             = intervention_start,
+  .scenario.id = paste0("otc_switch2otc_", 1),
+  .at = intervention_start,
   prep.otc.hard.indications = 0,
   prep.otc.always.sti.tst = 0,
   prep.otc.always.hiv.tst = 0,
@@ -182,8 +266,8 @@ sc_df_ls[["otc_switch2otc"]] <- tibble(
 )
 
 sc_df_ls[["otc_switch2std"]] <- tibble(
-  .scenario.id    = paste0("otc_switch2std_", 1:2),
-  .at             = intervention_start,
+  .scenario.id = paste0("otc_switch2std_", 1:2),
+  .at = intervention_start,
   prep.otc.hard.indications = 0,
   prep.otc.always.sti.tst = 0,
   prep.otc.always.hiv.tst = 0,

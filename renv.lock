@@ -204,7 +204,7 @@
       "RemoteUsername": "EpiModel",
       "RemoteRepo": "EpiModelHIV-p",
       "RemoteRef": "merge_offscript",
-      "RemoteSha": "2b8772bdd748ecc686df8b2b21e46e0d7e12d8ec",
+      "RemoteSha": "a8ee671e86ea24716366eb689846f16e9328b8e4",
       "RemoteHost": "api.github.com",
       "Remotes": "github::EpiModel/ARTnet@main, github::EpiModel/ARTnetData@main"
     },

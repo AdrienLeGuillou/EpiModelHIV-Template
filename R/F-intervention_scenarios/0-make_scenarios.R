@@ -186,9 +186,12 @@ sc_df_ls[["only_otc_relaxed_base"]] <- tibble(
   prep.otc.hbv.flare.prob = param$prep.hbv.flare.prob,
 )
 
-ints_ratios <- c(0.75, 0.5, 0.25)
+ints_ratios <- c(0.75, 0.5, 0.25, 1.25, 1.5, 1.75)
 sc_df_ls[["only_otc_relaxed_disc"]] <- tibble(
-  .scenario.id = paste0("only_otc_relaxed_disc_", c("75", "50", "25")),
+  .scenario.id = paste0(
+    "only_otc_relaxed_disc_",
+    c("075", "050", "025", "125", "150", "175")
+  ),
   .at = intervention_start,
   prep.otc.hard.indications = 0,
   prep.otc.gfr.stop = 1,
@@ -282,7 +285,7 @@ sc_df_ls[["only_otc_relaxed_hiv_tst_ints"]] <- tibble(
   sti.prep.otc.tx.prob = param$sti.prep.tx.prob,
 )
 
-ors <- c(2/3, 1/2, 1/3)
+ors <- c(2 / 3, 1 / 2, 1 / 3)
 sc_df_ls[["only_otc_relaxed_sti_screen"]] <- tibble(
   .scenario.id = paste0("only_otc_relaxed__sti_screen_", c("06", "05", "03")),
   .at = intervention_start,
@@ -311,7 +314,6 @@ sc_df_ls[["only_otc_relaxed_sti_screen"]] <- tibble(
   prep.otc.switch.std.prob = 0,
   sti.prep.otc.tx.prob = param$sti.prep.tx.prob,
 )
-
 
 
 sc_df_ls[["otc_free"]] <- tibble(
@@ -387,7 +389,43 @@ sc_df_ls[["otc_switch2std"]] <- tibble(
   prep.otc.switch.std.prob = sw_p
 )
 
+or_best_guess <- 0.6
+discont_best_guess <- 1.5
+sc_df_ls[["otc_best_guess"]] <- tibble(
+  .scenario.id = "otc_best_guess",
+  .at = intervention_start,
+  prep.otc.hard.indications = 0,
+  prep.otc.gfr.stop = 1,
+  prep.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], or_best_guess),
+  prep.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], or_best_guess),
+  prep.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], or_best_guess),
+  prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], or_best_guess),
+  prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], or_best_guess),
+  prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], or_best_guess),
+  prep.otc.adhr.dist_1 = param$prep.adhr.dist[1],
+  prep.otc.adhr.dist_2 = param$prep.adhr.dist[2],
+  prep.otc.adhr.dist_3 = param$prep.adhr.dist[3],
+  prep.otc.discont.int_1 = param$prep.discont.int[1] * discont_best_guess,
+  prep.otc.discont.int_2 = param$prep.discont.int[2] * discont_best_guess,
+  prep.otc.discont.int_3 = param$prep.discont.int[3] * discont_best_guess,
+  prep.otc.tst.int = year_steps / 2,
+  prep.otc.risk.reassess.int = 1, #NOTE: is that ok?
+  prep.std.switch.otc.prob = 0,
+  prep.otc.switch.std.prob = 0,
+  prep.otc.always.sti.tst = 0,
+  prep.otc.always.hiv.tst = 0,
+  sti.prep.otc.tx.prob = param$sti.prep.tx.prob,
+  sti.screen.prep.otc.rate = 1 / 26, # mean int 6 month
+  sti.screen.rect.prep.otc.prob = param$sti.screen.rect.prep.prob,
+  prep.otc.hbv.flare.prob = param$prep.hbv.flare.prob,
+  prep.otc.gfr.low.risk.int = 2 * 52,
+  prep.otc.gfr.high.risk.int = 2 * 52,
+  prep.otc.gfr.risk.rng = 1,
+)
+
 # sc_df <- bind_rows(sc_ls)
 # readr::write_csv(sc_df, "data/input/scenarios.csv")
+sc_ls <- sc_ls[c("otc_best_guess", "only_otc_relaxed_disc")]
+
 sc_ls <- lapply(sc_df_ls, EpiModel::create_scenario_list)
 scenarios_list <- Reduce(c, sc_ls, init = list())

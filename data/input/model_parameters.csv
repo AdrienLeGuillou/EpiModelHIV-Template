@@ -181,6 +181,7 @@ gfr.decline.gfr.lt90.or,8.5,numeric,,,,,
 gfr.prep.recov.rate,0.1591036,numeric,,,,,
 prep.otc.gfr.low.risk.int,52,numeric,,,,,
 prep.otc.gfr.high.risk.int,26,numeric,,,,,
+prep.otc.gfr.risk.rng,1,numeric,,,,,"gfr risk for prep is rng based and not int based"
 hbv.start,Inf,numeric,,,,,
 hbv.init.perc_1,0,numeric,,,,,
 hbv.init.perc_2,0.003655,numeric,,,,,

@@ -43,7 +43,7 @@ mutate_outcomes <- function(d) {
       lst_prep_otc_mean_eps = dbg_prep_otc_eps_mean,
       lst_prep_any = prepCurr + prep.otcCurr,
 
-      lst_prep_otc_std_indic_cov = prep.otc.std.indic,
+      lst_prep_otc_std_indic_cov = prep.otc.std.indic / prep.otcCurr,
       # lst_prep_otc_mean_dur_rng
       # lst_prep_otc_mean_dur_inelig
       # lst_prep_otc_ir100
@@ -65,7 +65,7 @@ mutate_outcomes <- function(d) {
       lst_prep_otc_gfr_lt60 = prep_otc_gfr_lt60,
 
       # HBV --------------------------------------------------------------------
-      lst_hbv_flare_ir100 =
+      lst_hbv_flare_ir100k =
         (dbg_hbv_flares_std + dbg_hbv_flares_otc) / num * 1e5 * 52,
       lst_hbv_flare_otc_ir100k = dbg_hbv_flares_otc / num * 1e5 * 52,
       lst_hbv_flare_std_ir100k = dbg_hbv_flares_std / num * 1e5 * 52,

@@ -425,7 +425,7 @@ sc_df_ls[["otc_best_guess"]] <- tibble(
 
 # sc_df <- bind_rows(sc_ls)
 # readr::write_csv(sc_df, "data/input/scenarios.csv")
-sc_ls <- sc_ls[c("otc_best_guess", "only_otc_relaxed_disc")]
+sc_df_ls <- sc_df_ls[c("otc_best_guess", "only_otc_relaxed_disc")]
 
 sc_ls <- lapply(sc_df_ls, EpiModel::create_scenario_list)
 scenarios_list <- Reduce(c, sc_ls, init = list())

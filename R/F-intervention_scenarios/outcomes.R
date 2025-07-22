@@ -13,12 +13,22 @@ mutate_outcomes <- function(d) {
       # HIV
       lst_ir100 = ir100,
       cml_incid = incid,
+      cml_incid_all = incid,
       lst_ir100_b = ir100.B,
       cml_incid_b = incid.B,
       lst_ir100_h = ir100.H,
       cml_incid_h = incid.H,
       lst_ir100_w = ir100.W,
       cml_incid_w = incid.W,
+      lst_hiv_prev_all = i.prev,
+      lst_hiv_prev_b = i.prev.B,
+      lst_hiv_prev_h = i.prev.H,
+      lst_hiv_prev_w = i.prev.W,
+      lst_hiv_dx_prop_all = (i_dx__B + i_dx__H + i_dx__W) /
+        (i__B + i__H + i__W),
+      lst_hiv_dx_prop_b = i_dx__B / i__B,
+      lst_hiv_dx_prop_h = i_dx__H / i__H,
+      lst_hiv_dx_prop_w = i_dx__W / i__W,
 
       ## STIs
       lst_ir100_gono = ir100.gono,
@@ -27,6 +37,7 @@ mutate_outcomes <- function(d) {
       cml_incid_chla = incid.chla,
 
       ## Clinical PrEP
+      lst_prep_num = prepCurr,
       lst_prep_cov = prepCurr / prep.indic,
       lst_prep_elig = prep.indic,
       lst_prep_mean_dur = prep.dur.mean,
@@ -37,6 +48,7 @@ mutate_outcomes <- function(d) {
       # cml_prep_incid
 
       # OTC PrEP
+      lst_prep_otc_num = prep.otcCurr,
       lst_prep_otc_cov = prep.otcCurr / prep.otc.indic,
       lst_prep_otc_elig = prep.otc.indic,
       lst_prep_otc_mean_dur = prep.otc.dur.mean,
@@ -65,8 +77,10 @@ mutate_outcomes <- function(d) {
       lst_prep_otc_gfr_lt60 = prep_otc_gfr_lt60,
 
       # HBV --------------------------------------------------------------------
-      lst_hbv_flare_ir100k =
-        (dbg_hbv_flares_std + dbg_hbv_flares_otc) / num * 1e5 * 52,
+      lst_hbv_flare_ir100k = (dbg_hbv_flares_std + dbg_hbv_flares_otc) /
+        num *
+        1e5 *
+        52,
       lst_hbv_flare_otc_ir100k = dbg_hbv_flares_otc / num * 1e5 * 52,
       lst_hbv_flare_std_ir100k = dbg_hbv_flares_std / num * 1e5 * 52,
       cml_hbv_flare = (dbg_hbv_flares_std + dbg_hbv_flares_otc),
@@ -149,7 +163,7 @@ process_one_scenario <- function(scenario_infos, d_ref) {
 
   d <- left_join(d_last, d_cum, by = c("scenario_name", "sim"))
 
-  for (pop in c("b", "h", "w")) {
+  for (pop in c("all", "b", "h", "w")) {
     d <- mutate_nia_pia(
       d,
       d_ref[[paste0("cml_incid_", pop)]],
@@ -166,6 +180,10 @@ process_one_scenario_plots <- function(scenario_infos, d_ref) {
   d_sim <- process_one_scenario(scenario_infos, d_ref)
   d_sim |>
     select(scenario_name, starts_with("cml_pia")) |>
-    separate_wider_delim(scenario_name, "_", names = c(NA, "test", NA, "treat")) |>
+    separate_wider_delim(
+      scenario_name,
+      "_",
+      names = c(NA, "test", NA, "treat")
+    ) |>
     mutate(test = as.numeric(test), treat = as.numeric(treat))
 }

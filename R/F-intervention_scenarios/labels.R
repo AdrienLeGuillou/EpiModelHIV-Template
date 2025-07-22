@@ -14,10 +14,30 @@ var_labels <- c(
   "lst_ir100_h"  = "HIV IR100 Hispanic (ly)",
   "lst_ir100_w"  = "HIV IR100 White (ly)",
 
+  "cml_nia_all"      = "HIV NIA All (10y)",
+  "cml_nia_b"    = "HIV NIA Black (10y)",
+  "cml_nia_h"    = "HIV NIA Hispanic (10y)",
+  "cml_nia_w"    = "HIV NIA White (10y)",
+
+  "cml_pia_all"      = "HIV PIA All (10y)",
+  "cml_pia_b"    = "HIV PIA Black (10y)",
+  "cml_pia_h"    = "HIV PIA Hispanic (10y)",
+  "cml_pia_w"    = "HIV PIA White (10y)",
+
   "cml_incid"    = "HIV Cumulative Incidence All (10y)",
   "cml_incid_b"  = "HIV Cumulative Incidence Black (10y)",
   "cml_incid_h"  = "HIV Cumulative Incidence Hispanic (10y)",
   "cml_incid_w"  = "HIV Cumulative Incidence White (10y)",
+
+  "lst_hiv_prev_all" = "HIV Prevalence All (ly)",
+  "lst_hiv_prev_b" = "HIV Prevalence Black (ly)",
+  "lst_hiv_prev_h" = "HIV Prevalence Hispanic (ly)",
+  "lst_hiv_prev_w" = "HIV Prevalence White (ly)",
+
+  "lst_hiv_dx_prop_all" = "Prop HIV Diag All (ly)",
+  "lst_hiv_dx_prop_b" = "Prop HIV Diag Black (ly)",
+  "lst_hiv_dx_prop_h" = "Prop HIV Diag Hispanic (ly)",
+  "lst_hiv_dx_prop_w" = "Prop HIV Diag White (ly)",
 
   "lst_ir100_gono"    = "Gono IR100 All (ly)",
   "lst_ir100_chla"    = "Chla IR100 All (ly)",
@@ -26,6 +46,8 @@ var_labels <- c(
   "cml_incid_chla"    = "Chla Cumulative Incidence All (10y)",
 
   "lst_prep_any"      = "Any PrEP Number (ly)",
+  "lst_prep_num"      = "STD PrEP Number (ly)",
+  "lst_prep_otc_num"  = "OTC PrEP Number (ly)",
 
   "lst_prep_cov"      = "Clinical PrEP Coverage (ly)",
   "lst_prep_elig"     = "Clinical PrEP Eligibles (ly)",
@@ -104,7 +126,7 @@ format_patterns <- list(
   ),
   perc = list(
     patterns = c("cml_pia", "lst_.*_prev", "lst_.*_cov", "lst_gfr[69].*",
-                 "lst_prep_.*_gfr_lt60"),
+                 "lst_prep_.*_gfr_lt60", "lst_.*_prop"),
     fun = scales::label_percent(0.1)
   ),
   default = list(

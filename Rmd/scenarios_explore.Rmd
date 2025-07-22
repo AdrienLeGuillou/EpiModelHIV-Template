@@ -1,0 +1,180 @@
+---
+title: "Interventions"
+output:
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_float: true
+    number_sections: true
+    smart: false
+---
+
+```{r setup, include = FALSE}
+source("R/shared_variables.R", local = TRUE)
+library(dplyr)
+library(EpiModelHIV)
+```
+
+## Notes
+
+- I use "standard", "clinical" or "std" PrEP interchangeably.
+- OTC PrEP: Over The Counter PrEP
+- In scenarios without STD PrEP, no one starts STD PrEP anymore but the current
+  STD PrEP users stay on PrEP until they "naturally" discontinue (random or
+  lapse in indications).
+- HBV: flares rate are always the ones from the litterature (30%)
+	- don't interpret them the same way
+	- STD PrEP: probably managed
+	- OTC PrEP: probably not managed
+- I often mention "rate base testing" and "interval testing"
+    - A rate based testing is a probability `p` of being tested at every time
+      step. (coin flip)
+    - An interval testing is a deterministic process where the next test occurs
+      after a number of steps defined by the interval. This approach can lead to
+      immediate tests for GFR when starting PrEP for the first time as no GFR
+      test was ever performed before.
+
+## Generic Scenarios
+
+When a parameter is not described for a scenario it means that its value is
+similar to the one in `baseline`.
+
+### `baseline` - Reference Scenario
+
+Reference scenario. What happened if everything stayed at equilibrium after
+calibration.
+
+- Default values
+- No OTC PrEP
+
+### `no_otc_prep_or_xx` - Increasing STD PrEP Coverage
+
+Similar to `baseline` but with increased PrEP coverage. We get the increased
+coverage by increasing the `prep.start.rate` by an odds ratio of 1.5 or 2. The
+other PrEP parameters are kept the same (discontinuation, indications, etc).
+
+### `otc_same_xx` - Addition of OTC PrEP - Same as STD
+
+PrEP OTC is turned on and behave exactly like STD PrEP (indication, gfr checks,
+STI and HIV testing, etc).
+
+The `prep.otc.start.rate` is based on `prep.start.rate` with an Odds Ratio
+applied to it. So `otc_same_05` uses an odds ratio of 0.5 and `otc_same_15` an
+odds ratio of 1.5.
+
+
+### `otc_relaxed_xx` - Addition of OTC PrEP - Relaxed Indications
+
+Similar to `otc_same_xx` but with relaxed OTC PrEP indications. In these
+scenarios any individual sexually active (any sex within 6 month) without and
+HIV positive diagnostic is eligible to OTC PrEP. The eligibility status is
+tested every 6 months similar to STD PrEP.
+
+The other PrEP attributes are kept similar to STD PrEP.
+
+This raises the number of PrEP OTC eligibles from 48k to 60k (+25%).
+
+### `only_otc_same_1` - Replace STD PrEP with OTC Same
+
+Turns off STD PrEP and replace it with OTC PrEP. OTC PrEP here behaves exactly
+like STD PrEP.
+
+This is mostly a debugging scenario. It should yield very similar result as
+`baseline`.
+
+### `only_otc_relaxed_base_xx` - Only OTC Relaxed
+
+Exaclty the same as `otc_same_xx` but with STD PrEP turned off.
+
+Use these scenarios to find the correct OR leading to the same number of PrEP
+users as `baseline` (it's `only_otc_relaxed_base_06`, so an OR of 2/3).
+Later `only_otc_relaxed_****` scenarios all use this 2/3 OR for `prep.otc.start.rate`.
+
+### `only_otc_relaxed_disc_` - Only OTC Relaxed With Changed Discontinuation
+
+Similar to `only_otc_relaxed_base_06` but with changes in the discontinuation
+intervals. Discontinuation intervals are multiplied by the values in the name:
+`only_otc_relaxed_disc_075` have the discontinuation intervals multiplied by
+0.75 (reduced) and `only_otc_relaxed_disc_150` have them multiplied by 1.5
+(increased).
+
+### `only_otc_relaxed_gfr_int` - Only OTC Relaxed With Changed GFR tests
+
+Similar to `only_otc_relaxed_base_06` but with changes in the interval testings
+for GFR. GFR is tested every 1, 2, 5 years or never (Inf).
+
+Note that in these scenarios the testing is interval based. It means that
+someone started OTC PrEP for the first time will always be tested at that time
+and then after "interval". Another approach is available. See the `best_`
+scenarios.
+
+### `only_otc_relaxed_hiv_tst_ints` - Only OTC Relaxed With Changed HIV tests
+
+Similar to `only_otc_relaxed_base_06` but with no automatic HIV and STI testing
+upon starts. Then the test interval for HIV is modified: 13, 26 and 52 weeks or
+3, 6 and 12 months.
+
+These are interval testing based on when the last HIV test was performed (even
+when not on PrEP)
+
+### `only_otc_relaxed_sti_screen` - Only OTC Relaxed With Changed STI tests
+
+Similar to `only_otc_relaxed_hiv_tst_ints` but with changes to the STI screening
+rates instead. The rates are modified by the OR in the names.
+
+### `only_otc_relaxed_adhr` - Only OTC Relaxed With Changed Adherence
+
+Similar to `only_otc_relaxed_sti_screen` but with changes to the adherence
+distributions. "m20" is "minus 20%" and "p10" is "plus 10%". That is reduce the
+highest adherence group by 20 percentage point or increase it by 10. The
+ration between the 2 other adherence groups is kept the same.
+
+### `only_otc_relaxed_switch2std_` - Only OTC Relaxed With Switch to STD
+
+Similar to `only_otc_relaxed_base_06` but with a percentage of the OTC PrEP user
+switching to STD PrEP each year. `only_otc_relaxed_switch2std_05` is a rate of
+5% of OTC PrEP users would switch to STD. Note that no other way to start STD
+PrEP is offered in these scenarios. Even for someone who previously was on STD.
+He would have to start OTC again and switch to STD again.
+
+## Best Guess Scenarios and variations
+
+### `otc_best_guess` - Best Guess Scenario
+
+- Total number of people on any kind of PrEP ~40% more that `baseline`
+- Same start rate for OTC and STD PrEP: OR = 0.6 compared to `baseline`'s
+  `prep.start.rate`
+- Relaxed Indications for OTC PrEP:
+  - sexually active (any sex within 6 month) without and HIV positive diagnostic
+  - checked every time step
+- Same adherence distribution
+- Discontinuation interval increased by a factor 1.5 for OTC PrEP
+- STI and HIV screening every 6 months (no test on start OTC PrEP)
+  - interval based for HIV
+  - rate for STI
+- GFR test every 2 years
+  - different from the `only_otc_relaxed_gfr_int` scenarios
+  - rate based GFR test while on OTC PrEP
+
+All `best_****` scenarios start from this base.
+
+### `best_disc_` - Best Guess Scenario - Vary Discontinuation
+
+Similar to `otc_best_guess` but apply a multiplying factor to the
+discontinuation intervals.
+
+### `best_gfr_same_int` - Best Guess Scenario - Same GFR
+
+Similar to `otc_best_guess` but checks GFR every 6 months for high risk (age >
+50 or last know GFR < 90) and 12 months otherwise. This still use the rate based
+testing.
+
+### `best_tests_int_` - Best Guess Scenario - Vary Tests Intervals
+
+Similar to `otc_best_guess` but test for HIV and STI every 4, 12 of 24 months.
+Not that HIV tests are still interval based and STI tests rate based.
+
+### `best_adhr_` - Best Guess Scenario - Vary Adherence
+
+Similar to `otc_best_guess` but vary OTC PrEP adherence distribution similarly
+to the `only_otc_relaxed__adhr_` scenarios.

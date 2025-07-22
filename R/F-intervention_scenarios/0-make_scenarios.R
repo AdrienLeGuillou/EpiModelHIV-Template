@@ -22,28 +22,6 @@ apply_odds_ratio <- function(p, or) {
   log_odds_to_prob(prob_to_log_odds(p) + log(or))
 }
 
-# # Utility functions
-# apply_or <- function(p, or) plogis(qlogis(p) + log(or))
-# ors <- c(lo = 1 / 4, base = 1, hi = 4)
-# interv_param <- c("test" = "hiv.test.rate", "treat" = "tx.init.rate")
-#
-# sc_list <- list()
-#
-# for (or_test in ors) {
-#   for (or_tx in ors) {
-#     sc_name <- paste0("test_", or_test, "_treat_", or_tx)
-#     sc_list[[sc_name]] <- tibble(
-#       .scenario.id    = sc_name,
-#       .at             = intervention_start,
-#       hiv.test.rate_1 = apply_or(param$hiv.test.rate[[1]], or_test),
-#       hiv.test.rate_2 = apply_or(param$hiv.test.rate[[2]], or_test),
-#       hiv.test.rate_3 = apply_or(param$hiv.test.rate[[2]], or_test),
-#       tx.init.rate_1 =  apply_or(param$tx.init.rate[[1]], or_tx),
-#       tx.init.rate_2 =  apply_or(param$tx.init.rate[[2]], or_tx),
-#       tx.init.rate_3 =  apply_or(param$tx.init.rate[[3]], or_tx)
-#     )
-#   }
-# }
 
 or_same <- 2 / 3 # NOTE: assumed OR to get to the same N_on_PrEP
 
@@ -315,44 +293,47 @@ sc_df_ls[["only_otc_relaxed_sti_screen"]] <- tibble(
   sti.prep.otc.tx.prob = param$sti.prep.tx.prob,
 )
 
+# PrEP ADHR changes
+shifts <- c(-20, -10, -5, 5, 10, 20) / 100
+adhrs <- vapply(
+  shifts,
+  EpiModelHIV::reallocate_pcp,
+  numeric(3),
+  in.pcp = param$prep.adhr.dist
+)
 
-sc_df_ls[["otc_free"]] <- tibble(
-  .scenario.id = paste0("otc_free_", 1),
+sc_df_ls[["only_otc_relaxed_adhr"]] <- tibble(
+  .scenario.id = paste0(
+    "only_otc_relaxed__adhr_",
+    c("m20", "m10", "m05", "p05", "p10", "p20")
+  ),
   .at = intervention_start,
   prep.otc.hard.indications = 0,
   prep.otc.always.sti.tst = 0,
   prep.otc.always.hiv.tst = 0,
-  prep.otc.start.rate_1 = param$prep.start.rate[1],
-  prep.otc.start.rate_2 = param$prep.start.rate[2],
-  prep.otc.start.rate_3 = param$prep.start.rate[3]
-)
-
-sc_df_ls[["only_otc_free"]] <- tibble(
-  .scenario.id = paste0("only_otc_free_", 1),
-  .at = intervention_start,
+  prep.otc.tst.int = param$prep.tst.int,
+  sti.screen.prep.otc.rate = param$sti.screen.prep.rate,
+  sti.screen.rect.prep.otc.prob = param$sti.screen.rect.prep.prob,
+  prep.otc.hbv.flare.prob = param$prep.hbv.flare.prob,
+  prep.otc.gfr.stop = 0,
   prep.start.rate_1 = 0,
   prep.start.rate_2 = 0,
   prep.start.rate_3 = 0,
-  prep.otc.hard.indications = 0,
-  prep.otc.always.sti.tst = 0,
-  prep.otc.always.hiv.tst = 0,
-  prep.otc.start.rate_1 = param$prep.start.rate[1],
-  prep.otc.start.rate_2 = param$prep.start.rate[2],
-  prep.otc.start.rate_3 = param$prep.start.rate[3]
+  prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], or_same),
+  prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], or_same),
+  prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], or_same),
+  prep.otc.adhr.dist_1 = adhrs[1, ],
+  prep.otc.adhr.dist_2 = adhrs[2, ],
+  prep.otc.adhr.dist_3 = adhrs[3, ],
+  prep.otc.discont.int_1 = param$prep.discont.int[1],
+  prep.otc.discont.int_2 = param$prep.discont.int[2],
+  prep.otc.discont.int_3 = param$prep.discont.int[3],
+  prep.otc.risk.reassess.int = param$prep.risk.reassess.int,
+  prep.std.switch.otc.prob = 0,
+  prep.otc.switch.std.prob = 0,
+  sti.prep.otc.tx.prob = param$sti.prep.tx.prob,
 )
 
-# sc_df_ls[["otc_switch2otc"]] <- tibble(
-#   .scenario.id = paste0("otc_switch2otc_", 1),
-#   .at = intervention_start,
-#   prep.otc.hard.indications = 0,
-#   prep.otc.always.sti.tst = 0,
-#   prep.otc.always.hiv.tst = 0,
-#   prep.otc.start.rate_1 = param$prep.start.rate[1],
-#   prep.otc.start.rate_2 = param$prep.start.rate[2],
-#   prep.otc.start.rate_3 = param$prep.start.rate[3],
-#   prep.std.switch.otc.prob = 0.05,
-#   prep.otc.switch.std.prob = 0
-# )
 
 # quantile - prob (p) that event occurs after interval (i)
 i2r_p <- function(i, p) 1 - (1 - p)^(1 / i)
@@ -399,9 +380,18 @@ sc_df_ls[["otc_best_guess"]] <- tibble(
   prep.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], or_best_guess),
   prep.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], or_best_guess),
   prep.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], or_best_guess),
-  prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], or_best_guess),
-  prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], or_best_guess),
-  prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], or_best_guess),
+  prep.otc.start.rate_1 = apply_odds_ratio(
+    param$prep.start.rate[1],
+    or_best_guess
+  ),
+  prep.otc.start.rate_2 = apply_odds_ratio(
+    param$prep.start.rate[2],
+    or_best_guess
+  ),
+  prep.otc.start.rate_3 = apply_odds_ratio(
+    param$prep.start.rate[3],
+    or_best_guess
+  ),
   prep.otc.adhr.dist_1 = param$prep.adhr.dist[1],
   prep.otc.adhr.dist_2 = param$prep.adhr.dist[2],
   prep.otc.adhr.dist_3 = param$prep.adhr.dist[3],
@@ -423,9 +413,66 @@ sc_df_ls[["otc_best_guess"]] <- tibble(
   prep.otc.gfr.risk.rng = 1,
 )
 
+disc_ints <- c(0.75, 0.5, 0.25, 1.25, 1.5, 1.75)
+sc_df_ls[["otc_best_guess_disc_"]] <- sc_df_ls[["otc_best_guess"]] |>
+  slice_sample(n = length(disc_ints), replace = TRUE) |>
+  mutate(
+    .scenario.id = paste0(
+      "best_disc_",
+      c("075", "050", "025", "125", "150", "175")
+    ),
+    prep.otc.discont.int_1 = prep.otc.discont.int_1 * disc_ints,
+    prep.otc.discont.int_2 = prep.otc.discont.int_2 * disc_ints,
+    prep.otc.discont.int_3 = prep.otc.discont.int_3 * disc_ints,
+  )
+
+
+# Same as best but with prep intervals for GFR. (In an RNG way)
+sc_df_ls[["otc_best_guess_gfr_same"]] <- sc_df_ls[["otc_best_guess"]] |>
+  mutate(
+    .scenario.id = "best_gfr_same_int",
+    prep.otc.gfr.low.risk.int = 52,
+    prep.otc.gfr.high.risk.int = 26,
+  )
+
+
+gfr_ints <- c(1, 3, 5)
+sc_df_ls[["otc_best_guess_gfrs"]] <- sc_df_ls[["otc_best_guess"]] |>
+  slice_sample(n = length(gfr_ints), replace = TRUE) |>
+  mutate(
+    .scenario.id = paste0("best_gfr_int_", gfr_ints),
+    prep.otc.gfr.low.risk.int = gfr_ints * 52,
+    prep.otc.gfr.high.risk.int = gfr_ints * 52,
+  )
+
+# Both sti & hiv tests
+test_ints <- c(1 / 4, 1, 2)
+sc_df_ls[["otc_best_guess_tests"]] <- sc_df_ls[["otc_best_guess"]] |>
+  slice_sample(n = length(test_ints), replace = TRUE) |>
+  mutate(
+    .scenario.id = paste0("best_tests_int_", c("04", "12", "24")),
+    sti.screen.prep.otc.rate = 1 / (52 * test_ints),
+    prep.otc.tst.int = year_steps * test_ints,
+  )
+
+sc_df_ls[["otc_best_guess_adhr"]] <- sc_df_ls[["otc_best_guess"]] |>
+  slice_sample(n = length(shifts), replace = TRUE) |>
+  mutate(
+    .scenario.id = paste0(
+      "best_adhr_",
+      c("m20", "m10", "m05", "p05", "p10", "p20")
+    ),
+    prep.otc.adhr.dist_1 = adhrs[1, ],
+    prep.otc.adhr.dist_2 = adhrs[2, ],
+    prep.otc.adhr.dist_3 = adhrs[3, ],
+  )
+
 # sc_df <- bind_rows(sc_ls)
 # readr::write_csv(sc_df, "data/input/scenarios.csv")
-sc_df_ls <- sc_df_ls[c("otc_best_guess", "only_otc_relaxed_disc")]
+sc_df_ls <- sc_df_ls[c(
+  "only_otc_relaxed_adhr",
+  "otc_best_guess_adhr"
+)]
 
 sc_ls <- lapply(sc_df_ls, EpiModel::create_scenario_list)
 scenarios_list <- Reduce(c, sc_ls, init = list())

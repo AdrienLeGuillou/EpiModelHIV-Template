@@ -23,3 +23,10 @@ d |>
   pivot_longer(-c(sim, time)) |>
   ggplot(aes(x = time / 52, y = value, col = name)) +
   geom_smooth()
+
+rmarkdown::render(
+  "./Rmd/scenarios_explore.Rmd",
+  output_file = "scenarios_explore.html",
+  knit_root_dir = getwd(),
+  output_dir = "./"
+)

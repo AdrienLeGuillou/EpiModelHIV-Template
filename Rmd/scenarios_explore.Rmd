@@ -10,10 +10,11 @@ output:
 ---
 
 ```{r setup, include = FALSE}
-source("R/shared_variables.R", local = TRUE)
-library(dplyr)
-library(EpiModelHIV)
+
 ```
+
+<!-- WARN: auto order scenarios! -->
+
 
 <!-- TODO: make scenarios similar to the best_guess ones. (based on previous) -->
 
@@ -230,7 +231,6 @@ The results table contains a lot of columns, most of them are debugging outputs
 used to check that the model behaved appropriatly. In the next section I will
 focus on the results that seems relevant to me for each of the scenario groups.
 
-
 ## Generic Scenarios
 
 ### `baseline` - Reference Scenario
@@ -346,6 +346,27 @@ scenarios would need to be devised to have something interesting to say.
 <!-- TODO: I should calc the NIA / PIA for these based on the best guess  -->
 <!-- and not baseline -->
 
+Evolution of STD vs OTC PrEP over time in best guess
+
+```{r}
+source("R/shared_variables.R", local = TRUE)
+
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+theme_set(theme_light())
+
+d <- readRDS("./data/run/scenarios/merged_tibbles/df__otc_best_guess.rds")
+
+d |>
+  select(sim, time, prepCurr, prep.otcCurr) |>
+  mutate(prep_any = prepCurr + prep.otcCurr) |>
+  pivot_longer(-c(sim, time)) |>
+  ggplot(aes(x = time / 52, y = value, col = name)) +
+  geom_smooth()
+```
+
 ### `otc_best_guess` - Best Guess Scenario
 
 Compared to Baseline:
@@ -402,3 +423,19 @@ STI being affected way more.
 
 As with the generic scenario: not much of a visible effect. Requires more
 replications and probably still not huge.
+
+# Next Steps
+
+## Calibration
+
+Not conviced by the current PrEP calibration (older values).
+Need to recalibrate
+
+## Replications
+
+Run 500-1000 replications
+
+## Scenarios
+
+- Better values for the `only_otc_relaxed_***` to get closer to the actual PrEP
+  numbers

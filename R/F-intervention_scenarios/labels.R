@@ -77,8 +77,8 @@ var_labels <- c(
   "lst_prep_otc_gfr_lt60" = "Proportion of PrEP user (otc) with GFR < 60 (ly)",
 
   "lst_hbv_flare_ir100k"     = "HBV Flares IR100k (ly)",
-  "lst_hbv_flare_otc_ir100k" = "HBV Flares IR100k - OTC PrEP(ly)",
   "lst_hbv_flare_std_ir100k" = "HBV Flares IR100k - STD PrEP(ly)",
+  "lst_hbv_flare_otc_ir100k" = "HBV Flares IR100k - OTC PrEP(ly)",
   "cml_hbv_flare"           = "HBV Flares Cumulative (10y)",
   "cml_hbv_flare_otc"       = "HBV Flares Cumulative - OTC PrEP(10y)",
   "cml_hbv_flare_std"       = "HBV Flares Cumulative - STD PrEP(10y)",

@@ -15,10 +15,15 @@ library(dplyr)
 library(EpiModelHIV)
 ```
 
-## Notes
+<!-- TODO: make scenarios similar to the best_guess ones. (based on previous) -->
 
-- I use "standard", "clinical" or "std" PrEP interchangeably.
-- OTC PrEP: Over The Counter PrEP
+# General
+
+- PrEP modalities:
+   - clinical: I use "clinical", "standard" or "STD" PrEP interchangeably.
+   - OTC PrEP: Over The Counter PrEP
+   - Any: used to count the number of individuals on any type of PrEP, they are
+     exclusive so it's STD + OTC
 - In scenarios without STD PrEP, no one starts STD PrEP anymore but the current
   STD PrEP users stay on PrEP until they "naturally" discontinue (random or
   lapse in indications).
@@ -34,7 +39,38 @@ library(EpiModelHIV)
       immediate tests for GFR when starting PrEP for the first time as no GFR
       test was ever performed before.
 
+**These are preliminary results:** The models were run with only 32 replications
+to get a quick glance at the effects. The final results will use ~500 to 1000
+runs per scenarios
+
+## Outcomes names
+
+- IR100: Incidence for 100 person year at risk
+- IR100k: Incidence for 100k person year at risk
+- NIA: Number of Infection Averted over 10 years (uses `baseline` as reference)
+- PIA: Percentage of Infection Averted
+- (10y): outcome calculated over the 10 years of intervention
+- (ly): outcome calculated over the last year of intervention
+- PrEP coverages are for each modalities $/frac{users}{indicated}$
+
+
+## Quirks
+
+"Clinical PrEP Mean Number of Unique Episodes (ly)" also takes into account the
+PrEP episodes before the start of intervention. So it will often be higher than
+for OTC.
+
+# Scenarios
+
+Scenarios start from a population "at equilibrium" which means that most
+demographic indicators would remain stable over time if no changed was made.
+
+Each scenario runs for 10 years.
+
 ## Generic Scenarios
+
+These scenarios are to explore the model in a more "technical" way. To see what
+is affected when a parameter is changed and when extreme values are used.
 
 When a parameter is not described for a scenario it means that its value is
 similar to the one in `baseline`.
@@ -52,6 +88,14 @@ calibration.
 Similar to `baseline` but with increased PrEP coverage. We get the increased
 coverage by increasing the `prep.start.rate` by an odds ratio of 1.5 or 2. The
 other PrEP parameters are kept the same (discontinuation, indications, etc).
+
+### `only_otc_same_1` - Replace STD PrEP with OTC Same
+
+Turns off STD PrEP and replace it with OTC PrEP. OTC PrEP here behaves exactly
+like STD PrEP.
+
+This is mostly a debugging scenario. It should yield very similar result as
+`baseline`.
 
 ### `otc_same_xx` - Addition of OTC PrEP - Same as STD
 
@@ -74,13 +118,6 @@ The other PrEP attributes are kept similar to STD PrEP.
 
 This raises the number of PrEP OTC eligibles from 48k to 60k (+25%).
 
-### `only_otc_same_1` - Replace STD PrEP with OTC Same
-
-Turns off STD PrEP and replace it with OTC PrEP. OTC PrEP here behaves exactly
-like STD PrEP.
-
-This is mostly a debugging scenario. It should yield very similar result as
-`baseline`.
 
 ### `only_otc_relaxed_base_xx` - Only OTC Relaxed
 
@@ -139,6 +176,9 @@ He would have to start OTC again and switch to STD again.
 
 ## Best Guess Scenarios and variations
 
+These scenarios are here to explore a more "realistic" future that could take
+place if OTC PrEP was approved Tomorrow.
+
 ### `otc_best_guess` - Best Guess Scenario
 
 - Total number of people on any kind of PrEP ~40% more that `baseline`
@@ -169,6 +209,11 @@ Similar to `otc_best_guess` but checks GFR every 6 months for high risk (age >
 50 or last know GFR < 90) and 12 months otherwise. This still use the rate based
 testing.
 
+### `best_gfr_int_` - Best Guess Scenario - Vary GFR intervals
+
+Similar to `otc_best_guess` but checks GFR every 1, 3 or 5. This still use the rate based
+testing.
+
 ### `best_tests_int_` - Best Guess Scenario - Vary Tests Intervals
 
 Similar to `otc_best_guess` but test for HIV and STI every 4, 12 of 24 months.
@@ -178,3 +223,182 @@ Not that HIV tests are still interval based and STI tests rate based.
 
 Similar to `otc_best_guess` but vary OTC PrEP adherence distribution similarly
 to the `only_otc_relaxed__adhr_` scenarios.
+
+# Results
+
+The results table contains a lot of columns, most of them are debugging outputs
+used to check that the model behaved appropriatly. In the next section I will
+focus on the results that seems relevant to me for each of the scenario groups.
+
+
+## Generic Scenarios
+
+### `baseline` - Reference Scenario
+
+This scenario represent the equilibrium state where the model simply runs for 10
+years without any changes. It's the baseline to compare the other models to.
+
+### `no_otc_prep_or_xx` - Increasing STD PrEP Coverage
+
+These scenarios introduce the effects and side effects of PrEP:
+
+- Higher Any / STD PrEP number and coverage
+- reduced HIV incidence and prevalence
+- increased proportion of HIV+ diagnosed due to higher test rates while on PrEP
+- lower STI (gono, chla) incidence due to higher STI screening rates
+- reduction of the number of indicated probably due to reduced STI incidences
+  (not HIV diag as OTC indic stays the same)
+- increased GFR drop due to PrEP, but same proportion of PrEP user with GFR <
+  60, meaning that the screening for GFR correctly stops PrEP when a drop is
+  present.
+- proportional increase in HBV flare
+- proportional increase in treatment resistance
+
+### `only_otc_same_1` - Replace STD PrEP with OTC Same
+
+Similar enough to `baseline` to think it works correctly. A few individuals
+remains on STD PrEP throughout the intervention. Meaning they were on it when it
+starts and never discontinued.
+
+### `otc_same_xx` - Addition of OTC PrEP - Same as STD
+
+This is very similar to the `no_otc_prep_or_xx` scenarios as here OTC PrEP has
+the same effect as STD PrEP. Looking at the `Any PrEP Number (ly)` column (H) we
+see that 0.5 and 1.0 respectively give the same total number of PrEP user as the
+1.5 and 2.0 `no_otc_prep_or_xx` scenarios.
+
+### `otc_relaxed_xx` - Addition of OTC PrEP - Relaxed Indications
+
+With these relaxed indications, the number of person on PrEP increases very
+fast. Because all the services linked to STD PrEP also applies to OTC PrEP, the
+same side effects are seen here.
+
+Slightly less benefits on HIV compared to the same number of Any PrEP users
+in the `no_otc_prep_or_xx` scenarios. It would make sense as the indicated should be slightly less at
+risk. *Does that stay true with higher number of replications?*
+
+PrEP user with GFR < 60 is slightly higher for OTC PrEP user, 2.9% instead of
+2.6% on the higher scenarios. I suspect it's purely because of of the rate of
+(re)starting can lead to longer period without tests.
+
+
+### `only_otc_relaxed_base_xx` - Only OTC Relaxed
+
+Seems to need slightly more "Any PrEP" to get the same benefits on HIV as
+`baseline`. It would make sense as the indicated should be slightly less at
+risk.
+
+<!-- TODO: make a scenarios with the exact same coverage to check that. -->
+
+Appart from that everything seems as expected (similar when same number of any
+prep)
+
+### `only_otc_relaxed_disc_` - Only OTC Relaxed With Changed Discontinuation
+
+`only_otc_relaxed_base_06` would be the same as `only_otc_relaxed_disc_100` (OR
+of 1, not in the scenarios).
+
+Most outcomes are related to the coverage of PrEP. So increasing by reducing
+discontinuation has the same effect as increasing start rate.
+
+More OTC PrEP with GFR<60. I suspect it's because they stay longer on OTC PrEP
+but not long enough to trigger the next GFR test.
+
+The faster the discontinuation the more HBV flare could occur as they are tied
+only to discontinuation.
+
+### `only_otc_relaxed_gfr_int` - Only OTC Relaxed With Changed GFR tests
+
+`only_otc_relaxed_base_06` would correspond to the scenario with same GFR checks
+as STD (6 months for high risk and 12 months for low risk).
+
+As expected, no more GFR drops due to PrEP compared to
+`only_otc_relaxed_base_06` but higher proportion of OTC PrEP with GFR<60 when
+testing is less frequent.
+
+### `only_otc_relaxed_hiv_tst_ints` - Only OTC Relaxed With Changed HIV tests
+
+`only_otc_relaxed_base_06` and `only_otc_relaxed_hiv_tst_ints` are the same.
+
+Changes are too small in size to be visible. Note that the 2 years interval is
+similar to the test rate in general population.
+
+### `only_otc_relaxed_sti_screen` - Only OTC Relaxed With Changed STI tests
+
+The ORs indeed reduce the test rate and increase the IR100 of gono and chla but
+they are very noisy outcomes and more repetitions are required to assess
+correctly.
+
+### `only_otc_relaxed_adhr` - Only OTC Relaxed With Changed Adherence
+
+`only_otc_relaxed_base_06` would correspond to the "no change" in adherence.
+
+The effect is barely visible with the current number of replications. Either on
+the HIV IR100 and the number of resistances over 10 years.
+
+### `only_otc_relaxed_switch2std_` - Only OTC Relaxed With Switch to STD
+
+Not much to say as so few people switch and stay on STD PrEP. More complex
+scenarios would need to be devised to have something interesting to say.
+
+## Best Guess Scenarios and variations
+
+<!-- TODO: I should calc the NIA / PIA for these based on the best guess  -->
+<!-- and not baseline -->
+
+### `otc_best_guess` - Best Guess Scenario
+
+Compared to Baseline:
+- ~40% more PrEP users total
+    - STD PrEP number is divided by 2 (6k instead of 12k)
+    - OTC PrEP number is 11k
+- HIV:
+    - 11% PIA
+    - prop diag: 88% vs 84%
+- STI:
+    - no visible effect
+    - need more replications to validate that
+- GFR:
+    - higher number of drop (directly linked to Any PrEP number)
+    - 6.3% PrEP users with GFR<60 vs 2.5%
+    - 8% for PrEP OTC and 2.5% for STD PrEP
+- HBV:
+    - Same number on both regimen. Because less discont on OTC
+    - if all OTC flare are unmanaged: 70 over 10year, IR100k: 5.1
+    - still very low
+- Resistance:
+    - ~40% more: the number of additional PrEP users
+    - 90 vs 65 over 10 years
+    - very low
+
+Conclusion here:
+- desirable outcome
+- GFR must be checked: communication is enough?
+
+### `best_disc_` - Best Guess Scenario - Vary Discontinuation
+
+Major impact on HIV outcomes, but still better than baseline in most case.
+
+### `best_gfr_same_int` and `best_gfr_int_` - Vary GFR test ints
+
+Better intervals reduces the amount of PrEP users with GFR<60. `same` is not as
+good as STD PrEP as it does not automatically test upon OTC PrEP start.
+
+Testing every year instead of 2 years without distinction in risk is still
+better as well.
+
+Note that higher GFR test rate slightly reduces PrEP coverage as it stop PrEP
+for these users. In reality a change in regimen or move to STD PrEP could be
+possible.
+
+
+### `best_tests_int_` - Best Guess Scenario - Vary Tests Intervals
+
+As with the generic scenarios on tests, the STI screening seems to be the major
+driving force here. With HIV diagnosed proportion not varying much but IR100 for
+STI being affected way more.
+
+### `best_adhr_` - Best Guess Scenario - Vary Adherence
+
+As with the generic scenario: not much of a visible effect. Requires more
+replications and probably still not huge.

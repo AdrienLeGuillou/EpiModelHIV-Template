@@ -22,6 +22,7 @@ apply_odds_ratio <- function(p, or) {
   log_odds_to_prob(prob_to_log_odds(p) + log(or))
 }
 
+# TODO: remove: `prep.otc.gfr.stop` -> use rates of Inf instead and rng == 1
 
 or_same <- 2 / 3 # NOTE: assumed OR to get to the same N_on_PrEP
 

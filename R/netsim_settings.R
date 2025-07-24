@@ -11,13 +11,12 @@ path_to_restart <- fs::path(est_dir, paste0("restart-", context, ".rds"))
 params_df <- read.csv(fs::path(input_dir, "model_parameters.csv")) |>
   dplyr::select(param, value, type)
 
-# `netsim` Parameters
+# `netsim` Parameters - default should be best guess with OTC PrEP turned off
 param <- param.net(
   data.frame.params = params_df,
   netstats          = netstats,
   epistats          = epistats,
-  prep.start        = prep_start,
-  riskh.start       = prep_start - year_steps,
+  # TODO: set `prep.otc.discont.int` using prep one time 1.5 (best_guess)
   hbv.start         = intervention_start
 )
 

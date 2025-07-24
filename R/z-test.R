@@ -7,6 +7,13 @@
 #   output_dir = "./"
 # )
 
+rmarkdown::render(
+  "./Rmd/scenarios_explore.Rmd",
+  output_file = "scenarios_explore.html",
+  knit_root_dir = getwd(),
+  output_dir = "./"
+)
+
 source("R/shared_variables.R", local = TRUE)
 
 library(dplyr)
@@ -15,18 +22,26 @@ library(ggplot2)
 
 theme_set(theme_light())
 
-d <- readRDS("./data/run/scenarios/merged_tibbles/df__otc_best_guess.rds")
+sim <- readRDS("./data/run/scenarios/sim__otc_best_guess__1.rds")
+age.breaks <- sim$param$netstats$demog$age.breaks
+age_grp_names <- cut(age.breaks[-1], age.breaks) |>
+  levels()
+attr <- sim$run[[1]]$attr
+prep_std <- attr$prep
+prep_otc <- attr$prep.otc
+age_grp <- attr$age.grp
 
-d |>
-  select(sim, time, prepCurr, prep.otcCurr) |>
-  mutate(prep_any = prepCurr + prep.otcCurr) |>
-  pivot_longer(-c(sim, time)) |>
-  ggplot(aes(x = time / 52, y = value, col = name)) +
-  geom_smooth()
+table(age_grp, prep_otc) |>
+  prop.table()
 
-rmarkdown::render(
-  "./Rmd/scenarios_explore.Rmd",
-  output_file = "scenarios_explore.html",
-  knit_root_dir = getwd(),
-  output_dir = "./"
-)
+prop <- table(age_grp[prep_otc == 1]) |>
+  prop.table() |>
+  (\(x) paste0(round(x * 100, 1), "%"))()
+names(prop) <- age_grp_names
+prop
+
+prop <- table(age_grp[prep_std == 1]) |>
+  prop.table() |>
+  (\(x) paste0(round(x * 100, 1), "%"))()
+names(prop) <- age_grp_names
+prop

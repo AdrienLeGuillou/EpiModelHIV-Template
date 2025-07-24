@@ -32,7 +32,7 @@ output:
 	- don't interpret them the same way
 	- STD PrEP: probably managed
 	- OTC PrEP: probably not managed
-- I often mention "rate base testing" and "interval testing"
+- I often mention "rate based testing" and "interval testing"
     - A rate based testing is a probability `p` of being tested at every time
       step. (coin flip)
     - An interval testing is a deterministic process where the next test occurs
@@ -54,6 +54,7 @@ runs per scenarios
 - (ly): outcome calculated over the last year of intervention
 - PrEP coverages are for each modalities $/frac{users}{indicated}$
 
+<!-- TODO: hbv flare: ir100 out of all HBV infected and not `num` -->
 
 ## Quirks
 
@@ -95,7 +96,7 @@ other PrEP parameters are kept the same (discontinuation, indications, etc).
 Turns off STD PrEP and replace it with OTC PrEP. OTC PrEP here behaves exactly
 like STD PrEP.
 
-This is mostly a debugging scenario. It should yield very similar result as
+This is mostly a debugging scenario. It should yield very similar result to
 `baseline`.
 
 ### `otc_same_xx` - Addition of OTC PrEP - Same as STD
@@ -138,6 +139,8 @@ intervals. Discontinuation intervals are multiplied by the values in the name:
 
 ### `only_otc_relaxed_gfr_int` - Only OTC Relaxed With Changed GFR tests
 
+<!-- TODO: use rate based gfr testing for these scenarios -->
+
 Similar to `only_otc_relaxed_base_06` but with changes in the interval testings
 for GFR. GFR is tested every 1, 2, 5 years or never (Inf).
 
@@ -147,6 +150,8 @@ and then after "interval". Another approach is available. See the `best_`
 scenarios.
 
 ### `only_otc_relaxed_hiv_tst_ints` - Only OTC Relaxed With Changed HIV tests
+
+<!-- TODO: use rate based intervals here -->
 
 Similar to `only_otc_relaxed_base_06` but with no automatic HIV and STI testing
 upon starts. Then the test interval for HIV is modified: 13, 26 and 52 weeks or
@@ -396,6 +401,47 @@ Conclusion here:
 - desirable outcome
 - GFR must be checked: communication is enough?
 
+#### PrEP repartition by age
+
+
+
+```{r include = FALSE, eval = FALSE}
+sim <- readRDS("./data/run/scenarios/sim__otc_best_guess__1.rds")
+age.breaks <- sim$param$netstats$demog$age.breaks
+age_grp_names <- cut(age.breaks[-1], age.breaks) |>
+  levels()
+attr <- sim$run[[1]]$attr
+prep_std <- attr$prep
+prep_otc <- attr$prep.otc
+age_grp <- attr$age.grp
+```
+
+STD PrEP
+
+```{r eval = FALSE}
+prop <- table(age_grp[prep_std == 1]) |>
+  prop.table() |>
+  (\(x) paste0(round(x * 100, 1), "%"))()
+names(prop) <- age_grp_names
+prop
+
+#> (15,25] (25,35] (35,45] (45,55] (55,65]
+#>  "24%" "25.8%" "22.3%" "16.8%" "11.2%"
+```
+
+OTC PrEP
+
+```{r eval = FALSE}
+prop <- table(age_grp[prep_otc == 1]) |>
+  prop.table() |>
+  (\(x) paste0(round(x * 100, 1), "%"))()
+names(prop) <- age_grp_names
+prop
+
+#> (15,25] (25,35] (35,45] (45,55] (55,65]
+#> "20.2%" "25.7%" "23.1%" "18.5%" "12.6%"
+```
+
 ### `best_disc_` - Best Guess Scenario - Vary Discontinuation
 
 Major impact on HIV outcomes, but still better than baseline in most case.
@@ -412,7 +458,6 @@ Note that higher GFR test rate slightly reduces PrEP coverage as it stop PrEP
 for these users. In reality a change in regimen or move to STD PrEP could be
 possible.
 
-
 ### `best_tests_int_` - Best Guess Scenario - Vary Tests Intervals
 
 As with the generic scenarios on tests, the STI screening seems to be the major
@@ -426,9 +471,17 @@ replications and probably still not huge.
 
 # Next Steps
 
+## Tx resistance paper
+
+https://academic.oup.com/cid/article/78/5/1240/7425528
+-> does not change our estimates
+-> could be very interesting to model resistance acquisition with "recent" use and not only while using
+-> PrEP use & resistance in Dat'Aids?
+
 ## Calibration
 
 Not conviced by the current PrEP calibration (older values).
+-> as Christina after her defense
 Need to recalibrate
 
 ## Replications
@@ -439,3 +492,17 @@ Run 500-1000 replications
 
 - Better values for the `only_otc_relaxed_***` to get closer to the actual PrEP
   numbers
+- always use GFR RNG for OTC (unless `same` scenarios)
+- always use rate based intervals for OTC PrEP?
+- same for STI but with intervals for PrEP STD? (not sure) -> ask
+<!-- NOTE: ask Sam -->
+
+- To do:
+    - adhr ratio: source?
+    - for OTC: rate base HIV testing
+    - always rate base GFR testing
+    - graph of STD vs OTC: add IR100 HIV?
+    - different best guess were:
+        - std start rate stays the same, adjust with otc
+        - same start rate but common OR
+    - redo calibration?

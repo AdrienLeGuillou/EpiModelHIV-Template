@@ -78,7 +78,7 @@ hiv.chla.rect.or,2.78,numeric,8.2,,,,Odds ratio comparing the odds of HIV infect
 hiv.chla.uret.or,1.73,numeric,8.2,,,,Odds ratio comparing the odds of HIV infection given current urethral chlamydia to the odds of HIV infection in the absence of current urethral chlamydia.
 hiv.dual.rr,0.2,numeric,7.5,,,,"Additive proportional risk, from 0 to 1, for HIV infection given dualinfection with both gonorrhea and chlamydia."
 hiv.syph.or,2.67,numeric,,,,,Odds ratio comparing the odds of HIV infection given current syphilis to the odds of HIV infection in the absence of current syphilis. (PMC8543214)
-riskh.start,-52,numeric,7.5,,,,Time step at which behavioral risk history assessment occurs.
+riskh.start,0,numeric,7.5,,,,Time step at which behavioral risk history assessment occurs.
 prep.start,0,numeric,missing?,"2020 CDC HIV surveillance data , 2017 National HIV Behavioral Surveillance findings",cc.prep.B,,Time step at which the PrEP intervention should start.
 prep.start.rate_1,0.005755714,numeric,missing?,"2020 CDC HIV surveillance data , 2017 National HIV Behavioral Surveillance findings",cc.prep.H,,Probability of starting PrEP given current indications for Black MSM.
 prep.start.rate_2,0.004652033,numeric,missing?,"2020 CDC HIV surveillance data , 2017 National HIV Behavioral Surveillance findings",cc.prep.W,,Probability of starting PrEP given current indications for Hispanic MSM.
@@ -104,12 +104,11 @@ prep.otc.adhr.dist_3,0.784,numeric,missing?,50,,,"Proportion of men who are low,
 prep.otc.discont.int_1,33.42,numeric,missing?,https://onlinelibrary.wiley.com/doi/10.1002/jia2.25252,,,Median interval until PrEP discontinuation in time steps for Black MSM. Calculated to get 56% retention 1Y and 41% 2Y
 prep.otc.discont.int_2,57.48,numeric,missing?,https://onlinelibrary.wiley.com/doi/10.1002/jia2.25252,,,Median interval until PrEP discontinuation in time steps for Hispanic MSM. Median interval until PrEP discontinuation in time steps for Black MSM. Calculated to get 56% retention 1Y and 41% 2Y
 prep.otc.discont.int_3,57.39,numeric,missing?,,,,Median interval until PrEP discontinuation in time steps for White MSM. Median interval until PrEP discontinuation in time steps for Black MSM. Calculated to get 56% retention 1Y and 41% 2Y
-prep.otc.tst.int,12.8571,numeric,missing?,,,,Testing interval by time steps for those who are actively on PrEP. This overrides the mean testing interval parameters.
+prep.otc.tst.int,26,numeric,missing?,,,,Testing interval by time steps for those who are actively on PrEP. This overrides the mean testing interval parameters.
 prep.otc.risk.reassess.int,0,numeric,,,,,Interval for reassessment of risk indications of active OTC PrEP users. Default of `52` for yearly reassessment when time unit is weekly -  use `Inf` for no reassessment.
 prep.std.switch.otc.prob,0,numeric,missing?,50,,,"Proportion of men who are low, medium, and high adherent to PrEP for White MSM."
 prep.otc.switch.std.prob,0,numeric,missing?,50,,,"Proportion of men who are low, medium, and high adherent to PrEP for White MSM."
 prep.otc.hard.indications,0,numeric,,,,,"Flag: use the same indications as normal PrEP for OTC PrEP"
-prep.otc.gfr.stop,0,numeric,,,,,"Flag: use the same gfr.stopping rules as normal PrEP for OTC PrEP - share same test date and gfr ref value with normal prep"
 prep.otc.always.sti.tst,0,numeric,,,,,"Flag: Always test for STI on PrEP OTC start"
 prep.otc.always.hiv.tst,0,numeric,,,,,"Flag: Always test for STI on PrEP OTC start"
 sti.prep.otc.tx.prob,1,numeric,,,,,Probability of any STI treatment given positive screening during PrEP visit.
@@ -179,8 +178,8 @@ gfr.decline.prep.rate,3.8e-4,numeric,,,,,"2 per 100 pyar / 52"
 gfr.decline.age.gt50.or,6,numeric,,,,,
 gfr.decline.gfr.lt90.or,8.5,numeric,,,,,
 gfr.prep.recov.rate,0.1591036,numeric,,,,,
-prep.otc.gfr.low.risk.int,52,numeric,,,,,
-prep.otc.gfr.high.risk.int,26,numeric,,,,,
+prep.otc.gfr.low.risk.int,104,numeric,,,,,
+prep.otc.gfr.high.risk.int,104,numeric,,,,,
 prep.otc.gfr.risk.rng,1,numeric,,,,,"gfr risk for prep is rng based and not int based"
 hbv.start,Inf,numeric,,,,,
 hbv.init.perc_1,0,numeric,,,,,

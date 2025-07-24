@@ -86,24 +86,25 @@ wf <- add_workflow_step(
     setup_lines = hpc_node_setup
   ),
   sbatch_opts = list(
-    "cpus-per-task" = max_cores,
-    "time" = "04:00:00",
-    "mem-per-cpu" = "5G"
-  )
-)
-
-# make plots step
-wf <- add_workflow_step(
-  wf_summary = wf,
-  step_tmpl = step_tmpl_do_call_script(
-    r_script = "R/F-intervention_scenarios/3-process_plots.R",
-    args = list(hpc_context = TRUE),
-    setup_lines = hpc_node_setup
-  ),
-  sbatch_opts = list(
     "mail-type" = "END",
     "cpus-per-task" = max_cores,
     "time" = "04:00:00",
     "mem-per-cpu" = "5G"
   )
 )
+
+# # make plots step
+# wf <- add_workflow_step(
+#   wf_summary = wf,
+#   step_tmpl = step_tmpl_do_call_script(
+#     r_script = "R/F-intervention_scenarios/3-process_plots.R",
+#     args = list(hpc_context = TRUE),
+#     setup_lines = hpc_node_setup
+#   ),
+#   sbatch_opts = list(
+#     "mail-type" = "END",
+#     "cpus-per-task" = max_cores,
+#     "time" = "04:00:00",
+#     "mem-per-cpu" = "5G"
+#   )
+# )

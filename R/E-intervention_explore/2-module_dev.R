@@ -34,7 +34,7 @@ control <- control_msm(
 )
 
 source("./R/F-intervention_scenarios/0-make_scenarios.R", local = TRUE)
-scenar <- scenarios_list[["only_otc_same_1"]]
+scenar <- scenarios_list[["only_otc_same_100"]]
 scenar[[".param.updater.list"]][[1]]$at <- restart_time + 1
 param <- use_scenario(param, scenar)
 

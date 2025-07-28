@@ -141,10 +141,10 @@ sc_df_ls[["otc_same"]] <- d_base_same |>
 # Replace STD with OTC PrEP wiht best guess config
 tmp_sc_names <- paste0(
   "only_otc_best_",
-  c("025", "050", "075", "100", "125", "150")
+  c("050", "056", "062", "068", "075")
 )
 sc_names <- c(sc_names, tmp_sc_names)
-ors <- c(0.25, 0.5, 0.75, 1, 1.25, 1.5)
+ors <- c(0.5, 0.5625, 0.625, 0.6875, 0.75)
 sc_df_ls[["only_otc_"]] <- d_base_best |>
   slice_sample(n = length(ors), replace = TRUE) |>
   mutate(
@@ -160,14 +160,32 @@ sc_df_ls[["only_otc_"]] <- d_base_best |>
 # Add OTC PrEP with "best guess" config
 tmp_sc_names <- paste0(
   "otc_best_",
-  c("012", "025", "037", "050", "062", "075", "087", "100")
+  c("012", "025", "037", "050")
 )
 sc_names <- c(sc_names, tmp_sc_names)
-ors <- c(0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1.0)
+ors <- c(0.125, 0.25, 0.375, 0.5)
 sc_df_ls[["otc_best"]] <- d_base_best |>
   slice_sample(n = length(ors), replace = TRUE) |>
   mutate(
     .scenario.id = tmp_sc_names,
+    prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
+    prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
+    prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
+  )
+
+tmp_sc_names <- paste0(
+  "otc_best_mix_",
+  c("03", "04", "05", "06", "0.7")
+)
+sc_names <- c(sc_names, tmp_sc_names)
+ors <- c(0.3, 0.4, 0.5, 0.6, 0.7)
+sc_df_ls[["otc_best_mix"]] <- d_base_best |>
+  slice_sample(n = length(ors), replace = TRUE) |>
+  mutate(
+    .scenario.id = tmp_sc_names,
+    prep.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
+    prep.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
+    prep.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors),
     prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
     prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
     prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)

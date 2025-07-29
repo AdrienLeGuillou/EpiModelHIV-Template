@@ -210,10 +210,10 @@ sc_df_ls[["otc_best"]] <- d_base_best |>
 
 tmp_sc_names <- paste0(
   "otc_best_mix_",
-  c("03", "04", "05", "06", "0.7")
+  c("052", "054", "056", "058")
 )
 sc_names <- c(sc_names, tmp_sc_names)
-ors <- c(0.3, 0.4, 0.5, 0.6, 0.7)
+ors <- c(0.52, 0.54, 0.56, 0.58)
 sc_df_ls[["otc_best_mix"]] <- d_base_best |>
   slice_sample(n = length(ors), replace = TRUE) |>
   mutate(
@@ -531,7 +531,8 @@ sc_df_ls[["otc_best_mix"]] <- d_base_best |>
 #
 
 sc_df_ls <- sc_df_ls[c(
-  "only_otc_best"
+  "only_otc_best",
+  "otc_best_mix"
 )]
 
 sc_ls <- lapply(sc_df_ls, EpiModel::create_scenario_list)

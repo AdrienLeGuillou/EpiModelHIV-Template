@@ -45,3 +45,9 @@ prop <- table(age_grp[prep_std == 1]) |>
   (\(x) paste0(round(x * 100, 1), "%"))()
 names(prop) <- age_grp_names
 prop
+
+b = 12645
+p = c(1.15, 1.3, 1.4, 1.5)
+b * p
+x = c(14621, 16247, 17692, 18940)
+x/b - 1

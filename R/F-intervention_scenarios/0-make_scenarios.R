@@ -21,6 +21,17 @@ apply_odds_ratio <- function(p, or) {
   log_odds_to_prob(prob_to_log_odds(p) + log(or))
 }
 
+################################################################################
+### corresp OR start rate to Percentage increase for STD PrEP:
+###   ors <- c(1.25, 1.50, 1.75, 2.0)
+###         ~ +15%, +30%, +40%, +50%
+###   for `otc_best` we aim for +30% any PrEP -> 16 500 users `otc_best_025`
+###   for `otc_best_mix` -> >0.5 && <0.6 (best guess 0.52)
+################################################################################
+only_otc_best_or <- 0.59
+otc_best_or <- 0.25
+otc_best_mix_or <- 0.52
+
 # Base DF for scenarios: -------------------------------------------------------
 #
 # # OTC == STD
@@ -78,6 +89,30 @@ d_base_best <- tibble(
   prep.otc.gfr.risk.rng = 1, # rate based testing
   prep.otc.hbv.flare.prob = param$prep.hbv.flare.prob
 )
+
+tmp_or <- only_otc_best_or
+d_base_only_otc_best <- d_base_best |>
+  mutate(
+    prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], tmp_or),
+    prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], tmp_or),
+    prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], tmp_or)
+  )
+
+tmp_or <- otc_best_or
+d_base_otc_best <- d_base_best |>
+  mutate(
+    prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], tmp_or),
+    prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], tmp_or),
+    prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], tmp_or)
+  )
+
+tmp_or <- otc_best_mix_or
+d_base_otc_best_mix <- d_base_best |>
+  mutate(
+    prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], tmp_or),
+    prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], tmp_or),
+    prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], tmp_or)
+  )
 # ------------------------------------------------------------------------------
 
 # Scenarios DF list ------------------------------------------------------------
@@ -141,11 +176,11 @@ sc_df_ls[["otc_same"]] <- d_base_same |>
 # Replace STD with OTC PrEP wiht best guess config
 tmp_sc_names <- paste0(
   "only_otc_best_",
-  c("050", "056", "062", "068", "075")
+  c("057", "058", "059", "060", "061")
 )
 sc_names <- c(sc_names, tmp_sc_names)
-ors <- c(0.5, 0.5625, 0.625, 0.6875, 0.75)
-sc_df_ls[["only_otc_"]] <- d_base_best |>
+ors <- c(0.57, 0.58, 0.59, 0.60, 0.61)
+sc_df_ls[["only_otc_best"]] <- d_base_best |>
   slice_sample(n = length(ors), replace = TRUE) |>
   mutate(
     .scenario.id = tmp_sc_names,
@@ -495,11 +530,9 @@ sc_df_ls[["otc_best_mix"]] <- d_base_best |>
 #   )
 #
 
-
-# sc_df_ls <- sc_df_ls[c(
-#   "only_otc_relaxed_adhr",
-#   "otc_best_guess_adhr"
-# )]
+sc_df_ls <- sc_df_ls[c(
+  "only_otc_best"
+)]
 
 sc_ls <- lapply(sc_df_ls, EpiModel::create_scenario_list)
 scenarios_list <- Reduce(c, sc_ls, init = list())

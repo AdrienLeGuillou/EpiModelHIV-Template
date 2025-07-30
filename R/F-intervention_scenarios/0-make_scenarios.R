@@ -28,7 +28,7 @@ apply_odds_ratio <- function(p, or) {
 ###   for `otc_best` we aim for +30% any PrEP -> 16 500 users `otc_best_025`
 ###   for `otc_best_mix` -> >0.5 && <0.6 (best guess 0.52)
 ################################################################################
-only_otc_best_or <- 0.59
+only_otc_best_or <- 0.595
 otc_best_or <- 0.25
 otc_best_mix_or <- 0.52
 
@@ -62,6 +62,9 @@ d_base_same <- tibble(
   prep.otc.gfr.risk.rng = 0,
   prep.otc.hbv.flare.prob = param$prep.hbv.flare.prob
 )
+
+d_base_relaxed <- d_base_same |>
+  mutate(prep.otc.hard.indications = 0)
 
 # OTC best guess scenario
 d_base_best <- tibble(
@@ -124,7 +127,6 @@ sc_names <- c()
 # Simply no OTC
 tmp_sc_names <- "baseline"
 sc_names <- c(sc_names, tmp_sc_names)
-
 sc_df_ls[["baseline"]] <- tibble(
   .scenario.id = paste0("baseline"),
   .at = intervention_start,
@@ -151,6 +153,22 @@ tmp_sc_names <- paste0("only_otc_same_", c("100", "125", "150", "175", "200"))
 sc_names <- c(sc_names, tmp_sc_names)
 ors <- c(1.0, 1.25, 1.50, 1.75, 2.0)
 sc_df_ls[["only_otc_same"]] <- d_base_same |>
+  slice_sample(n = length(ors), replace = TRUE) |>
+  mutate(
+    .scenario.id = tmp_sc_names,
+    prep.start.rate_1 = 0,
+    prep.start.rate_2 = 0,
+    prep.start.rate_3 = 0,
+    prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
+    prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
+    prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
+  )
+
+# Replace STD with OTC PrEP that behaves like STD PrEP with relaxed indications
+tmp_sc_names <- paste0("only_otc_relaxed_", c("70", "75", "80", "85", "90"))
+sc_names <- c(sc_names, tmp_sc_names)
+ors <- c(0.7, 0.75, 0.8, 0.85, 0.9)
+sc_df_ls[["only_otc_relaxed"]] <- d_base_relaxed |>
   slice_sample(n = length(ors), replace = TRUE) |>
   mutate(
     .scenario.id = tmp_sc_names,
@@ -231,7 +249,7 @@ sc_df_ls[["otc_best_mix"]] <- d_base_best |>
 # Scenarios exploring changes to best and best_mix -----------------------------
 
 name_bases <- c("only_otc_best_", "otc_best_", "otc_best_mix_")
-d_bases <- c(d_base_only_otc_best, d_base_otc_best, d_base_otc_best_mix)
+d_bases <- list(d_base_only_otc_best, d_base_otc_best, d_base_otc_best_mix)
 
 # Modify the discontinuation
 for (i in seq_along(name_bases)) {
@@ -242,7 +260,7 @@ for (i in seq_along(name_bases)) {
   )
   sc_names <- c(sc_names, tmp_sc_names)
   ints_ratios <- c(0.75, 0.5, 0.25, 1.25, 1.5, 1.75)
-  sc_df_ls[[paste0(name_bases[i], "disc")]] <- d_bases[i] |>
+  sc_df_ls[[paste0(name_bases[i], "disc")]] <- d_bases[[i]] |>
     slice_sample(n = length(ints_ratios), replace = TRUE) |>
     mutate(
       .scenario.id = tmp_sc_names,
@@ -261,7 +279,7 @@ for (i in seq_along(name_bases)) {
   )
   sc_names <- c(sc_names, tmp_sc_names)
   gfr_ints <- c(1, 3, 5, Inf)
-  sc_df_ls[[paste0(name_bases[i], "gfr")]] <- d_bases[i] |>
+  sc_df_ls[[paste0(name_bases[i], "gfr")]] <- d_bases[[i]] |>
     slice_sample(n = length(gfr_ints), replace = TRUE) |>
     mutate(
       .scenario.id = tmp_sc_names,
@@ -279,7 +297,7 @@ for (i in seq_along(name_bases)) {
   )
   sc_names <- c(sc_names, tmp_sc_names)
   tst_ints <- c(13, 52)
-  sc_df_ls[[paste0(name_bases[i], "hivtst")]] <- d_bases[i] |>
+  sc_df_ls[[paste0(name_bases[i], "hivtst")]] <- d_bases[[i]] |>
     slice_sample(n = length(tst_ints), replace = TRUE) |>
     mutate(
       .scenario.id = tmp_sc_names,
@@ -296,7 +314,7 @@ for (i in seq_along(name_bases)) {
   )
   sc_names <- c(sc_names, tmp_sc_names)
   tst_ints <- c(13, 52)
-  sc_df_ls[[paste0(name_bases[i], "stitst")]] <- d_bases[i] |>
+  sc_df_ls[[paste0(name_bases[i], "stitst")]] <- d_bases[[i]] |>
     slice_sample(n = length(tst_ints), replace = TRUE) |>
     mutate(
       .scenario.id = tmp_sc_names,
@@ -319,7 +337,7 @@ for (i in seq_along(name_bases)) {
     numeric(3),
     in.pcp = param$prep.adhr.dist
   )
-  sc_df_ls[[paste0(name_bases[i], "adhr")]] <- d_bases[i] |>
+  sc_df_ls[[paste0(name_bases[i], "adhr")]] <- d_bases[[i]] |>
     slice_sample(n = length(shifts), replace = TRUE) |>
     mutate(
       .scenario.id = tmp_sc_names,
@@ -332,10 +350,9 @@ for (i in seq_along(name_bases)) {
 
 # TODO: add switch scs?
 
-
-# sc_df_ls <- sc_df_ls[c(
-#   ""
-#   )]
+sc_df_ls <- sc_df_ls[c(
+  "only_otc_relaxed"
+  )]
 
 sc_ls <- lapply(sc_df_ls, EpiModel::create_scenario_list)
 scenarios_list <- Reduce(c, sc_ls, init = list())

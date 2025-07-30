@@ -28,7 +28,7 @@ apply_odds_ratio <- function(p, or) {
 ###   for `otc_best` we aim for +30% any PrEP -> 16 500 users `otc_best_025`
 ###   for `otc_best_mix` -> >0.5 && <0.6 (best guess 0.52)
 ################################################################################
-only_otc_relaxed_or <- 0.8
+only_otc_relaxed_or <- 0.75
 only_otc_best_or <- 0.595
 otc_best_or <- 0.25
 otc_best_mix_or <- 0.52
@@ -150,116 +150,116 @@ sc_df_ls[["baseline"]] <- tibble(
   prep.otc.start.rate_3 = 0
 )
 
-# Increase STD PrEP, still no OTC
-tmp_sc_names <- paste0("no_otc_prep_or", c("125", "150", "175", "200"))
-sc_names <- c(sc_names, tmp_sc_names)
-ors <- c(1.25, 1.50, 1.75, 2.0)
-sc_df_ls[["no_otc_prep_or"]] <- sc_df_ls[["baseline"]] |>
-  slice_sample(n = length(ors), replace = TRUE) |>
-  mutate(
-    .scenario.id = tmp_sc_names,
-    prep.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
-    prep.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
-    prep.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
-  )
-
-# Replace STD with OTC PrEP that behaves like STD PrEP
-tmp_sc_names <- paste0("only_otc_same_", c("100", "125", "150", "175", "200"))
-sc_names <- c(sc_names, tmp_sc_names)
-ors <- c(1.0, 1.25, 1.50, 1.75, 2.0)
-sc_df_ls[["only_otc_same"]] <- d_base_same |>
-  slice_sample(n = length(ors), replace = TRUE) |>
-  mutate(
-    .scenario.id = tmp_sc_names,
-    prep.start.rate_1 = 0,
-    prep.start.rate_2 = 0,
-    prep.start.rate_3 = 0,
-    prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
-    prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
-    prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
-  )
-
-# Replace STD with OTC PrEP that behaves like STD PrEP with relaxed indications
-tmp_sc_names <- paste0("only_otc_relaxed_", c("70", "75", "80", "85", "90"))
-sc_names <- c(sc_names, tmp_sc_names)
-ors <- c(0.7, 0.75, 0.8, 0.85, 0.9)
-sc_df_ls[["only_otc_relaxed"]] <- d_base_relaxed |>
-  slice_sample(n = length(ors), replace = TRUE) |>
-  mutate(
-    .scenario.id = tmp_sc_names,
-    prep.start.rate_1 = 0,
-    prep.start.rate_2 = 0,
-    prep.start.rate_3 = 0,
-    prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
-    prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
-    prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
-  )
-
-# Add OTC PrEP that behaves like STD PrEP
-tmp_sc_names <- paste0("otc_same_", c("025", "050", "075", "100"))
-sc_names <- c(sc_names, tmp_sc_names)
-ors <- c(0.25, 0.5, 0.75, 1.0)
-sc_df_ls[["otc_same"]] <- d_base_same |>
-  slice_sample(n = length(ors), replace = TRUE) |>
-  mutate(
-    .scenario.id = tmp_sc_names,
-    prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
-    prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
-    prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
-  )
-
-# Replace STD with OTC PrEP wiht best guess config
-tmp_sc_names <- paste0(
-  "only_otc_best_",
-  c("057", "058", "059", "060", "061")
-)
-sc_names <- c(sc_names, tmp_sc_names)
-ors <- c(0.57, 0.58, 0.59, 0.60, 0.61)
-sc_df_ls[["only_otc_best"]] <- d_base_best |>
-  slice_sample(n = length(ors), replace = TRUE) |>
-  mutate(
-    .scenario.id = tmp_sc_names,
-    prep.start.rate_1 = 0,
-    prep.start.rate_2 = 0,
-    prep.start.rate_3 = 0,
-    prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
-    prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
-    prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
-  )
-
-# Add OTC PrEP with "best guess" config
-tmp_sc_names <- paste0(
-  "otc_best_",
-  c("012", "025", "037", "050")
-)
-sc_names <- c(sc_names, tmp_sc_names)
-ors <- c(0.125, 0.25, 0.375, 0.5)
-sc_df_ls[["otc_best"]] <- d_base_best |>
-  slice_sample(n = length(ors), replace = TRUE) |>
-  mutate(
-    .scenario.id = tmp_sc_names,
-    prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
-    prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
-    prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
-  )
-
-tmp_sc_names <- paste0(
-  "otc_best_mix_",
-  c("052", "054", "056", "058")
-)
-sc_names <- c(sc_names, tmp_sc_names)
-ors <- c(0.52, 0.54, 0.56, 0.58)
-sc_df_ls[["otc_best_mix"]] <- d_base_best |>
-  slice_sample(n = length(ors), replace = TRUE) |>
-  mutate(
-    .scenario.id = tmp_sc_names,
-    prep.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
-    prep.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
-    prep.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors),
-    prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
-    prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
-    prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
-  )
+# # Increase STD PrEP, still no OTC
+# tmp_sc_names <- paste0("no_otc_prep_or", c("125", "150", "175", "200"))
+# sc_names <- c(sc_names, tmp_sc_names)
+# ors <- c(1.25, 1.50, 1.75, 2.0)
+# sc_df_ls[["no_otc_prep_or"]] <- sc_df_ls[["baseline"]] |>
+#   slice_sample(n = length(ors), replace = TRUE) |>
+#   mutate(
+#     .scenario.id = tmp_sc_names,
+#     prep.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
+#     prep.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
+#     prep.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
+#   )
+#
+# # Replace STD with OTC PrEP that behaves like STD PrEP
+# tmp_sc_names <- paste0("only_otc_same_", c("100", "125", "150", "175", "200"))
+# sc_names <- c(sc_names, tmp_sc_names)
+# ors <- c(1.0, 1.25, 1.50, 1.75, 2.0)
+# sc_df_ls[["only_otc_same"]] <- d_base_same |>
+#   slice_sample(n = length(ors), replace = TRUE) |>
+#   mutate(
+#     .scenario.id = tmp_sc_names,
+#     prep.start.rate_1 = 0,
+#     prep.start.rate_2 = 0,
+#     prep.start.rate_3 = 0,
+#     prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
+#     prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
+#     prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
+#   )
+#
+# # Replace STD with OTC PrEP that behaves like STD PrEP with relaxed indications
+# tmp_sc_names <- paste0("only_otc_relaxed_", c("70", "75", "80", "85", "90"))
+# sc_names <- c(sc_names, tmp_sc_names)
+# ors <- c(0.7, 0.75, 0.8, 0.85, 0.9)
+# sc_df_ls[["only_otc_relaxed"]] <- d_base_relaxed |>
+#   slice_sample(n = length(ors), replace = TRUE) |>
+#   mutate(
+#     .scenario.id = tmp_sc_names,
+#     prep.start.rate_1 = 0,
+#     prep.start.rate_2 = 0,
+#     prep.start.rate_3 = 0,
+#     prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
+#     prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
+#     prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
+#   )
+#
+# # Add OTC PrEP that behaves like STD PrEP
+# tmp_sc_names <- paste0("otc_same_", c("025", "050", "075", "100"))
+# sc_names <- c(sc_names, tmp_sc_names)
+# ors <- c(0.25, 0.5, 0.75, 1.0)
+# sc_df_ls[["otc_same"]] <- d_base_same |>
+#   slice_sample(n = length(ors), replace = TRUE) |>
+#   mutate(
+#     .scenario.id = tmp_sc_names,
+#     prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
+#     prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
+#     prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
+#   )
+#
+# # Replace STD with OTC PrEP wiht best guess config
+# tmp_sc_names <- paste0(
+#   "only_otc_best_",
+#   c("057", "058", "059", "060", "061")
+# )
+# sc_names <- c(sc_names, tmp_sc_names)
+# ors <- c(0.57, 0.58, 0.59, 0.60, 0.61)
+# sc_df_ls[["only_otc_best"]] <- d_base_best |>
+#   slice_sample(n = length(ors), replace = TRUE) |>
+#   mutate(
+#     .scenario.id = tmp_sc_names,
+#     prep.start.rate_1 = 0,
+#     prep.start.rate_2 = 0,
+#     prep.start.rate_3 = 0,
+#     prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
+#     prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
+#     prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
+#   )
+#
+# # Add OTC PrEP with "best guess" config
+# tmp_sc_names <- paste0(
+#   "otc_best_",
+#   c("012", "025", "037", "050")
+# )
+# sc_names <- c(sc_names, tmp_sc_names)
+# ors <- c(0.125, 0.25, 0.375, 0.5)
+# sc_df_ls[["otc_best"]] <- d_base_best |>
+#   slice_sample(n = length(ors), replace = TRUE) |>
+#   mutate(
+#     .scenario.id = tmp_sc_names,
+#     prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
+#     prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
+#     prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
+#   )
+#
+# tmp_sc_names <- paste0(
+#   "otc_best_mix_",
+#   c("052", "054", "056", "058")
+# )
+# sc_names <- c(sc_names, tmp_sc_names)
+# ors <- c(0.52, 0.54, 0.56, 0.58)
+# sc_df_ls[["otc_best_mix"]] <- d_base_best |>
+#   slice_sample(n = length(ors), replace = TRUE) |>
+#   mutate(
+#     .scenario.id = tmp_sc_names,
+#     prep.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
+#     prep.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
+#     prep.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors),
+#     prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
+#     prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
+#     prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
+#   )
 
 # Scenarios exploring changes to relaxed, best and best_mix --------------------
 name_bases <- c(
@@ -275,15 +275,15 @@ d_bases <- list(
   d_base_otc_best_mix
 )
 
-# Modify the discontinuation
 for (i in seq_along(name_bases)) {
+  # Modify the discontinuation
   tmp_sc_names <- paste0(
     name_bases[i],
     "disc_",
-    c("075", "050", "025", "125", "150", "175")
+    c("025", "050", "075", "100", "125", "150", "175")
   )
   sc_names <- c(sc_names, tmp_sc_names)
-  ints_ratios <- c(0.75, 0.5, 0.25, 1.25, 1.5, 1.75)
+  ints_ratios <- c(0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75)
   sc_df_ls[[paste0(name_bases[i], "disc")]] <- d_bases[[i]] |>
     slice_sample(n = length(ints_ratios), replace = TRUE) |>
     mutate(
@@ -292,69 +292,62 @@ for (i in seq_along(name_bases)) {
       prep.otc.discont.int_2 = prep.otc.discont.int_2 * ints_ratios,
       prep.otc.discont.int_3 = prep.otc.discont.int_3 * ints_ratios
     )
-}
 
-# Modify gfr testing
-for (i in seq_along(name_bases)) {
+  # Modify gfr testing
   tmp_sc_names <- paste0(
     name_bases[i],
     "gfr_",
-    c("1", "3", "5", "Inf")
+    c("same", "1", "2", "3", "5", "Inf")
   )
   sc_names <- c(sc_names, tmp_sc_names)
-  gfr_ints <- c(1, 3, 5, Inf)
+  low_gfr_ints <- c(1, 1, 2, 3, 5, Inf)
+  high_gfr_ints <- c(1 / 2, 1, 2, 3, 5, Inf)
   sc_df_ls[[paste0(name_bases[i], "gfr")]] <- d_bases[[i]] |>
-    slice_sample(n = length(gfr_ints), replace = TRUE) |>
+    slice_sample(n = length(low_gfr_ints), replace = TRUE) |>
     mutate(
       .scenario.id = tmp_sc_names,
-      prep.otc.gfr.low.risk.int = year_steps * gfr_ints,
-      prep.otc.gfr.high.risk.int = year_steps * gfr_ints
+      prep.otc.gfr.low.risk.int = year_steps * low_gfr_ints,
+      prep.otc.gfr.high.risk.int = year_steps * high_gfr_ints
     )
-}
 
-# Modify hiv testing
-for (i in seq_along(name_bases)) {
+  # Modify hiv testing
   tmp_sc_names <- paste0(
     name_bases[i],
     "hivtst_",
-    c("13", "52") # default is 26
+    c("13", "26", "52") # default is 26
   )
   sc_names <- c(sc_names, tmp_sc_names)
-  tst_ints <- c(13, 52)
+  tst_ints <- c(13, 26, 52)
   sc_df_ls[[paste0(name_bases[i], "hivtst")]] <- d_bases[[i]] |>
     slice_sample(n = length(tst_ints), replace = TRUE) |>
     mutate(
       .scenario.id = tmp_sc_names,
       prep.otc.tst.int = tst_ints
     )
-}
 
-# Modify STI testing
-for (i in seq_along(name_bases)) {
+  # Modify STI testing
   tmp_sc_names <- paste0(
     name_bases[i],
     "stitst_",
-    c("13", "52") # default is 26
+    c("13", "26", "52") # default is 26
   )
   sc_names <- c(sc_names, tmp_sc_names)
-  tst_ints <- c(13, 52)
+  tst_ints <- c(13, 26, 52)
   sc_df_ls[[paste0(name_bases[i], "stitst")]] <- d_bases[[i]] |>
     slice_sample(n = length(tst_ints), replace = TRUE) |>
     mutate(
       .scenario.id = tmp_sc_names,
       sti.screen.prep.otc.rate = 1 / tst_ints
     )
-}
 
-# Modify ADHR
-for (i in seq_along(name_bases)) {
+  # Modify ADHR
   tmp_sc_names <- paste0(
     name_bases[i],
     "adhr_",
-    c("m20", "m10", "m05", "p05", "p10", "p20")
+    c("m20", "m10", "m05", "base", "p05", "p10", "p20")
   )
   sc_names <- c(sc_names, tmp_sc_names)
-  shifts <- c(-20, -10, -5, 5, 10, 20) / 100
+  shifts <- c(-20, -10, -5, 0, 5, 10, 20) / 100
   adhrs <- vapply(
     shifts,
     EpiModelHIV::reallocate_pcp,
@@ -374,9 +367,9 @@ for (i in seq_along(name_bases)) {
 
 # TODO: add switch scs?
 
-sc_df_ls <- sc_df_ls[c(
-  "only_otc_relaxed"
-)]
+# sc_df_ls <- sc_df_ls[c(
+#   "only_otc_relaxed"
+# )]
 
 sc_ls <- lapply(sc_df_ls, EpiModel::create_scenario_list)
 scenarios_list <- Reduce(c, sc_ls, init = list())

@@ -5,7 +5,7 @@
 .DS_Store
 .jpeg
 .rda
-.html
+*.html
 data/intermediate
 data/run
 data/output

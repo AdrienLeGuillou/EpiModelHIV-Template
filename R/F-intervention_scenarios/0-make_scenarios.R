@@ -28,6 +28,7 @@ apply_odds_ratio <- function(p, or) {
 ###   for `otc_best` we aim for +30% any PrEP -> 16 500 users `otc_best_025`
 ###   for `otc_best_mix` -> >0.5 && <0.6 (best guess 0.52)
 ################################################################################
+only_otc_relaxed_or <- 0.8
 only_otc_best_or <- 0.595
 otc_best_or <- 0.25
 otc_best_mix_or <- 0.52
@@ -95,9 +96,23 @@ d_base_best <- tibble(
   prep.otc.hbv.flare.prob = param$prep.hbv.flare.prob
 )
 
+tmp_or <- only_otc_relaxed_or
+d_base_only_otc_relaxed <- d_base_relaxed |>
+  mutate(
+    prep.start.rate_1 = 0,
+    prep.start.rate_2 = 0,
+    prep.start.rate_3 = 0,
+    prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], tmp_or),
+    prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], tmp_or),
+    prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], tmp_or)
+  )
+
 tmp_or <- only_otc_best_or
 d_base_only_otc_best <- d_base_best |>
   mutate(
+    prep.start.rate_1 = 0,
+    prep.start.rate_2 = 0,
+    prep.start.rate_3 = 0,
     prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], tmp_or),
     prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], tmp_or),
     prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], tmp_or)
@@ -246,10 +261,19 @@ sc_df_ls[["otc_best_mix"]] <- d_base_best |>
     prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
   )
 
-# Scenarios exploring changes to best and best_mix -----------------------------
-
-name_bases <- c("only_otc_best_", "otc_best_", "otc_best_mix_")
-d_bases <- list(d_base_only_otc_best, d_base_otc_best, d_base_otc_best_mix)
+# Scenarios exploring changes to relaxed, best and best_mix --------------------
+name_bases <- c(
+  "only_otc_relaxed_",
+  "only_otc_best_",
+  "otc_best_",
+  "otc_best_mix_"
+)
+d_bases <- list(
+  d_base_only_otc_relaxed,
+  d_base_only_otc_best,
+  d_base_otc_best,
+  d_base_otc_best_mix
+)
 
 # Modify the discontinuation
 for (i in seq_along(name_bases)) {
@@ -352,7 +376,7 @@ for (i in seq_along(name_bases)) {
 
 sc_df_ls <- sc_df_ls[c(
   "only_otc_relaxed"
-  )]
+)]
 
 sc_ls <- lapply(sc_df_ls, EpiModel::create_scenario_list)
 scenarios_list <- Reduce(c, sc_ls, init = list())

@@ -36,7 +36,13 @@ format_table(d_sc_raw, var_labels, format_patterns) |>
 
 # Make sub tables per scenario family ------------------------------------------
 
-scs <- c("only_otc_best", "only_otc_relaxed", "otc_best", "otc_best_mix")
+scs <- c(
+  "only_otc_best",
+  "only_otc_relaxed",
+  "otc_best",
+  "otc_best_mix",
+  "only_otc_same"
+)
 for (i in seq_along(scs)) {
   sc <- scs[i]
   sc_ref <- paste0("df__", sc, "_adhr_base.rds")

@@ -50,12 +50,7 @@ b = 12645
 p = c(1.15, 1.3, 1.4, 1.5)
 b * p
 x = c(14621, 16247, 17692, 18940)
-x/b - 1
-
-
-
-
-
+x / b - 1
 
 
 # Pot PrEP vs OTC --------------------------------------------------------------
@@ -66,9 +61,15 @@ library(tidyr)
 library(ggplot2)
 
 theme_set(theme_light())
-scs <- c("only_otc_best", "only_otc_relaxed", "otc_best", "otc_best_mix")
+scs <- c(
+  "only_otc_best",
+  "only_otc_relaxed",
+  "otc_best",
+  "otc_best_mix",
+  "only_otc_same"
+)
 sc <- scs[4]
-d <- readRDS(paste0(scenarios_dir, "merged_tibbles/df__", sc ,"_adhr_base.rds"))
+d <- readRDS(paste0(scenarios_dir, "merged_tibbles/df__", sc, "_adhr_base.rds"))
 
 d |>
   select(sim, time, prepCurr, prep.otcCurr) |>

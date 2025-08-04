@@ -24,7 +24,7 @@ var_labels <- c(
   "cml_pia_h"    = "HIV PIA Hispanic (10y)",
   "cml_pia_w"    = "HIV PIA White (10y)",
 
-  "cml_nnt_otc" = "Number of Person Year on OTC to avert 1 HIV infection",
+  "cml_nnt_otc" = "NNT HIV PY on OTC (10y)",
 
   "cml_incid"    = "HIV Cumulative Incidence All (10y)",
   "cml_incid_b"  = "HIV Cumulative Incidence Black (10y)",
@@ -84,15 +84,19 @@ var_labels <- c(
   "cml_hbv_flare"           = "HBV Flares Cumulative (10y)",
   "cml_hbv_flare_otc"       = "HBV Flares Cumulative - OTC PrEP(10y)",
   "cml_hbv_flare_std"       = "HBV Flares Cumulative - STD PrEP(10y)",
+  "cml_hbv_flare_otc_ir100k " = "HBV Flares IR100k OTC users (10y)",
 
   "cml_resist" = "Any ART resistance Cumulative (10y)",
   "cml_resist_tdf" = "TDF resistance Cumulative (10y)",
   "cml_resist_ftc" = "FTC resistance Cumulative (10y)",
   "cml_resist_prep" = "Any ART resistance Cumulative - HIV inf while PrEP (10y)",
   "cml_resist_hiv" = "Any ART resistance Cumulative - PrEP start while HIV (10y)",
-  "lst_resist_prev" = "Any ART resistance Prevalence (ly)",
-  "lst_resist_tdf_prev" = "TDF resistance Prevalence (ly)",
-  "lst_resist_ftc_prev" = "FTC resistance Prevalence (ly)",
+  "lst_resist_prev" = "Any ART resistance Prevalence (all pop) (ly)",
+  "lst_resist_tdf_prev" = "TDF resistance Prevalence  (all pop) (ly)",
+  "lst_resist_ftc_prev" = "FTC resistance Prevalence (all pop) (ly)",
+  "lst_resist_hiv_prev" = "Any ART resistance Prevalence (among HIV+) (ly)",
+  "lst_resist_hiv_tdf_prev" = "TDF resistance Prevalence (among HIV+) (ly)",
+  "lst_resist_hiv_ftc_prev" = "FTC resistance Prevalence (among HIV+) (ly)",
 
   "lst_num" = "num"
 )
@@ -113,13 +117,13 @@ unused_labels <- c(
   "cml_nnt_w"    = "HIV NNT White (10y)"
 )
 
-var_labels <- c(
+first_table_labels <- c(
   # Epi
   "lst_ir100",
   "cml_incid",
   "cml_nia_all",
   "cml_pia_all",
-  # NNT
+  "cml_nnt_otc",
   "lst_resist_prev",
   # cml resist per PY
   "cml_gfr_drop",

@@ -87,6 +87,7 @@ mutate_outcomes <- function(d) {
       cml_hbv_flare = (dbg_hbv_flares_std + dbg_hbv_flares_otc),
       cml_hbv_flare_otc = dbg_hbv_flares_otc,
       cml_hbv_flare_std = dbg_hbv_flares_std,
+      cml_hbv_flare_otc_ir100k = dbg_hbv_flares_otc / 1e5 * cml_prep_otc_py,
       # Resistance -------------------------------------------------------------
       cml_resist = any.resist.incid,
       cml_resist_tdf = tdf.resist.incid,
@@ -96,6 +97,9 @@ mutate_outcomes <- function(d) {
       lst_resist_prev = any.resist.prev / num,
       lst_resist_tdf_prev = tdf.resist.prev / num,
       lst_resist_ftc_prev = ftc.resist.prev / num,
+      lst_resist_hiv_prev = any.resist.prev / (i__B + i__H + i__W),
+      lst_resist_hiv_tdf_prev = tdf.resist.prev / (i__B + i__H + i__W),
+      lst_resist_hiv_ftc_prev = ftc.resist.prev / (i__B + i__H + i__W),
       #
       # TODO: separate OTC prep from STD prep?
       #

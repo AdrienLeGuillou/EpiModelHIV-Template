@@ -16,7 +16,8 @@ source("R/F-intervention_scenarios/outcomes.R", local = TRUE)
 
 # Process ----------------------------------------------------------------------
 
-scenarios_tibble_dir <- fs::path(scenarios_dir, "merged_tibbles")
+# scenarios_tibble_dir <- fs::path(scenarios_dir, "merged_tibbles")
+scenarios_tibble_dir <- "./data/run/sav_scs_07_30/merged_tibbles/"
 scenarios_info <- EpiModelHPC::get_scenarios_tibble_infos(scenarios_tibble_dir)
 
 d_ref <- make_d_ref(fs::path(scenarios_tibble_dir, "df__baseline.rds"))

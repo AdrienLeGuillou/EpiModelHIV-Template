@@ -32,5 +32,32 @@ glimpse(d_sc_raw)
 source("R/F-intervention_scenarios/labels.R", local = TRUE)
 
 format_table(d_sc_raw, var_labels, format_patterns) |>
-  # as.list()
   write.csv(fs::path(output_dir, "table.csv"), row.names = FALSE)
+
+# Make sub tables per scenario family ------------------------------------------
+
+scs <- c("only_otc_best", "only_otc_relaxed", "otc_best", "otc_best_mix")
+for (i in seq_along(scs)) {
+  sc <- scs[i]
+  sc_ref <- paste0("df__", sc, "_adhr_base.rds")
+  d_ref <- make_d_ref(fs::path(scenarios_tibble_dir, sc_ref))
+
+  sc_info <- scenarios_info |>
+    filter(stringr::str_detect(scenario_name, paste0("^", sc, ".*")))
+
+  d_ls <- future.apply::future_lapply(
+    seq_len(nrow(sc_info)),
+    \(i) process_one_scenario(scenarios_info[i, ], d_ref)
+  )
+
+  d_sc_raw <- dplyr::bind_rows(d_ls)
+  glimpse(d_sc_raw)
+
+  source("R/F-intervention_scenarios/labels.R", local = TRUE)
+
+  format_table(d_sc_raw, var_labels, format_patterns) |>
+    write.csv(
+      fs::path(output_dir, paste0("table__", sc, ".csv")),
+      row.names = FALSE
+    )
+}

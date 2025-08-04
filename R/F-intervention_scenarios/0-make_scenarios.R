@@ -129,6 +129,9 @@ d_base_otc_best <- d_base_best |>
 tmp_or <- otc_best_mix_or
 d_base_otc_best_mix <- d_base_best |>
   mutate(
+    prep.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], tmp_or),
+    prep.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], tmp_or),
+    prep.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], tmp_or),
     prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], tmp_or),
     prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], tmp_or),
     prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], tmp_or)

@@ -53,6 +53,7 @@ mutate_outcomes <- function(d) {
       lst_prep_otc_elig = prep.otc.indic,
       lst_prep_otc_mean_dur = prep.otc.dur.mean,
       lst_prep_otc_mean_eps = dbg_prep_otc_eps_mean,
+      cml_prep_otc_py = prep.otcCurr / 52,
       lst_prep_any = prepCurr + prep.otcCurr,
 
       lst_prep_otc_std_indic_cov = prep.otc.std.indic / prep.otcCurr,
@@ -126,8 +127,8 @@ mutate_nia_pia <- function(d, ref_val, var, var_nia, var_pia) {
   d
 }
 
-mutate_pia <- function(d, var, var_nia, var_pia) {
-  d[[var_pia]] <- d[[var_nia]] / (d[[var_nia]] + d[[var]])
+mutate_nnt <- function(d, var_nnt, var_nia, var_tt) {
+  d[[var_nnt]] <- d[[var_tt]] / d[[var_nia]]
   d
 }
 
@@ -172,6 +173,8 @@ process_one_scenario <- function(scenario_infos, d_ref) {
       paste0("cml_pia_", pop)
     )
   }
+
+  d <- mutate_nnt(d, "cml_nnt_otc", "cml_nia_all", "cml_prep_otc_py")
 
   d
 }

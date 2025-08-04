@@ -24,6 +24,8 @@ var_labels <- c(
   "cml_pia_h"    = "HIV PIA Hispanic (10y)",
   "cml_pia_w"    = "HIV PIA White (10y)",
 
+  "cml_nnt_otc" = "Number of Person Year on OTC to avert 1 HIV infection",
+
   "cml_incid"    = "HIV Cumulative Incidence All (10y)",
   "cml_incid_b"  = "HIV Cumulative Incidence Black (10y)",
   "cml_incid_h"  = "HIV Cumulative Incidence Hispanic (10y)",
@@ -109,6 +111,23 @@ unused_labels <- c(
   "cml_nnt_b"    = "HIV NNT Black (10y)",
   "cml_nnt_h"    = "HIV NNT Hispanic (10y)",
   "cml_nnt_w"    = "HIV NNT White (10y)"
+)
+
+var_labels <- c(
+  # Epi
+  "lst_ir100",
+  "cml_incid",
+  "cml_nia_all",
+  "cml_pia_all",
+  # NNT
+  "lst_resist_prev",
+  # cml resist per PY
+  "cml_gfr_drop",
+  "cml_gfr_drop_gfr90",
+  "cml_gfr_drop_yo50",
+  "lst_prep_any_gfr_lt60",
+  "cml_hbv_flare",
+  "lst_hbv_flare_ir100k"
 )
 
 # Formatters for the variables

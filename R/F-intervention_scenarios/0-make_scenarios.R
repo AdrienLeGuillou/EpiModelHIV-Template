@@ -393,33 +393,44 @@ d_bases <- list(
 )
 
 for (i in seq_along(name_bases)) {
-  tmp_sc_names <- paste0( name_bases[i], "always_hivtst")
+  # tmp_sc_names <- paste0( name_bases[i], "always_hivtst")
+  # sc_names <- c(sc_names, tmp_sc_names)
+  # sc_df_ls[[paste0(name_bases[i], "always_hivtst")]] <- d_bases[[i]] |>
+  #   slice_sample(n = 1, replace = TRUE) |>
+  #   mutate(
+  #     .scenario.id = tmp_sc_names,
+  #     prep.otc.always.hiv.tst = 1
+  #   )
+  #
+  # tmp_sc_names <- paste0(name_bases[i], "always_stitst")
+  # sc_names <- c(sc_names, tmp_sc_names)
+  # sc_df_ls[[paste0(name_bases[i], "always_stitst")]] <- d_bases[[i]] |>
+  #   slice_sample(n = 1, replace = TRUE) |>
+  #   mutate(
+  #     .scenario.id = tmp_sc_names,
+  #     prep.otc.always.sti.tst = 1
+  #   )
+  #
+  # tmp_sc_names <- paste0(name_bases[i], "always_bothtst")
+  # sc_names <- c(sc_names, tmp_sc_names)
+  # sc_df_ls[[paste0(name_bases[i], "always_bothtst")]] <- d_bases[[i]] |>
+  #   slice_sample(n = 1, replace = TRUE) |>
+  #   mutate(
+  #     .scenario.id = tmp_sc_names,
+  #     prep.otc.always.hiv.tst = 1,
+  #     prep.otc.always.sti.tst = 1
+  #   )
+  #
+  hivtst_prob <- c(0.25, 0.5, 0.75)
+  tmp_sc_names <- paste0(name_bases[i], "some_hivtst_", c(25, 50, 75))
   sc_names <- c(sc_names, tmp_sc_names)
-  sc_df_ls[[paste0(name_bases[i], "always_hivtst")]] <- d_bases[[i]] |>
-    slice_sample(n = 1, replace = TRUE) |>
+  sc_df_ls[[paste0(name_bases[i], "some_hivtst")]] <- d_bases[[i]] |>
+    slice_sample(n = length(hivtst_prob), replace = TRUE) |>
     mutate(
       .scenario.id = tmp_sc_names,
-      prep.otc.always.hiv.tst = 1
+      prep.otc.always.hiv.tst = hivtst_prob
     )
 
-  tmp_sc_names <- paste0(name_bases[i], "always_stitst")
-  sc_names <- c(sc_names, tmp_sc_names)
-  sc_df_ls[[paste0(name_bases[i], "always_stitst")]] <- d_bases[[i]] |>
-    slice_sample(n = 1, replace = TRUE) |>
-    mutate(
-      .scenario.id = tmp_sc_names,
-      prep.otc.always.sti.tst = 1
-    )
-
-  tmp_sc_names <- paste0(name_bases[i], "always_bothtst")
-  sc_names <- c(sc_names, tmp_sc_names)
-  sc_df_ls[[paste0(name_bases[i], "always_bothtst")]] <- d_bases[[i]] |>
-    slice_sample(n = 1, replace = TRUE) |>
-    mutate(
-      .scenario.id = tmp_sc_names,
-      prep.otc.always.hiv.tst = 1,
-      prep.otc.always.sti.tst = 1
-    )
 }
 
 

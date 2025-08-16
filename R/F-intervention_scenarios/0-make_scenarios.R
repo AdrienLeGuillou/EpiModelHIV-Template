@@ -26,12 +26,12 @@ apply_odds_ratio <- function(p, or) {
 ###   ors <- c(1.25, 1.50, 1.75, 2.0)
 ###         ~ +15%, +30%, +40%, +50%
 ###   for `otc_best` we aim for +30% any PrEP -> 16 500 users `otc_best_025`
-###   for `otc_best_mix` -> >0.5 && <0.6 (best guess 0.52)
+###   for `otc_mix` -> >0.5 && <0.6 (best guess 0.52)
 ################################################################################
 only_otc_relaxed_or <- 0.75
 only_otc_best_or <- 0.595
 otc_best_or <- 0.25
-otc_best_mix_or <- 0.52
+otc_mix_or <- 0.52
 
 # Base DF for scenarios: -------------------------------------------------------
 #
@@ -136,8 +136,8 @@ d_base_otc_best <- d_base_best |>
     prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], tmp_or)
   )
 
-tmp_or <- otc_best_mix_or
-d_base_otc_best_mix <- d_base_best |>
+tmp_or <- otc_mix_or
+d_base_otc_mix <- d_base_best |>
   mutate(
     prep.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], tmp_or),
     prep.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], tmp_or),
@@ -257,12 +257,12 @@ sc_names <- c()
 #   )
 #
 # tmp_sc_names <- paste0(
-#   "otc_best_mix_",
+#   "otc_mix_",
 #   c("052", "054", "056", "058")
 # )
 # sc_names <- c(sc_names, tmp_sc_names)
 # ors <- c(0.52, 0.54, 0.56, 0.58)
-# sc_df_ls[["otc_best_mix"]] <- d_base_best |>
+# sc_df_ls[["otc_mix"]] <- d_base_best |>
 #   slice_sample(n = length(ors), replace = TRUE) |>
 #   mutate(
 #     .scenario.id = tmp_sc_names,
@@ -274,19 +274,19 @@ sc_names <- c()
 #     prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
 #   )
 
-# # Scenarios exploring changes to relaxed, best and best_mix --------------------
+# # Scenarios exploring changes to relaxed, best and mix --------------------
 # name_bases <- c(
 #   "only_otc_relaxed_",
 #   "only_otc_best_",
 #   "otc_best_",
-#   "otc_best_mix_",
+#   "otc_mix_",
 #   "base_only_otc_same_"
 # )
 # d_bases <- list(
 #   d_base_only_otc_relaxed,
 #   d_base_only_otc_best,
 #   d_base_otc_best,
-#   d_base_otc_best_mix,
+#   d_base_otc_mix,
 #   d_base_only_otc_same
 # )
 #
@@ -384,12 +384,12 @@ sc_names <- c()
 name_bases <- c(
   "only_otc_best_",
   "otc_best_",
-  "otc_best_mix_"
+  "otc_mix_"
 )
 d_bases <- list(
   d_base_only_otc_best,
   d_base_otc_best,
-  d_base_otc_best_mix
+  d_base_otc_mix
 )
 
 for (i in seq_along(name_bases)) {

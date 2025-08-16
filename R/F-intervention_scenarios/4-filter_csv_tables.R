@@ -1,4 +1,4 @@
-# Setup ------------------------------------------------------------------------
+# Setup -----------------------------------------------------------------------
 library(dplyr)
 library(tidyr)
 
@@ -6,6 +6,12 @@ source("R/shared_variables.R", local = TRUE)
 source("R/F-intervention_scenarios/z-context.R", local = TRUE)
 source("R/F-intervention_scenarios/labels.R", local = TRUE)
 
+d_raw <- readr::read_csv("data/output/table.csv")
+d_clean_scs <- d_raw[order_scs(d_raw$scenario_name), ] |>
+  mutate(scenario_name = nicefy_scs_names(scenario_name))
+readr::write_csv(d_clean_scs, "data/output/clean_scs_table.csv")
+
+# First Table ------------------------------------------------------------------
 first_table_labels <- c(
   # Process
   "lst_prep_any",
@@ -31,19 +37,36 @@ first_table_scs <- tibble(
   scenario_name = c(
     "baseline",
     "base_only_otc_same_adhr_base",
-    "only_otc_best_adhr_base",
     "only_otc_relaxed_adhr_base",
+    "only_otc_best_adhr_base",
     "no_otc_prep_or150",
     "otc_best_adhr_base",
-    "otc_best_mix_adhr_base"
+    "otc_mix_adhr_base"
   )
 )
 
-ft <- readr::read_csv("data/output/table.csv")
-
-ft <- first_table_scs |>
-  left_join(ft, by = "scenario_name") |>
+d_first <- first_table_scs |>
+  left_join(d_raw, by = "scenario_name") |>
   select(scenario_name, any_of(unname(labels))) |>
   mutate(scenario_name = nicefy_scs_names(scenario_name))
 
-readr::write_csv(ft, "data/output/table1.csv")
+readr::write_csv(d_first, "data/output/table1.csv")
+
+# Per Sub Tables ---------------------------------------------------------------
+
+sub_table_names <- c(
+  "base_only_otc_same",
+  "only_otc_relaxed",
+  "only_otc_best",
+  "otc_mix",
+  "otc_best"
+)
+for (tbl in sub_table_names) {
+  d_raw_t <- readr::read_csv(paste0("data/output/table__", tbl, ".csv"))
+
+  d_t <- d_raw_t[order_scs(d_raw_t$scenario_name), ] |>
+    select(scenario_name, any_of(unname(labels))) |>
+    mutate(scenario_name = nicefy_scs_names(scenario_name))
+
+  readr::write_csv(d_t, paste0("data/output/table1__", tbl, ".csv"))
+}

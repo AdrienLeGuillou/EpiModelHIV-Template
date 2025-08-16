@@ -161,54 +161,80 @@ for (nms in names(fmts)) {
 
 scenarios_root_names <- c(
   "baseline" = "Standard PrEP Only",
-  "base_only_otc_same" = "Substituting STD with OTC - Same",
-  "only_otc_best" = "Substituting STD with OTC - Best Guess",
-  "only_otc_relaxed" = "Substituting STD with OTC - Relaxed Indications",
   "no_otc_prep" = "Standard PrEP Only",
-  "otc_best_mix" = "Adding OTC PrEP Best Guess - Same Start Rate",
-  "otc_best" = "Adding OTC PrEP Best Guess - Lower Start Rate"
+  "base_only_otc_same" = "Substituting STD with OTC - Same",
+  "only_otc_same" = "Substituting STD with OTC - Same",
+  "only_otc_relaxed" = "Substituting STD with OTC - Relaxed Indications",
+  "only_otc_best" = "Substituting STD with OTC - Best Guess",
+  "otc_mix" = "Adding OTC PrEP Best Guess - Lower STD Start Rate",
+  "otc_best" = "Adding OTC PrEP Best Guess - Keep STD Start Rate"
 )
 
 scenarios_prefix_names <- c(
-  "_adhr_base" = "",
   "_or125" = ": OR 1.25",
   "_or150" = ": OR 1.5",
   "_or175" = ": OR 1.75",
   "_or200" = ": OR 2",
-  "_adhr_m05" = ": High Adherence -5%",
-  "_adhr_m10" = ": High Adherence -10%",
   "_adhr_m20" = ": High Adherence -20%",
+  "_adhr_m10" = ": High Adherence -10%",
+  "_adhr_m05" = ": High Adherence -5%",
+  "_adhr_base" = "",
   "_adhr_p05" = ": High Adherence +5%",
   "_adhr_p10" = ": High Adherence +10%",
   "_adhr_p20" = ": High Adherence +20%",
-  "_disc_025" = ": Time to Discontinuation x0.25",
-  "_disc_050" = ": Time to Discontinuation x0.5",
-  "_disc_075" = ": Time to Discontinuation x0.75",
-  "_disc_100" = ": Time to Discontinuation x1",
-  "_disc_125" = ": Time to Discontinuation x1.25",
-  "_disc_150" = ": Time to Discontinuation x1.5",
   "_disc_175" = ": Time to Discontinuation x1.75",
-  "_same_gfr_1" = ": GFR Test Every 1 year",
-  "_same_gfr_2" = ": GFR Test Every 2 year",
-  "_same_gfr_3" = ": GFR Test Every 3 year",
-  "_same_gfr_5" = ": GFR Test Every 5 year",
-  "_same_gfr_Inf" = ": GFR Test Never",
-  "_same_gfr_same" = ": GFR Test as Recommended",
+  "_disc_150" = ": Time to Discontinuation x1.5",
+  "_disc_125" = ": Time to Discontinuation x1.25",
+  "_disc_100" = ": Time to Discontinuation x1",
+  "_disc_075" = ": Time to Discontinuation x0.75",
+  "_disc_050" = ": Time to Discontinuation x0.5",
+  "_disc_025" = ": Time to Discontinuation x0.25",
+  "_disc01" = ": Time to Discontinuation x0.1",
+  "_disc02" = ": Time to Discontinuation x0.2",
+  "_disc03" = ": Time to Discontinuation x0.3",
+  "_disc04" = ": Time to Discontinuation x0.4",
+  "_gfr_same" = ": GFR Test as Recommended",
+  "_gfr_1" = ": GFR Test Every 1 year",
+  "_gfr_2" = ": GFR Test Every 2 year",
+  "_gfr_3" = ": GFR Test Every 3 year",
+  "_gfr_5" = ": GFR Test Every 5 year",
+  "_gfr_Inf" = ": GFR Test Never",
   "_hivtst_13" = ": HIV Test Every 3 Months",
   "_hivtst_26" = ": HIV Test Every 6 Months",
   "_hivtst_52" = ": HIV Test Every 12 Months",
   "_stitst_13" = ": STI Test Every 3 Months",
   "_stitst_26" = ": STI Test Every 6 Months",
   "_stitst_52" = ": STI Test Every 12 Months",
-  "_always_bothtst" = ": Always Test HIV and STI at OTC Start",
-  "_always_hivtst" = ": Always Test HIV at OTC Start",
-  "_always_stitst" = ": Always Test STI at OTC Start",
   "_some_hivtst_25" = ": Some (25%) HIV Test at OTC Start",
   "_some_hivtst_50" = ": Some (50%) HIV Test at OTC Start",
-  "_some_hivtst_75" = ": Some (75%) HIV Test at OTC Start"
+  "_some_hivtst_75" = ": Some (75%) HIV Test at OTC Start",
+  "_always_hivtst" = ": Always Test HIV at OTC Start",
+  "_always_stitst" = ": Always Test STI at OTC Start",
+  "_always_bothtst" = ": Always Test HIV and STI at OTC Start",
+  "_100" = ": OR 1",
+  "_125" = ": OR 1.25",
+  "_150" = ": OR 1.5",
+  "_175" = ": OR 1.75",
+  "_200" = ": OR 2"
 )
 
 nicefy_scs_names <- function(scs_names) {
   stringr::str_replace_all(scs_names, scenarios_root_names) |>
     stringr::str_replace_all(scenarios_prefix_names)
+}
+
+order_scs <- function(scs_names) {
+  root_order <- stringr::str_pad(
+    seq_along(scenarios_root_names),
+    2, "left", "0"
+  )
+  names(root_order) <- names(scenarios_root_names)
+  prefix_order <- stringr::str_pad(
+    seq_along(scenarios_prefix_names),
+    2, "left", "0"
+  )
+  names(prefix_order) <- names(scenarios_prefix_names)
+  sc_order <- stringr::str_replace_all(scs_names, root_order) |>
+    stringr::str_replace_all(prefix_order)
+  order(sc_order)
 }

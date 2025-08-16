@@ -41,7 +41,7 @@ scs <- c(
   "only_otc_best",
   "only_otc_relaxed",
   "otc_best",
-  "otc_best_mix",
+  "otc_mix",
   "base_only_otc_same"
 )
 for (i in seq_along(scs)) {

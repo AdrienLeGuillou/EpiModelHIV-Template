@@ -6,30 +6,32 @@
 ## This script should not be run directly. But `sourced` from other scripts
 ## within the `R/F-intervention_scenarios/` directory.
 
+source("R/F-intervention_scenarios/utils-formats.R", local = TRUE)
+
 # Conversion between variable name and final label
 var_labels <- c(
   # Epi
-  "lst_ir100"    = "HIV IR100 All (ly)",
-  "lst_ir100_b"  = "HIV IR100 Black (ly)",
-  "lst_ir100_h"  = "HIV IR100 Hispanic (ly)",
-  "lst_ir100_w"  = "HIV IR100 White (ly)",
+  "lst_ir100" = "HIV IR100 All (ly)",
+  "lst_ir100_b" = "HIV IR100 Black (ly)",
+  "lst_ir100_h" = "HIV IR100 Hispanic (ly)",
+  "lst_ir100_w" = "HIV IR100 White (ly)",
 
-  "cml_nia_all"      = "HIV NIA All (10y)",
-  "cml_nia_b"    = "HIV NIA Black (10y)",
-  "cml_nia_h"    = "HIV NIA Hispanic (10y)",
-  "cml_nia_w"    = "HIV NIA White (10y)",
+  "cml_nia_all" = "HIV NIA All (10y)",
+  "cml_nia_b" = "HIV NIA Black (10y)",
+  "cml_nia_h" = "HIV NIA Hispanic (10y)",
+  "cml_nia_w" = "HIV NIA White (10y)",
 
-  "cml_pia_all"      = "HIV PIA All (10y)",
-  "cml_pia_b"    = "HIV PIA Black (10y)",
-  "cml_pia_h"    = "HIV PIA Hispanic (10y)",
-  "cml_pia_w"    = "HIV PIA White (10y)",
+  "cml_pia_all" = "HIV PIA All (10y)",
+  "cml_pia_b" = "HIV PIA Black (10y)",
+  "cml_pia_h" = "HIV PIA Hispanic (10y)",
+  "cml_pia_w" = "HIV PIA White (10y)",
 
   "cml_nnt_otc" = "NNT HIV PY on OTC (10y)",
 
-  "cml_incid"    = "HIV Cumulative Incidence All (10y)",
-  "cml_incid_b"  = "HIV Cumulative Incidence Black (10y)",
-  "cml_incid_h"  = "HIV Cumulative Incidence Hispanic (10y)",
-  "cml_incid_w"  = "HIV Cumulative Incidence White (10y)",
+  "cml_incid" = "HIV Cumulative Incidence All (10y)",
+  "cml_incid_b" = "HIV Cumulative Incidence Black (10y)",
+  "cml_incid_h" = "HIV Cumulative Incidence Hispanic (10y)",
+  "cml_incid_w" = "HIV Cumulative Incidence White (10y)",
 
   "lst_hiv_prev_all" = "HIV Prevalence All (ly)",
   "lst_hiv_prev_b" = "HIV Prevalence Black (ly)",
@@ -41,23 +43,23 @@ var_labels <- c(
   "lst_hiv_dx_prop_h" = "Prop HIV Diag Hispanic (ly)",
   "lst_hiv_dx_prop_w" = "Prop HIV Diag White (ly)",
 
-  "lst_ir100_gono"    = "Gono IR100 All (ly)",
-  "lst_ir100_chla"    = "Chla IR100 All (ly)",
+  "lst_ir100_gono" = "Gono IR100 All (ly)",
+  "lst_ir100_chla" = "Chla IR100 All (ly)",
 
-  "cml_incid_gono"    = "Gono Cumulative Incidence All (10y)",
-  "cml_incid_chla"    = "Chla Cumulative Incidence All (10y)",
+  "cml_incid_gono" = "Gono Cumulative Incidence All (10y)",
+  "cml_incid_chla" = "Chla Cumulative Incidence All (10y)",
 
-  "lst_prep_any"      = "Any PrEP Number (ly)",
-  "lst_prep_num"      = "STD PrEP Number (ly)",
-  "lst_prep_otc_num"  = "OTC PrEP Number (ly)",
+  "lst_prep_any" = "Any PrEP Number (ly)",
+  "lst_prep_num" = "STD PrEP Number (ly)",
+  "lst_prep_otc_num" = "OTC PrEP Number (ly)",
 
-  "lst_prep_cov"      = "Clinical PrEP Coverage (ly)",
-  "lst_prep_elig"     = "Clinical PrEP Eligibles (ly)",
+  "lst_prep_cov" = "Clinical PrEP Coverage (ly)",
+  "lst_prep_elig" = "Clinical PrEP Eligibles (ly)",
   "lst_prep_mean_dur" = "Clinical PrEP Mean Duration (ly)",
   "lst_prep_mean_eps" = "Clinical PrEP Mean Number of Unique Episodes (ly)",
 
-  "lst_prep_otc_cov"      = "OTC PrEP Coverage (ly)",
-  "lst_prep_otc_elig"     = "OTC PrEP Eligibles (ly)",
+  "lst_prep_otc_cov" = "OTC PrEP Coverage (ly)",
+  "lst_prep_otc_elig" = "OTC PrEP Eligibles (ly)",
   "lst_prep_otc_mean_dur" = "OTC PrEP Mean Duration (ly)",
   "lst_prep_otc_mean_eps" = "OTC PrEP Mean Number of Unique Episodes (ly)",
   "lst_prep_otc_std_indic_cov" = "OTC PrEP users indicated to Clinical PrEP (ly)",
@@ -78,12 +80,12 @@ var_labels <- c(
   "lst_prep_std_gfr_lt60" = "Proportion of PrEP user (std) with GFR < 60 (ly)",
   "lst_prep_otc_gfr_lt60" = "Proportion of PrEP user (otc) with GFR < 60 (ly)",
 
-  "lst_hbv_flare_ir100k"     = "HBV Flares IR100k (ly)",
+  "lst_hbv_flare_ir100k" = "HBV Flares IR100k (ly)",
   "lst_hbv_flare_std_ir100k" = "HBV Flares IR100k - STD PrEP(ly)",
   "lst_hbv_flare_otc_ir100k" = "HBV Flares IR100k - OTC PrEP(ly)",
-  "cml_hbv_flare"           = "HBV Flares Cumulative (10y)",
-  "cml_hbv_flare_otc"       = "HBV Flares Cumulative - OTC PrEP(10y)",
-  "cml_hbv_flare_std"       = "HBV Flares Cumulative - STD PrEP(10y)",
+  "cml_hbv_flare" = "HBV Flares Cumulative (10y)",
+  "cml_hbv_flare_otc" = "HBV Flares Cumulative - OTC PrEP(10y)",
+  "cml_hbv_flare_std" = "HBV Flares Cumulative - STD PrEP(10y)",
   "cml_hbv_flare_otc_ir100k " = "HBV Flares IR100k OTC users (10y)",
 
   "cml_resist" = "Any ART resistance Cumulative (10y)",
@@ -102,37 +104,21 @@ var_labels <- c(
 )
 
 unused_labels <- c(
-  "cml_nia"      = "HIV NIA All (10y)",
-  "cml_nia_b"    = "HIV NIA Black (10y)",
-  "cml_nia_h"    = "HIV NIA Hispanic (10y)",
-  "cml_nia_w"    = "HIV NIA White (10y)",
+  "cml_nia" = "HIV NIA All (10y)",
+  "cml_nia_b" = "HIV NIA Black (10y)",
+  "cml_nia_h" = "HIV NIA Hispanic (10y)",
+  "cml_nia_w" = "HIV NIA White (10y)",
 
-  "cml_pia"      = "HIV PIA All (10y)",
-  "cml_pia_b"    = "HIV PIA Black (10y)",
-  "cml_pia_h"    = "HIV PIA Hispanic (10y)",
-  "cml_pia_w"    = "HIV PIA White (10y)",
+  "cml_pia" = "HIV PIA All (10y)",
+  "cml_pia_b" = "HIV PIA Black (10y)",
+  "cml_pia_h" = "HIV PIA Hispanic (10y)",
+  "cml_pia_w" = "HIV PIA White (10y)",
 
-  "cml_nnt_b"    = "HIV NNT Black (10y)",
-  "cml_nnt_h"    = "HIV NNT Hispanic (10y)",
-  "cml_nnt_w"    = "HIV NNT White (10y)"
+  "cml_nnt_b" = "HIV NNT Black (10y)",
+  "cml_nnt_h" = "HIV NNT Hispanic (10y)",
+  "cml_nnt_w" = "HIV NNT White (10y)"
 )
 
-first_table_labels <- c(
-  # Epi
-  "lst_ir100",
-  "cml_incid",
-  "cml_nia_all",
-  "cml_pia_all",
-  "cml_nnt_otc",
-  "lst_resist_prev",
-  # cml resist per PY
-  "cml_gfr_drop",
-  "cml_gfr_drop_gfr90",
-  "cml_gfr_drop_yo50",
-  "lst_prep_any_gfr_lt60",
-  "cml_hbv_flare",
-  "lst_hbv_flare_ir100k"
-)
 
 # Formatters for the variables
 fmts <- replicate(length(var_labels), scales::label_number(1))
@@ -148,8 +134,14 @@ format_patterns <- list(
     fun = scales::label_percent(0.01)
   ),
   perc = list(
-    patterns = c("cml_pia", "lst_.*_prev", "lst_.*_cov", "lst_gfr[69].*",
-                 "lst_prep_.*_gfr_lt60", "lst_.*_prop"),
+    patterns = c(
+      "cml_pia",
+      "lst_.*_prev",
+      "lst_.*_cov",
+      "lst_gfr[69].*",
+      "lst_prep_.*_gfr_lt60",
+      "lst_.*_prop"
+    ),
     fun = scales::label_percent(0.1)
   ),
   default = list(
@@ -167,88 +159,56 @@ for (nms in names(fmts)) {
   }
 }
 
-make_ordered_labels <- function(nms, named_labels) {
-  ordered_labels <- named_labels[nms]
-  ordered_labels <- paste0(seq_along(ordered_labels), "-", ordered_labels)
-  names(ordered_labels) <- nms
+scenarios_root_names <- c(
+  "baseline" = "Standard PrEP Only",
+  "base_only_otc_same" = "Substituting STD with OTC - Same",
+  "only_otc_best" = "Substituting STD with OTC - Best Guess",
+  "only_otc_relaxed" = "Substituting STD with OTC - Relaxed Indications",
+  "no_otc_prep" = "Standard PrEP Only",
+  "otc_best_mix" = "Adding OTC PrEP Best Guess - Same Start Rate",
+  "otc_best" = "Adding OTC PrEP Best Guess - Lower Start Rate"
+)
 
-  ordered_labels
-}
+scenarios_prefix_names <- c(
+  "_adhr_base" = "",
+  "_or125" = ": OR 1.25",
+  "_or150" = ": OR 1.5",
+  "_or175" = ": OR 1.75",
+  "_or200" = ": OR 2",
+  "_adhr_m05" = ": High Adherence -5%",
+  "_adhr_m10" = ": High Adherence -10%",
+  "_adhr_m20" = ": High Adherence -20%",
+  "_adhr_p05" = ": High Adherence +5%",
+  "_adhr_p10" = ": High Adherence +10%",
+  "_adhr_p20" = ": High Adherence +20%",
+  "_disc_025" = ": Time to Discontinuation x0.25",
+  "_disc_050" = ": Time to Discontinuation x0.5",
+  "_disc_075" = ": Time to Discontinuation x0.75",
+  "_disc_100" = ": Time to Discontinuation x1",
+  "_disc_125" = ": Time to Discontinuation x1.25",
+  "_disc_150" = ": Time to Discontinuation x1.5",
+  "_disc_175" = ": Time to Discontinuation x1.75",
+  "_same_gfr_1" = ": GFR Test Every 1 year",
+  "_same_gfr_2" = ": GFR Test Every 2 year",
+  "_same_gfr_3" = ": GFR Test Every 3 year",
+  "_same_gfr_5" = ": GFR Test Every 5 year",
+  "_same_gfr_Inf" = ": GFR Test Never",
+  "_same_gfr_same" = ": GFR Test as Recommended",
+  "_hivtst_13" = ": HIV Test Every 3 Months",
+  "_hivtst_26" = ": HIV Test Every 6 Months",
+  "_hivtst_52" = ": HIV Test Every 12 Months",
+  "_stitst_13" = ": STI Test Every 3 Months",
+  "_stitst_26" = ": STI Test Every 6 Months",
+  "_stitst_52" = ": STI Test Every 12 Months",
+  "_always_bothtst" = ": Always Test HIV and STI at OTC Start",
+  "_always_hivtst" = ": Always Test HIV at OTC Start",
+  "_always_stitst" = ": Always Test STI at OTC Start",
+  "_some_hivtst_25" = ": Some (25%) HIV Test at OTC Start",
+  "_some_hivtst_50" = ": Some (50%) HIV Test at OTC Start",
+  "_some_hivtst_75" = ": Some (75%) HIV Test at OTC Start"
+)
 
-### utils-format.R
-library(dplyr)
-library(tidyr)
-
-format_table <- function(d, var_labels, format_patterns) {
-  formatters <- make_formatters(var_labels, format_patterns)
-
-  d_out <- d |>
-    sum_quants(0.025, 0.5, 0.975) |>
-    pivot_longer(-scenario_name) |>
-    separate(name, into = c("name", "quantile"), sep = "_/_") |>
-    pivot_wider(names_from = quantile, values_from = value) |>
-    filter(name %in% names(var_labels)) |>
-    mutate(
-      clean_val = purrr::pmap_chr(
-        list(name, l, m, h),
-        ~ common_format(formatters, ..1, ..2, ..3, ..4))
-    ) |>
-    select(-c(l, m, h)) |>
-    mutate(
-      name = var_labels[name]
-    ) |>
-    pivot_wider(names_from = name, values_from = clean_val) |>
-    arrange(scenario_name)
-
-  reorder_cols(d_out, var_labels)
-}
-
-make_formatters <- function(var_labels, format_patterns) {
-  fmts <- vector(mode = "list", length = length(var_labels))
-  for (nms in names(var_labels)) {
-    for (fp in format_patterns) {
-      if (any(stringr::str_detect(nms, fp$patterns))) {
-        fmts[[nms]] <- fp$fun
-        break()
-      }
-    }
-  }
-  fmts
-}
-
-
-sum_quants <- function(d, ql = 0.025, qm = 0.5, qh = 0.975) {
-  d |>
-    ungroup() |>
-    select(-sim) |>
-    group_by(scenario_name) |>
-    summarise(across(
-      everything(),
-      list(
-        l = ~ quantile(.x, ql, na.rm = TRUE),
-        m = ~ quantile(.x, qm, na.rm = TRUE),
-        h = ~ quantile(.x, qh, na.rm = TRUE)
-      ),
-      .names = "{.col}_/_{.fn}"
-    ),
-    .groups = "drop"
-  )
-}
-
-
-reorder_cols <- function(d, var_labels) {
-  missing_cols <- setdiff(names(d), var_labels)
-  cols_order <- c(missing_cols, intersect(var_labels, names(d)))
-  d[, cols_order]
-}
-
-common_format <- function(formatters, name, ql, qm, qh) {
-  if (is.na(qm)) {
-    "-"
-  } else {
-    paste0(
-        formatters[[name]](qm), " (", formatters[[name]](ql),
-        ", ", formatters[[name]](qh), ")"
-    )
-  }
+nicefy_scs_names <- function(scs_names) {
+  stringr::str_replace_all(scs_names, scenarios_root_names) |>
+    stringr::str_replace_all(scenarios_prefix_names)
 }

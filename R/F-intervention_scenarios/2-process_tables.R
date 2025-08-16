@@ -54,7 +54,7 @@ for (i in seq_along(scs)) {
 
   d_ls <- future.apply::future_lapply(
     seq_len(nrow(sc_info)),
-    \(i) process_one_scenario(scenarios_info[i, ], d_ref)
+    \(i) process_one_scenario(sc_info[i, ], d_ref)
   )
 
   d_sc_raw <- dplyr::bind_rows(d_ls)

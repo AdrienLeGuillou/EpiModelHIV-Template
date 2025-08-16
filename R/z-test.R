@@ -65,10 +65,10 @@ scs <- c(
   "only_otc_best",
   "only_otc_relaxed",
   "otc_best",
-  "otc_best_mix",
+  "otc_mix",
   "only_otc_same"
 )
-sc <- scs[4]
+sc <- scs[3]
 d <- readRDS(paste0(scenarios_dir, "merged_tibbles/df__", sc, "_adhr_base.rds"))
 
 d |>
@@ -77,3 +77,5 @@ d |>
   pivot_longer(-c(sim, time)) |>
   ggplot(aes(x = time / 52, y = value, col = name)) +
   geom_smooth()
+
+ggsave("data/output/preps_best.png")

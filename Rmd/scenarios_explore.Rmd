@@ -13,10 +13,6 @@ output:
 
 ```
 
-<!-- WARN: auto order scenarios! -->
-
-
-<!-- TODO: make scenarios similar to the best_guess ones. (based on previous) -->
 
 # General
 
@@ -39,10 +35,6 @@ output:
       after a number of steps defined by the interval. This approach can lead to
       immediate tests for GFR when starting PrEP for the first time as no GFR
       test was ever performed before.
-
-**These are preliminary results:** The models were run with only 32 replications
-to get a quick glance at the effects. The final results will use ~500 to 1000
-runs per scenarios
 
 ## Outcomes names
 

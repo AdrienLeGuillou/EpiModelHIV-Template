@@ -82,7 +82,10 @@ wf <- add_workflow_step(
   wf_summary = wf,
   step_tmpl = step_tmpl_do_call_script(
     r_script = "R/F-intervention_scenarios/2-process_tables.R",
-    args = list(hpc_context = TRUE),
+    args = list(
+      hpc_context = TRUE,
+      n_cores = max_cores
+    ),
     setup_lines = hpc_node_setup
   ),
   sbatch_opts = list(

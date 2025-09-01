@@ -15,7 +15,6 @@ source("R/F-intervention_scenarios/z-context.R", local = TRUE)
 source("R/F-intervention_scenarios/outcomes.R", local = TRUE)
 
 oopts <- options(future.globals.maxSize = Inf)
-on.exit(options(oopts))
 if (context == "hpc" && exists("n_cores") && hpc_context) {
   future::plan("multicore", workers = n_cores)
 }

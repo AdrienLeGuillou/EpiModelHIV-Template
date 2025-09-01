@@ -71,8 +71,8 @@ wf <- add_workflow_step(
       setup_lines = hpc_node_setup
     ),
     sbatch_opts = list(
-      "cpus-per-task" = max_cores,
-      "time" = "02:00:00",
+      "cpus-per-task" = 32,
+      "time" = "06:00:00",
       "mem-per-cpu" = "5G"
     )
 )

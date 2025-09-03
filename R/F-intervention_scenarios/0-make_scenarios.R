@@ -65,7 +65,10 @@ d_base_same <- tibble(
 )
 
 d_base_relaxed <- d_base_same |>
-  mutate(prep.otc.hard.indications = 0)
+  mutate(
+    prep.otc.hard.indications = 0,
+    prep.otc.risk.reassess.int = 0
+  )
 
 # OTC best guess scenario
 d_base_best <- tibble(
@@ -192,22 +195,24 @@ sc_df_ls[["only_otc_same"]] <- d_base_same |>
     prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
   )
 
-# # Replace STD with OTC PrEP that behaves like STD PrEP with relaxed indications
-# tmp_sc_names <- paste0("only_otc_relaxed_", c("70", "75", "80", "85", "90"))
-# sc_names <- c(sc_names, tmp_sc_names)
-# ors <- c(0.7, 0.75, 0.8, 0.85, 0.9)
-# sc_df_ls[["only_otc_relaxed"]] <- d_base_relaxed |>
-#   slice_sample(n = length(ors), replace = TRUE) |>
-#   mutate(
-#     .scenario.id = tmp_sc_names,
-#     prep.start.rate_1 = 0,
-#     prep.start.rate_2 = 0,
-#     prep.start.rate_3 = 0,
-#     prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
-#     prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
-#     prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
-#   )
-#
+# Replace STD with OTC PrEP that behaves like STD PrEP with relaxed indications
+ors <- c(0.6, 0.625, 0.65, 0.675, 0.7, 0.725, 0.75, 0.775, 0.8, 0.825, 0.85, 0.875, 0.9)
+ors_n <- stringr::str_replace(ors, "\\.", "")
+tmp_sc_names <- paste0("only_otc_relaxed_", ors_n)
+sc_names <- c(sc_names, tmp_sc_names)
+sc_df_ls[["only_otc_relaxed"]] <- d_base_only_otc_relaxed |>
+  slice_sample(n = length(ors), replace = TRUE) |>
+  mutate(
+    .scenario.id = tmp_sc_names,
+    prep.start.rate_1 = 0,
+    prep.start.rate_2 = 0,
+    prep.start.rate_3 = 0,
+    prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
+    prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
+    prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
+  )
+
+
 # # Add OTC PrEP that behaves like STD PrEP
 # tmp_sc_names <- paste0("otc_same_", c("025", "050", "075", "100"))
 # sc_names <- c(sc_names, tmp_sc_names)
@@ -436,9 +441,9 @@ for (i in seq_along(name_bases)) {
 
 # TODO: add switch scs?
 
-# sc_df_ls <- sc_df_ls[c(
-#   "only_otc_relaxed"
-# )]
+sc_df_ls <- sc_df_ls[c(
+  "only_otc_relaxed"
+)]
 
 sc_ls <- lapply(sc_df_ls, EpiModel::create_scenario_list)
 scenarios_list <- Reduce(c, sc_ls, init = list())

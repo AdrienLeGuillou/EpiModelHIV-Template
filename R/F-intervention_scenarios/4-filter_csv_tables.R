@@ -53,6 +53,12 @@ d_first <- first_table_scs |>
 
 readr::write_csv(d_first, "data/output/table1.csv")
 
+d_full_basic <- first_table_scs |>
+  left_join(d_raw, by = "scenario_name") |>
+  mutate(scenario_name = nicefy_scs_names(scenario_name))
+readr::write_csv(d_full_basic, "data/output/table_basics.csv")
+
+
 # Per Sub Tables ---------------------------------------------------------------
 
 sub_table_names <- c(

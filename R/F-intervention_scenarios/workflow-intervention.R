@@ -46,7 +46,7 @@ wf <- add_workflow_step(
     path_to_restart, param, init, control,
     scenarios_list = scenarios_list,
     output_dir = scenarios_dir,
-    n_rep = 256,
+    n_rep = 64,
     n_cores = max_cores,
     max_array_size = 500,
     setup_lines = hpc_node_setup

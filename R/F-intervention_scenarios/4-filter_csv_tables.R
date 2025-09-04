@@ -40,7 +40,7 @@ first_table_scs <- tibble(
     "base_only_otc_same_adhr_base",
     "only_otc_relaxed_adhr_base",
     "only_otc_best_adhr_base",
-    "no_otc_prep_or150",
+    "no_otc_prep_or155",
     "otc_best_adhr_base",
     "otc_mix_adhr_base"
   )

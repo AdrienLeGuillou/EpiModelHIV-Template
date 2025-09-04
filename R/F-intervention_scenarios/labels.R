@@ -173,6 +173,7 @@ scenarios_root_names <- c(
 scenarios_prefix_names <- c(
   "_or125" = ": OR 1.25",
   "_or150" = ": OR 1.5",
+  "_or155" = ": OR 1.55",
   "_or175" = ": OR 1.75",
   "_or200" = ": OR 2",
   "_adhr_m20" = ": High Adherence -20%",

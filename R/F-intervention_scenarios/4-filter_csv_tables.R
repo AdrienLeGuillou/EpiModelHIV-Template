@@ -19,17 +19,21 @@ first_table_labels <- c(
   # Epi
   # "lst_ir100",
   # "cml_incid",
-  # "cml_nia_all",
+  "cml_nia_all",
   "cml_pia_all",
   # "cml_nnt_otc",
+  "cml_resist",
   "lst_resist_hiv_prev",
   # "cml_gfr_drop",
   # "cml_gfr_drop_gfr90",
   # "cml_gfr_drop_yo50",
+  "cml_gfr_drop",
   "lst_prep_any_gfr_lt60",
   # "cml_hbv_flare",
-  "cml_hbv_flare",
-  "cml_hbv_flare_otc"
+  # "cml_hbv_flare_otc"
+  # "lst_hbv_flare_ir100k",
+  # "lst_hbv_flare_otc_ir100k",
+  "cml_hbv_flare_otc_ir100kpy"
 )
 
 labels <- var_labels[first_table_labels]
@@ -40,8 +44,8 @@ first_table_scs <- tibble(
     "base_only_otc_same_adhr_base",
     "only_otc_relaxed_adhr_base",
     "only_otc_best_adhr_base",
-    "no_otc_prep_or155",
-    "otc_best_adhr_base",
+    "no_otc_prep_or150",
+    "otc_best_some_hivtst_50",
     "otc_mix_adhr_base"
   )
 )

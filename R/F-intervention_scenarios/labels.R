@@ -84,9 +84,9 @@ var_labels <- c(
   "lst_hbv_flare_std_ir100k" = "HBV Flares IR100k - STD PrEP(ly)",
   "lst_hbv_flare_otc_ir100k" = "HBV Flares IR100k - OTC PrEP(ly)",
   "cml_hbv_flare" = "HBV Flares Cumulative (10y)",
-  "cml_hbv_flare_otc" = "HBV Flares Cumulative - OTC PrEP(10y)",
-  "cml_hbv_flare_std" = "HBV Flares Cumulative - STD PrEP(10y)",
-  "cml_hbv_flare_otc_ir100k " = "HBV Flares IR100k OTC users (10y)",
+  "cml_hbv_flare_otc" = "HBV Flares Cumulative - OTC PrEP (10y)",
+  "cml_hbv_flare_std" = "HBV Flares Cumulative - STD PrEP (10y)",
+  "cml_hbv_flare_otc_ir100kpy" = "HBV Flares OTC IR100k PY (10y)",
 
   "cml_resist" = "Any ART resistance Cumulative (10y)",
   "cml_resist_tdf" = "TDF resistance Cumulative (10y)",
@@ -99,6 +99,10 @@ var_labels <- c(
   "lst_resist_hiv_prev" = "Any ART resistance Prevalence (among HIV+) (ly)",
   "lst_resist_hiv_tdf_prev" = "TDF resistance Prevalence (among HIV+) (ly)",
   "lst_resist_hiv_ftc_prev" = "FTC resistance Prevalence (among HIV+) (ly)",
+
+  "cml_addi_resist_nia" = "Additional Resistances Created per Infection Averted (10y)",
+  "cml_addi_hbv_flare_otc_nia" = "Additional of HBV Flares Due to OTC per Infection Averted (10y)",
+  "cml_addi_gfr_drop_nia" = "Additional GFR Drops Due to PrEP per Infection Averted (10y)",
 
   "lst_num" = "num"
 )
@@ -126,7 +130,13 @@ names(fmts) <- names(var_labels)
 
 format_patterns <- list(
   small_num = list(
-    patterns = c("lst_ir100", "lst_.*_ir100", "cml_nnt", ".*_mean_eps"),
+    patterns = c(
+      "lst_ir100",
+      "lst_.*_ir100",
+      "cml_addi_",
+      "cml_nnt",
+      ".*_mean_eps"
+    ),
     fun = scales::label_number(0.01)
   ),
   small_perc = list(
@@ -227,12 +237,16 @@ nicefy_scs_names <- function(scs_names) {
 order_scs <- function(scs_names) {
   root_order <- stringr::str_pad(
     seq_along(scenarios_root_names),
-    2, "left", "0"
+    2,
+    "left",
+    "0"
   )
   names(root_order) <- names(scenarios_root_names)
   prefix_order <- stringr::str_pad(
     seq_along(scenarios_prefix_names),
-    2, "left", "0"
+    2,
+    "left",
+    "0"
   )
   names(prefix_order) <- names(scenarios_prefix_names)
   sc_order <- stringr::str_replace_all(scs_names, root_order) |>

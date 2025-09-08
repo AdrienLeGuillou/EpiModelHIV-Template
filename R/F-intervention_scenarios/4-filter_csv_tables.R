@@ -33,7 +33,10 @@ first_table_labels <- c(
   # "cml_hbv_flare_otc"
   # "lst_hbv_flare_ir100k",
   # "lst_hbv_flare_otc_ir100k",
-  "cml_hbv_flare_otc_ir100kpy"
+  "cml_hbv_flare_otc_ir100kpy",
+  "cml_addi_resist_nia",
+  "cml_addi_hbv_flare_otc_nia",
+  "cml_addi_gfr_drop_nia"
 )
 
 labels <- var_labels[first_table_labels]

@@ -87,8 +87,8 @@ d_base_best <- tibble(
   prep.otc.hard.indications = 0, # relaxed indications
   prep.std.switch.otc.prob = 0,
   prep.otc.switch.std.prob = 0,
-  prep.otc.always.sti.tst = 0, # no automatic test on start OTC
-  prep.otc.always.hiv.tst = 0, # no automatic test on start OTC
+  prep.otc.always.sti.tst = 0, # no automatic STI test on start OTC
+  prep.otc.always.hiv.tst = 0.5, # 50% HIV test on start OTC
   prep.otc.adhr.dist.realloc = FALSE,
   sti.prep.otc.tx.prob = param$sti.prep.tx.prob,
   sti.screen.prep.otc.rate = 1 / (year_steps / 2), # mean time to test 6 months
@@ -281,11 +281,11 @@ sc_names <- c()
 # Scenarios exploring changes to relaxed, best and mix --------------------
 name_bases <- c(
   # "only_otc_relaxed_"
-  # "only_otc_best_",
-  # "otc_best_",
-  # "otc_mix_",
   # "base_only_otc_same_",
-  "only_otc_relaxed_"
+  # "only_otc_relaxed_",
+  "only_otc_best_",
+  "otc_best_",
+  "otc_mix_"
 )
 d_bases <- list(
   d_base_only_otc_relaxed,
@@ -385,60 +385,59 @@ for (i in seq_along(name_bases)) {
     )
 }
 
-# # TODO: re-activate
-#
-# # Scenarios exploring always hiv/sti test in "best" likes ----------------------
-# name_bases <- c(
-#   "only_otc_best_",
-#   "otc_best_",
-#   "otc_mix_"
-# )
-# d_bases <- list(
-#   d_base_only_otc_best,
-#   d_base_otc_best,
-#   d_base_otc_mix
-# )
-#
-# for (i in seq_along(name_bases)) {
-#   tmp_sc_names <- paste0( name_bases[i], "always_hivtst")
-#   sc_names <- c(sc_names, tmp_sc_names)
-#   sc_df_ls[[paste0(name_bases[i], "always_hivtst")]] <- d_bases[[i]] |>
-#     slice_sample(n = 1, replace = TRUE) |>
-#     mutate(
-#       .scenario.id = tmp_sc_names,
-#       prep.otc.always.hiv.tst = 1
-#     )
-#
-#   tmp_sc_names <- paste0(name_bases[i], "always_stitst")
-#   sc_names <- c(sc_names, tmp_sc_names)
-#   sc_df_ls[[paste0(name_bases[i], "always_stitst")]] <- d_bases[[i]] |>
-#     slice_sample(n = 1, replace = TRUE) |>
-#     mutate(
-#       .scenario.id = tmp_sc_names,
-#       prep.otc.always.sti.tst = 1
-#     )
-#
-#   tmp_sc_names <- paste0(name_bases[i], "always_bothtst")
-#   sc_names <- c(sc_names, tmp_sc_names)
-#   sc_df_ls[[paste0(name_bases[i], "always_bothtst")]] <- d_bases[[i]] |>
-#     slice_sample(n = 1, replace = TRUE) |>
-#     mutate(
-#       .scenario.id = tmp_sc_names,
-#       prep.otc.always.hiv.tst = 1,
-#       prep.otc.always.sti.tst = 1
-#     )
-#
-#   hivtst_prob <- c(0.25, 0.5, 0.75)
-#   tmp_sc_names <- paste0(name_bases[i], "some_hivtst_", c(25, 50, 75))
-#   sc_names <- c(sc_names, tmp_sc_names)
-#   sc_df_ls[[paste0(name_bases[i], "some_hivtst")]] <- d_bases[[i]] |>
-#     slice_sample(n = length(hivtst_prob), replace = TRUE) |>
-#     mutate(
-#       .scenario.id = tmp_sc_names,
-#       prep.otc.always.hiv.tst = hivtst_prob
-#     )
-#
-# }
+# Scenarios exploring always hiv/sti test in "best" likes ----------------------
+name_bases <- c(
+  "only_otc_best_",
+  "otc_best_",
+  "otc_mix_"
+)
+d_bases <- list(
+  d_base_only_otc_best,
+  d_base_otc_best,
+  d_base_otc_mix
+)
+
+for (i in seq_along(name_bases)) {
+  # # Now with the `some_hivtst_`
+  # tmp_sc_names <- paste0( name_bases[i], "always_hivtst")
+  # sc_names <- c(sc_names, tmp_sc_names)
+  # sc_df_ls[[paste0(name_bases[i], "always_hivtst")]] <- d_bases[[i]] |>
+  #   slice_sample(n = 1, replace = TRUE) |>
+  #   mutate(
+  #     .scenario.id = tmp_sc_names,
+  #     prep.otc.always.hiv.tst = 1
+  #   )
+
+  tmp_sc_names <- paste0(name_bases[i], "always_stitst")
+  sc_names <- c(sc_names, tmp_sc_names)
+  sc_df_ls[[paste0(name_bases[i], "always_stitst")]] <- d_bases[[i]] |>
+    slice_sample(n = 1, replace = TRUE) |>
+    mutate(
+      .scenario.id = tmp_sc_names,
+      prep.otc.always.sti.tst = 1
+    )
+
+  tmp_sc_names <- paste0(name_bases[i], "always_bothtst")
+  sc_names <- c(sc_names, tmp_sc_names)
+  sc_df_ls[[paste0(name_bases[i], "always_bothtst")]] <- d_bases[[i]] |>
+    slice_sample(n = 1, replace = TRUE) |>
+    mutate(
+      .scenario.id = tmp_sc_names,
+      prep.otc.always.hiv.tst = 1,
+      prep.otc.always.sti.tst = 1
+    )
+
+  hivtst_prob <- c(0, 0.25, 0.5, 0.75, 1)
+  tmp_sc_names <- paste0(name_bases[i], "some_hivtst_", c(0, 25, 50, 75, 100))
+  sc_names <- c(sc_names, tmp_sc_names)
+  sc_df_ls[[paste0(name_bases[i], "some_hivtst")]] <- d_bases[[i]] |>
+    slice_sample(n = length(hivtst_prob), replace = TRUE) |>
+    mutate(
+      .scenario.id = tmp_sc_names,
+      prep.otc.always.hiv.tst = hivtst_prob
+    )
+
+}
 
 
 # TODO: add switch scs?

@@ -58,6 +58,15 @@ make_em_workflow <- function(wf_name, override = FALSE, update_renv = TRUE) {
     )
   }
 
+make_em_workflow <- function(wf_name, override = FALSE, update_renv = TRUE) {
+  if (update_renv) {
+    renv::snapshot(
+      packages = c("EpiModelHIV", "EpiModelHPC", "ARTnetData"),
+      lockfile = "renv.lock.hpc",
+      prompt = FALSE
+    )
+  }
+
   wf_path <- paste0("workflows/", wf_name)
   if (override && fs::dir_exists(wf_path)) fs::dir_delete(wf_path)
 
@@ -77,7 +86,7 @@ make_em_workflow <- function(wf_name, override = FALSE, update_renv = TRUE) {
     step_tmpl = EpiModelHPC::step_tmpl_renv_restore(
       git_branch = current_git_branch,
       setup_lines = hpc_node_setup,
-      lockfile = "renv.lock.hpc"
+      lockfile = if (update_renv) "renv.lock.hpc" else NULL
     ),
     sbatch_opts = list(
       "mem" = "16G",

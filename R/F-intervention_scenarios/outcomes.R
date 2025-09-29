@@ -55,6 +55,7 @@ mutate_outcomes <- function(d) {
       lst_prep_otc_mean_eps = dbg_prep_otc_eps_mean,
       cml_prep_otc_py = prep.otcCurr / 52,
       lst_prep_any = prepCurr + prep.otcCurr,
+      lst_prop_otc = prep.otcCurr / lst_prep_any,
 
       lst_prep_otc_std_indic_cov = prep.otc.std.indic / prep.otcCurr,
       # lst_prep_otc_mean_dur_rng

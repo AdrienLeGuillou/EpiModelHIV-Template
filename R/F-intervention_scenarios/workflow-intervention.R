@@ -36,10 +36,9 @@ control <- control_msm(
 wf <- make_em_workflow("interventions", override = TRUE)
 
 # Define test scenarios
-# scenarios_df <- readr::read_csv("data/input/scenarios.csv")
-# scenarios_list <- EpiModel::create_scenario_list(scenarios_df)
-source("./R/F-intervention_scenarios/0-make_scenarios.R", local = TRUE)
-source("./R/F-intervention_scenarios/01-make_scenarios_find_steps.R", local = TRUE)
+# source("./R/F-intervention_scenarios/0-make_scenarios.R", local = TRUE)
+# source("./R/F-intervention_scenarios/01-make_scenarios_find_steps.R", local = TRUE)
+source("./R/F-intervention_scenarios/02-make_scenarios_contour.R", local = TRUE)
 
 wf <- add_workflow_step(
   wf_summary = wf,

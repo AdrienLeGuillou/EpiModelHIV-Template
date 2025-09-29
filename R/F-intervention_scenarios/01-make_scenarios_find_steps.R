@@ -37,7 +37,6 @@ sc_names <- c()
 # first: get only OTC best == 1.3
 # test with 0 - 0.75
 
-
 # new  ORs: (CLI: 0, OTC: 1)
 #   - CLI: 0
 #   - OTC: 0.85
@@ -81,7 +80,6 @@ sc_names <- c()
 # new  ORs: (CLI: 0.88, OTC: 0.12)
 #   - CLI: 1.3
 #   - OTC: 0.1
-
 
 # cli_ors <- c(0,    0.3, 0.5, 0.7, 0.9, 1.1, 1.3)
 # otc_ors <- c(0.75, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1)

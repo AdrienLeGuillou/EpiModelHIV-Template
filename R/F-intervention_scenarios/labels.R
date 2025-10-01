@@ -151,7 +151,7 @@ format_patterns <- list(
       "lst_.*_cov",
       "lst_gfr[69].*",
       "lst_prep_.*_gfr_lt60",
-      "lst.*_prop",
+      "lst.*_prop"
     ),
     fun = scales::label_percent(0.1)
   ),

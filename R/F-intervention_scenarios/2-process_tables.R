@@ -22,7 +22,6 @@ if (context == "hpc" && exists("n_cores") && hpc_context) {
 # Process ----------------------------------------------------------------------
 
 scenarios_tibble_dir <- fs::path(scenarios_dir, "merged_tibbles")
-# scenarios_tibble_dir <- "./data/run/sav_scs_07_30/merged_tibbles/"
 scenarios_info <- EpiModelHPC::get_scenarios_tibble_infos(scenarios_tibble_dir)
 
 d_ref <- make_d_ref(fs::path(scenarios_tibble_dir, "df__baseline.rds"))
@@ -42,42 +41,29 @@ format_table(d_sc_raw, var_labels, format_patterns) |>
   write.csv(fs::path(output_dir, "table.csv"), row.names = FALSE)
 
 
-d_sc_raw |>
-  filter(scenario_name != "baseline") |>
-  pull(cml_addi_gfr_drop_nia) |>
-  summary()
-
-
-d_sc_raw |>
-  filter(scenario_name != "baseline") |>
-  select(sim, cml_prep_otc_py)
-
-d <- readRDS("data/run/scenarios/merged_tibbles/df__otc_best_some_hivtst_50.rds")
-
-d |>
-  select(sim, time, dbg_hbv_flares_otc, prep.otcCurr) |>
-  mutate(ir100 = dbg_hbv_flares_otc / prep.otcCurr) |>
-  group_by(sim) |>
-  summarise(
-    tot = sum(prep.otcCurr),
-    py = tot / 52,
-    fl = sum(dbg_hbv_flares_otc),
-    ir100 = sum(ir100),
-    ir20 = fl / tot
-  )
-
-
-
-
-
-
-
-
-
-
-
-
-
+# d_sc_raw |>
+#   filter(scenario_name != "baseline") |>
+#   pull(cml_addi_gfr_drop_nia) |>
+#   summary()
+#
+#
+# d_sc_raw |>
+#   filter(scenario_name != "baseline") |>
+#   select(sim, cml_prep_otc_py)
+#
+# d <- readRDS("data/run/scenarios/merged_tibbles/df__otc_best_some_hivtst_50.rds")
+#
+# d |>
+#   select(sim, time, dbg_hbv_flares_otc, prep.otcCurr) |>
+#   mutate(ir100 = dbg_hbv_flares_otc / prep.otcCurr) |>
+#   group_by(sim) |>
+#   summarise(
+#     tot = sum(prep.otcCurr),
+#     py = tot / 52,
+#     fl = sum(dbg_hbv_flares_otc),
+#     ir100 = sum(ir100),
+#     ir20 = fl / tot
+#   )
 
 # Make sub tables per scenario family ------------------------------------------
 

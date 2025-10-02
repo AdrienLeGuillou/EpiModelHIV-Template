@@ -19,8 +19,9 @@ scs <- expand.grid(indexes = ors$indexes, prep.otc.always.hiv.tst = hiv_tests)
 scs <- left_join(scs, ors, by = "indexes") |>
   select(-indexes) |>
   mutate(
+    .at = 1,
     .scenario.id = paste0(
-      "cli",
+      "plot_cli",
       cli,
       "_otc",
       otc,

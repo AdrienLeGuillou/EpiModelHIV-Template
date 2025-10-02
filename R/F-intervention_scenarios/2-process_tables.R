@@ -22,12 +22,15 @@ if (context == "hpc" && exists("n_cores") && hpc_context) {
 # Process ----------------------------------------------------------------------
 
 scenarios_tibble_dir <- fs::path(scenarios_dir, "merged_tibbles")
-scenarios_info <- EpiModelHPC::get_scenarios_tibble_infos(scenarios_tibble_dir)
+scenarios_info <- EpiModelHPC::get_scenarios_tibble_infos(
+  scenarios_tibble_dir
+) |>
+  filter(!stringr::str_starts(scenario_name, "plot_"))
 
 d_ref <- make_d_ref(fs::path(scenarios_tibble_dir, "df__baseline.rds"))
 
 d_ls <- future.apply::future_lapply(
-# lapply(
+  # lapply(
   seq_len(nrow(scenarios_info)),
   \(i) process_one_scenario(scenarios_info[i, ], d_ref)
 )

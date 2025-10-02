@@ -36,9 +36,7 @@ control <- control_msm(
 wf <- make_em_workflow("interventions", override = TRUE)
 
 # Define test scenarios
-# source("./R/F-intervention_scenarios/0-make_scenarios.R", local = TRUE)
-# source("./R/F-intervention_scenarios/01-make_scenarios_find_steps.R", local = TRUE)
-source("./R/F-intervention_scenarios/02-make_scenarios_contour.R", local = TRUE)
+ source("./R/F-intervention_scenarios/0-make_scenarios.R", local = TRUE)
 
 wf <- add_workflow_step(
   wf_summary = wf,
@@ -46,7 +44,7 @@ wf <- add_workflow_step(
     path_to_restart, param, init, control,
     scenarios_list = scenarios_list,
     output_dir = scenarios_dir,
-    n_rep = 64,
+    n_rep = 512,
     n_cores = max_cores,
     max_array_size = 500,
     setup_lines = hpc_node_setup

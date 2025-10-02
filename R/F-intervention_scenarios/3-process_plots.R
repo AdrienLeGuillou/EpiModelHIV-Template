@@ -10,35 +10,41 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 theme_set(theme_light())
+# library(metR)
 
 source("R/shared_variables.R", local = TRUE)
+source("./R/F-intervention_scenarios/z-context.R", local = TRUE)
 source("R/F-intervention_scenarios/outcomes.R", local = TRUE)
 
 # Process ----------------------------------------------------------------------
 
-scenarios_tibble_dir <- fs::path(scenarios_dir, "merged_tibbles")
-scenarios_info <- EpiModelHPC::get_scenarios_tibble_infos(scenarios_tibble_dir)
+d_cont <- readRDS("./data/run/scenarios/plots/df_cont_plot.Rds")
 
-d_ref <- make_d_ref(fs::path(scenarios_tibble_dir, "df__test_1_treat_1.rds"))
+glimpse(d_cont)
 
-d_ls <- future.apply::future_lapply(
-  seq_len(nrow(scenarios_info)),
-  \(i) process_one_scenario_plots(scenarios_info[i, ], d_ref)
+library(akima)
+akim_inter <- interp(
+  x = d_cont$lst_prop_otc,
+  y = d_cont$tst_rate,
+  z = d_cont$cml_resist,
+  linear = F
 )
 
-d_plots <- dplyr::bind_rows(d_ls)
-glimpse(d_plots)
+with(akim_inter, contour(x, y, z))
 
-library(ggplot2)
-theme_set(theme_light())
+d_inter <- tibble(
+  x = akim_inter$x,
+  y = akim_inter$y
+) |>
+  expand.grid()
+d_inter$z <- as.numeric(akim_inter$z)
 
-ggplot(d_plots, aes(x = test, y = treat, fill = cml_pia_b, z = cml_pia_b)) +
-  geom_raster(interpolate = TRUE) +
-  geom_contour(col = "white", alpha = 0.5, lwd = 0.5, position = "jitter") +
-  viridis::scale_fill_viridis(
-    discrete = FALSE,
-    alpha = 1,
-    option = "B",
-    direction = 1,
-    labels = scales::label_percent(1)
-  )
+ggplot(d_inter, aes(x, y)) +
+  geom_contour(aes(z = z))
+
+
+data(faithfuld)
+glimpse(faithfuld)
+
+ggplot(faithfuld, aes(waiting, eruptions)) +
+  geom_raster(aes(fill = density))

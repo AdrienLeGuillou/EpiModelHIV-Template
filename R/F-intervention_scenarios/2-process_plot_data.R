@@ -25,14 +25,27 @@ b_infos <- EpiModelHPC::get_scenarios_tibble_infos(scenarios_tibble_dir) |>
   mutate(scenario_name_tmp = scenario_name) |>
   separate_wider_regex(
     scenario_name_tmp,
-    c("plot_cli[0-9\\.]*_otc[0-9\\.]*_tst", test_p = "[0-9\\.]*")
+    c(
+      "plot_cli",
+      cli = "[0-9\\.]*",
+      "_otc",
+      otc = "[0-9\\.]*",
+      "_tst",
+      test_p = "[0-9\\.]*"
+    )
   )
 
 d_cont <- future.apply::future_lapply(seq_len(nrow(b_infos)), \(i) {
   process_one_scenario(b_infos[i, ], d_ref) |>
-    mutate(tst_rate = as.numeric(b_infos[i, "test_p"])) |>
+    mutate(
+      tst_rate = as.numeric(b_infos[i, "test_p"]),
+      or_cli = as.numeric(b_infos[i, "cli"]),
+      or_otc = as.numeric(b_infos[i, "otc"])
+    ) |>
     select(
       tst_rate,
+      or_cli,
+      or_otc,
       lst_prop_otc,
       cml_pia_all,
       cml_resist,
@@ -42,5 +55,15 @@ d_cont <- future.apply::future_lapply(seq_len(nrow(b_infos)), \(i) {
 }) |>
   bind_rows()
 
-if (!fs::dir_exists(plots_dir)) fs::dir_create(plots_dir)
-saveRDS(d_cont, fs::path(plots_dir, "df_cont_plot.R"))
+d_prop <- d_cont |>
+  filter(tst_rate == 0.5) |> # TODO: change to 0.5 once they are ran
+  mutate(prop_otc = lst_prop_otc) |>
+  select(or_cli, or_otc, prop_otc)
+
+d_cont <- left_join(d_cont, d_prop, by = c("or_cli", "or_otc")) |>
+  select(-c(or_cli, or_otc, lst_prop_otc))
+
+if (!fs::dir_exists(plots_dir)) {
+  fs::dir_create(plots_dir)
+}
+saveRDS(d_cont, fs::path(plots_dir, "df_cont_plot.Rds"))

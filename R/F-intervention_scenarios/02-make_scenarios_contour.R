@@ -7,9 +7,13 @@ source("R/F-intervention_scenarios/z-context.R", local = TRUE)
 source("R/F-intervention_scenarios/utils-scenarios.R", local = TRUE)
 
 # ors for various coverages
+# ors <- tibble(
+#   cli = c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.9, 1, 1.1, 1.3, 1.52),
+#   otc = c(0.85, 0.777, 0.725, 0.65, 0.6, 0.53, 0.475, 0.42, 0.3, 0.25, 0.2, 0.1, 0)
+# )
 ors <- tibble(
-  cli = c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.9, 1, 1.1, 1.3),
-  otc = c(0.85, 0.777, 0.725, 0.65, 0.6, 0.53, 0.475, 0.42, 0.3, 0.25, 0.2, 0.1)
+  cli = c(1.52),
+  otc = c(0)
 )
 ors$indexes <- seq_len(nrow(ors))
 

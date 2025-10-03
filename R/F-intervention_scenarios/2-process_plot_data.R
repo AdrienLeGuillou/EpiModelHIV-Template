@@ -47,6 +47,7 @@ d_cont <- future.apply::future_lapply(seq_len(nrow(b_infos)), \(i) {
       or_cli,
       or_otc,
       lst_prop_otc,
+      cml_nia_all,
       cml_pia_all,
       cml_resist,
       cml_addi_resist_nia

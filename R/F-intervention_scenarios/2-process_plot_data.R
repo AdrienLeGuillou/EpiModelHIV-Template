@@ -50,8 +50,7 @@ d_cont <- future.apply::future_lapply(seq_len(nrow(b_infos)), \(i) {
       cml_pia_all,
       cml_resist,
       cml_addi_resist_nia
-    ) |>
-    summarise(across(everything(), median))
+    ) # |> summarise(across(everything(), median))
 }) |>
   bind_rows()
 

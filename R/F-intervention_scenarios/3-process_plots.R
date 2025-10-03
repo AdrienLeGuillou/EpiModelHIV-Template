@@ -21,20 +21,20 @@ source("R/F-intervention_scenarios/outcomes.R", local = TRUE)
 
 d_cont <- readRDS("./data/run/scenarios/plots/df_cont_plot.Rds")
 
-ggplot(d_cont, aes(x = prop_otc, y = tst_rate, col = log(cml_resist))) +
+ggplot(d_cont, aes(x = lst_prop_otc, y = tst_rate, col = log(cml_resist))) +
   geom_point(size = 5) +
   scale_color_viridis(discrete = FALSE, alpha = 1, option = "D", direction = 1)
 
 glimpse(d_cont)
 
 # loess_mod <- loess(log10(cml_resist) ~ prop_otc * tst_rate, data = d_cont)
-loess_mod <- loess(cml_addi_resist_nia ~ prop_otc * tst_rate, data = d_cont)
+loess_mod <- loess(cml_addi_resist_nia ~ lst_prop_otc * tst_rate, data = d_cont)
 loess_inter <- expand.grid(list(
-  prop_otc = seq(0, 1, 0.01),
+  lst_prop_otc = seq(0, 1, 0.01),
   tst_rate = seq(0, 1, 0.01)
 ))
 loess_inter$z <- as.numeric(predict(loess_mod, newdata = loess_inter))
-loess_inter$x <- loess_inter$prop_otc
+loess_inter$x <- loess_inter$lst_prop_otc
 loess_inter$y <- loess_inter$tst_rate
 
 ggplot(loess_inter, aes(x, y)) +

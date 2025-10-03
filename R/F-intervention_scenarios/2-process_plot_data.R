@@ -56,7 +56,9 @@ d_cont <- future.apply::future_lapply(seq_len(nrow(b_infos)), \(i) {
 
 d_prop <- d_cont |>
   filter(tst_rate == 0.5) |>
-  mutate(prop_otc = lst_prop_otc) |>
+  group_by(or_cli, or_otc, tst_rate) |>
+  summarise(prop_otc = median(lst_prop_otc)) |>
+  ungroup() |>
   select(or_cli, or_otc, prop_otc)
 
 d_cont <- left_join(d_cont, d_prop, by = c("or_cli", "or_otc"))

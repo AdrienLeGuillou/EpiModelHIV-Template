@@ -56,12 +56,11 @@ d_cont <- future.apply::future_lapply(seq_len(nrow(b_infos)), \(i) {
   bind_rows()
 
 d_prop <- d_cont |>
-  filter(tst_rate == 0.5) |> # TODO: change to 0.5 once they are ran
+  filter(tst_rate == 0.5) |>
   mutate(prop_otc = lst_prop_otc) |>
   select(or_cli, or_otc, prop_otc)
 
-d_cont <- left_join(d_cont, d_prop, by = c("or_cli", "or_otc")) |>
-  select(-c(or_cli, or_otc, lst_prop_otc))
+d_cont <- left_join(d_cont, d_prop, by = c("or_cli", "or_otc"))
 
 if (!fs::dir_exists(plots_dir)) {
   fs::dir_create(plots_dir)

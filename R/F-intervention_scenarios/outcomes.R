@@ -117,7 +117,14 @@ make_d_ref <- function(file_path) {
   readRDS(file_path) |>
     mutate_outcomes() |>
     filter(time >= max(time) - 10 * year_steps) |>
-    select(sim, starts_with("cml_incid"), cml_gfr_drop, cml_resist) |>
+    select(
+      sim,
+      starts_with("cml_incid"),
+      cml_gfr_drop,
+      cml_resist,
+      cml_resist_tdf,
+      cml_resist_ftc
+    ) |>
     group_by(sim) |>
     summarize(across(everything(), \(x) sum(x, na.rm = TRUE))) |>
     ungroup() |>
@@ -185,8 +192,10 @@ process_one_scenario <- function(scenario_infos, d_ref) {
     mutate(
       cml_hbv_flare_otc_ir100kpy = cml_hbv_flare_otc / cml_prep_otc_py * 1e5,
       cml_addi_resist_nia = (cml_resist - d_ref$cml_resist) / cml_nia_all,
-      cml_addi_resist_tdf_nia = (cml_resist_tdf - d_ref$cml_resist_tdf) / cml_nia_all,
-      cml_addi_resist_ftc_nia = (cml_resist_ftc - d_ref$cml_resist_ftc) / cml_nia_all,
+      cml_addi_resist_tdf_nia = (cml_resist_tdf - d_ref$cml_resist_tdf) /
+        cml_nia_all,
+      cml_addi_resist_ftc_nia = (cml_resist_ftc - d_ref$cml_resist_ftc) /
+        cml_nia_all,
       cml_addi_hbv_flare_otc_nia = cml_hbv_flare_otc / cml_nia_all,
       cml_addi_gfr_drop_nia = (cml_gfr_drop - d_ref$cml_gfr_drop) / cml_nia_all
     )

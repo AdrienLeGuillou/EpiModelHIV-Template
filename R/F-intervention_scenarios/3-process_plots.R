@@ -20,17 +20,20 @@ source("R/F-intervention_scenarios/outcomes.R", local = TRUE)
 
 d_cont <- readRDS("./data/run/scenarios/plots/df_cont_plot.Rds") |>
   group_by(prop_otc, tst_rate) |>
-  summarise(across(everything(), median))
+  summarise(across(everything(), median)) |>
+  mutate(cml_resist_inf = cml_resist / (1e4 - cml_nia_all))
 glimpse(d_cont)
 
 ggplot(d_cont, aes(x = prop_otc, y = tst_rate, col = log(cml_resist))) +
   geom_point(size = 1) +
   scale_color_viridis(discrete = FALSE, alpha = 1, option = "D", direction = 1)
 
-# loess_mod <- loess(log10(cml_resist) ~ prop_otc * tst_rate, data = d_cont, span = 0.25)
+# TODO: CML_RESIST per cuml infs - rougly 10k inf in baseline
+loess_mod <- loess(cml_resist_inf ~ prop_otc * tst_rate, data = d_cont, span = 0.25)
+loess_mod <- loess(log10(cml_resist) ~ prop_otc * tst_rate, data = d_cont, span = 0.25)
 # loess_mod <- loess(cml_resist ~ prop_otc * tst_rate, data = d_cont, span = 0.25)
 # loess_mod <- loess(cml_addi_resist_nia ~ prop_otc * tst_rate, data = d_cont, span = 0.75)
-loess_mod <- loess(cml_pia_all ~ prop_otc * tst_rate, data = d_cont, span = 0.25)
+# loess_mod <- loess(cml_pia_all ~ prop_otc * tst_rate, data = d_cont, span = 0.25)
 # loess_mod <- loess(cml_nia_all ~ prop_otc * tst_rate, data = d_cont, span = 0.25)
 loess_inter <- expand.grid(list(
   prop_otc = seq(0, 1, 0.01),

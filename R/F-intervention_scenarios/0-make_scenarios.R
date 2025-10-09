@@ -18,32 +18,32 @@ source("R/F-intervention_scenarios/utils-scenarios.R", local = TRUE)
 sc_df_ls <- list()
 sc_names <- c()
 
-# # TODO: re-activate
-#
-# # Simply no OTC
-# tmp_sc_names <- "baseline"
-# sc_names <- c(sc_names, tmp_sc_names)
-# sc_df_ls[["baseline"]] <- tibble(
-#   .scenario.id = paste0("baseline"),
-#   .at = intervention_start,
-#   prep.otc.start.rate_1 = 0,
-#   prep.otc.start.rate_2 = 0,
-#   prep.otc.start.rate_3 = 0
-# )
+# Simply no OTC
+tmp_sc_names <- "baseline"
+sc_names <- c(sc_names, tmp_sc_names)
+sc_df_ls[["baseline"]] <- tibble(
+  .scenario.id = paste0("baseline"),
+  .at = intervention_start,
+  prep.otc.start.rate_1 = 0,
+  prep.otc.start.rate_2 = 0,
+  prep.otc.start.rate_3 = 0
+)
 
 # # NOTE: to get the right OR for +30%
 #
-# tmp_sc_names <- paste0("no_otc_prep_or", c("125", "150", "175", "200"))
-# sc_names <- c(sc_names, tmp_sc_names)
-# ors <- c(1.25, 1.50, 1.75, 2.0)
-# sc_df_ls[["no_otc_prep_or"]] <- sc_df_ls[["baseline"]] |>
-#   slice_sample(n = length(ors), replace = TRUE) |>
-#   mutate(
-#     .scenario.id = tmp_sc_names,
-#     prep.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
-#     prep.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
-#     prep.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
-#   )
+tmp_sc_names <- paste0("no_otc_prep_or", c("125", "150", "175", "200"))
+tmp_sc_names <- paste0("no_otc_prep_or", c("152"))
+sc_names <- c(sc_names, tmp_sc_names)
+ors <- c(1.25, 1.50, 1.75, 2.0)
+ors <- c(1.52)
+sc_df_ls[["no_otc_prep_or"]] <- sc_df_ls[["baseline"]] |>
+  slice_sample(n = length(ors), replace = TRUE) |>
+  mutate(
+    .scenario.id = tmp_sc_names,
+    prep.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
+    prep.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
+    prep.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
+  )
 
 # # NOTE: to get the right OR for same coverage
 #
@@ -145,17 +145,16 @@ sc_names <- c()
 name_bases <- c(
   # "only_otc_relaxed_"
   # "base_only_otc_same_",
-  # "only_otc_relaxed_",
-  "only_otc_best_",
-  "otc_best_",
-  "otc_mix_"
+  # "only_otc_best_",
+  #"otc_mix_",
+  "otc_best_"
 )
 d_bases <- list(
-  d_base_only_otc_relaxed,
-  d_base_only_otc_best,
-  d_base_otc_best,
-  d_base_otc_mix,
-  d_base_only_otc_same
+  # d_base_only_otc_relaxed,
+  # d_base_only_otc_same,
+  # d_base_only_otc_best,
+  # d_base_otc_mix,
+  d_base_otc_best
 )
 
 for (i in seq_along(name_bases)) {
@@ -193,102 +192,92 @@ for (i in seq_along(name_bases)) {
       prep.otc.gfr.high.risk.int = year_steps * high_gfr_ints
     )
 
-  # Modify hiv testing
-  tmp_sc_names <- paste0(
-    name_bases[i],
-    "hivtst_",
-    c("13", "26", "52") # default is 26
-  )
-  sc_names <- c(sc_names, tmp_sc_names)
-  tst_ints <- c(13, 26, 52)
-  sc_df_ls[[paste0(name_bases[i], "hivtst")]] <- d_bases[[i]] |>
-    slice_sample(n = length(tst_ints), replace = TRUE) |>
-    mutate(
-      .scenario.id = tmp_sc_names,
-      prep.otc.tst.int = tst_ints
-    )
-
-  # Modify STI testing
-  tmp_sc_names <- paste0(
-    name_bases[i],
-    "stitst_",
-    c("13", "26", "52") # default is 26
-  )
-  sc_names <- c(sc_names, tmp_sc_names)
-  tst_ints <- c(13, 26, 52)
-  sc_df_ls[[paste0(name_bases[i], "stitst")]] <- d_bases[[i]] |>
-    slice_sample(n = length(tst_ints), replace = TRUE) |>
-    mutate(
-      .scenario.id = tmp_sc_names,
-      sti.screen.prep.otc.rate = 1 / tst_ints
-    )
-
-  # Modify ADHR
-  tmp_sc_names <- paste0(
-    name_bases[i],
-    "adhr_",
-    c("m20", "m10", "m05", "base", "p05", "p10", "p20")
-  )
-  sc_names <- c(sc_names, tmp_sc_names)
-  shifts <- c(-20, -10, -5, 0, 5, 10, 20) / 100
-  adhrs <- vapply(
-    shifts,
-    EpiModelHIV::reallocate_pcp,
-    numeric(3),
-    in.pcp = param$prep.adhr.dist
-  )
-  sc_df_ls[[paste0(name_bases[i], "adhr")]] <- d_bases[[i]] |>
-    slice_sample(n = length(shifts), replace = TRUE) |>
-    mutate(
-      .scenario.id = tmp_sc_names,
-      prep.otc.adhr.dist.realloc = TRUE,
-      prep.otc.adhr.dist_1 = adhrs[1, ],
-      prep.otc.adhr.dist_2 = adhrs[2, ],
-      prep.otc.adhr.dist_3 = adhrs[3, ],
-    )
+  # # Modify hiv testing
+  # tmp_sc_names <- paste0(
+  #   name_bases[i],
+  #   "hivtst_",
+  #   c("13", "26", "52") # default is 26
+  # )
+  # sc_names <- c(sc_names, tmp_sc_names)
+  # tst_ints <- c(13, 26, 52)
+  # sc_df_ls[[paste0(name_bases[i], "hivtst")]] <- d_bases[[i]] |>
+  #   slice_sample(n = length(tst_ints), replace = TRUE) |>
+  #   mutate(
+  #     .scenario.id = tmp_sc_names,
+  #     prep.otc.tst.int = tst_ints
+  #   )
+  #
+  # # Modify STI testing
+  # tmp_sc_names <- paste0(
+  #   name_bases[i],
+  #   "stitst_",
+  #   c("13", "26", "52") # default is 26
+  # )
+  # sc_names <- c(sc_names, tmp_sc_names)
+  # tst_ints <- c(13, 26, 52)
+  # sc_df_ls[[paste0(name_bases[i], "stitst")]] <- d_bases[[i]] |>
+  #   slice_sample(n = length(tst_ints), replace = TRUE) |>
+  #   mutate(
+  #     .scenario.id = tmp_sc_names,
+  #     sti.screen.prep.otc.rate = 1 / tst_ints
+  #   )
+  #
+  # # Modify ADHR
+  # tmp_sc_names <- paste0(
+  #   name_bases[i],
+  #   "adhr_",
+  #   c("m20", "m10", "m05", "base", "p05", "p10", "p20")
+  # )
+  # sc_names <- c(sc_names, tmp_sc_names)
+  # shifts <- c(-20, -10, -5, 0, 5, 10, 20) / 100
+  # adhrs <- vapply(
+  #   shifts,
+  #   EpiModelHIV::reallocate_pcp,
+  #   numeric(3),
+  #   in.pcp = param$prep.adhr.dist
+  # )
+  # sc_df_ls[[paste0(name_bases[i], "adhr")]] <- d_bases[[i]] |>
+  #   slice_sample(n = length(shifts), replace = TRUE) |>
+  #   mutate(
+  #     .scenario.id = tmp_sc_names,
+  #     prep.otc.adhr.dist.realloc = TRUE,
+  #     prep.otc.adhr.dist_1 = adhrs[1, ],
+  #     prep.otc.adhr.dist_2 = adhrs[2, ],
+  #     prep.otc.adhr.dist_3 = adhrs[3, ],
+  #   )
 }
 
 # Scenarios exploring always hiv/sti test in "best" likes ----------------------
 name_bases <- c(
-  "only_otc_best_",
-  "otc_best_",
-  "otc_mix_"
+  # "only_otc_best_",
+  # "otc_mix_",
+  "otc_best_"
 )
 d_bases <- list(
-  d_base_only_otc_best,
-  d_base_otc_best,
-  d_base_otc_mix
+  # d_base_only_otc_best,
+  # d_base_otc_mix,
+  d_base_otc_best
 )
 
 for (i in seq_along(name_bases)) {
-  # # Now with the `some_hivtst_`
-  # tmp_sc_names <- paste0( name_bases[i], "always_hivtst")
+  # tmp_sc_names <- paste0(name_bases[i], "always_stitst")
   # sc_names <- c(sc_names, tmp_sc_names)
-  # sc_df_ls[[paste0(name_bases[i], "always_hivtst")]] <- d_bases[[i]] |>
+  # sc_df_ls[[paste0(name_bases[i], "always_stitst")]] <- d_bases[[i]] |>
   #   slice_sample(n = 1, replace = TRUE) |>
   #   mutate(
   #     .scenario.id = tmp_sc_names,
-  #     prep.otc.always.hiv.tst = 1
+  #     prep.otc.always.sti.tst = 1
   #   )
-
-  tmp_sc_names <- paste0(name_bases[i], "always_stitst")
-  sc_names <- c(sc_names, tmp_sc_names)
-  sc_df_ls[[paste0(name_bases[i], "always_stitst")]] <- d_bases[[i]] |>
-    slice_sample(n = 1, replace = TRUE) |>
-    mutate(
-      .scenario.id = tmp_sc_names,
-      prep.otc.always.sti.tst = 1
-    )
-
-  tmp_sc_names <- paste0(name_bases[i], "always_bothtst")
-  sc_names <- c(sc_names, tmp_sc_names)
-  sc_df_ls[[paste0(name_bases[i], "always_bothtst")]] <- d_bases[[i]] |>
-    slice_sample(n = 1, replace = TRUE) |>
-    mutate(
-      .scenario.id = tmp_sc_names,
-      prep.otc.always.hiv.tst = 1,
-      prep.otc.always.sti.tst = 1
-    )
+  #
+  # tmp_sc_names <- paste0(name_bases[i], "always_bothtst")
+  # sc_names <- c(sc_names, tmp_sc_names)
+  # sc_df_ls[[paste0(name_bases[i], "always_bothtst")]] <- d_bases[[i]] |>
+  #   slice_sample(n = 1, replace = TRUE) |>
+  #   mutate(
+  #     .scenario.id = tmp_sc_names,
+  #     prep.otc.always.hiv.tst = 1,
+  #     prep.otc.always.sti.tst = 1
+  #   )
 
   hivtst_prob <- c(0, 0.25, 0.5, 0.75, 1)
   tmp_sc_names <- paste0(name_bases[i], "some_hivtst_", c(0, 25, 50, 75, 100))
@@ -299,7 +288,6 @@ for (i in seq_along(name_bases)) {
       .scenario.id = tmp_sc_names,
       prep.otc.always.hiv.tst = hivtst_prob
     )
-
 }
 
 

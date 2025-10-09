@@ -102,6 +102,8 @@ var_labels <- c(
   "lst_resist_hiv_ftc_prev" = "FTC resistance Prevalence (among HIV+) (ly)",
 
   "cml_addi_resist_nia" = "Additional Resistances Created per Infection Averted (10y)",
+  "cml_addi_resist_tdf_nia" = "Additional TDF Resistances Created per Infection Averted (10y)",
+  "cml_addi_resist_ftc_nia" = "Additional FTC Resistances Created per Infection Averted (10y)",
   "cml_addi_hbv_flare_otc_nia" = "Additional of HBV Flares Due to OTC per Infection Averted (10y)",
   "cml_addi_gfr_drop_nia" = "Additional GFR Drops Due to PrEP per Infection Averted (10y)",
 

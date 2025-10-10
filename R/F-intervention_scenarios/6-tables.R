@@ -8,6 +8,18 @@ source("R/F-intervention_scenarios/labels.R", local = TRUE)
 
 d_raw <- readr::read_csv("data/output/table.csv")
 
+# Tables and Plots:
+#
+# T1: scenarios and params
+# T2: baseline, +30%: OTC 0, 25, 50, 75 100 - PIA, GFR, FLARES, 2 resists
+#   - impact of OTC cov
+# P1: OTC VS cli dynamics
+# T3: +30%: OTC 30, vary disc, gfr test, some HIVtest - PIA, GFR, FLARES, 2 resists
+#   - mitigation
+# P2: PIA | Resist ~ prop_otc * test_rate
+
+
+
 t2_scenarios <- c(
   "baseline",
   "no_otc_prep_or150",

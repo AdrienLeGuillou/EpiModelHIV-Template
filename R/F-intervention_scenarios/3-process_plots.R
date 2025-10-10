@@ -29,12 +29,16 @@ ggplot(d_cont, aes(x = prop_otc, y = tst_rate, col = log(cml_resist))) +
   scale_color_viridis(discrete = FALSE, alpha = 1, option = "D", direction = 1)
 
 # TODO: CML_RESIST per cuml infs - rougly 10k inf in baseline
-loess_mod <- loess(cml_resist_inf ~ prop_otc * tst_rate, data = d_cont, span = 0.25)
-loess_mod <- loess(log10(cml_resist) ~ prop_otc * tst_rate, data = d_cont, span = 0.25)
-# loess_mod <- loess(cml_resist ~ prop_otc * tst_rate, data = d_cont, span = 0.25)
-# loess_mod <- loess(cml_addi_resist_nia ~ prop_otc * tst_rate, data = d_cont, span = 0.75)
-# loess_mod <- loess(cml_pia_all ~ prop_otc * tst_rate, data = d_cont, span = 0.25)
-# loess_mod <- loess(cml_nia_all ~ prop_otc * tst_rate, data = d_cont, span = 0.25)
+loess_mod <- loess(
+  cml_resist_inf ~ prop_otc * tst_rate,
+  data = d_cont,
+  span = 0.25
+)
+# loess_mod <- loess(
+#   cml_pia_all ~ prop_otc * tst_rate,
+#   data = d_cont,
+#   span = 0.25
+# )
 loess_inter <- expand.grid(list(
   prop_otc = seq(0, 1, 0.01),
   tst_rate = seq(0, 1, 0.01)
@@ -54,7 +58,7 @@ ggplot(loess_inter, aes(x, y)) +
     y = "Probability of HIV test before OTC start",
     x = "Proportion of OTC PrEP"
   ) +
-  scale_fill_viridis(discrete = FALSE, alpha = 1, option = "D", direction = 1) +
+  scale_fill_viridis(discrete = FALSE, alpha = 1, option = "A", direction = 1) +
   theme(
     legend.position = "right",
     axis.text = element_text(size = 12, colour = "black"),
@@ -63,4 +67,6 @@ ggplot(loess_inter, aes(x, y)) +
     legend.title = element_text(size = 12),
     axis.ticks.length = unit(0.25, "cm"),
     axis.ticks = element_line(color = "black")
-  )
+  ) +
+  geom_hline(yintercept = 0.5, color = "gray", linetype = 2) +
+  geom_vline(xintercept = 0.3, color = "gray", linetype = 2)

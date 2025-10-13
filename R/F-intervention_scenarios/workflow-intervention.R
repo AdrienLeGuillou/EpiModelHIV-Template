@@ -36,7 +36,7 @@ control <- control_msm(
 wf <- make_em_workflow("interventions", override = TRUE)
 
 # Define test scenarios
- source("./R/F-intervention_scenarios/0-make_scenarios.R", local = TRUE)
+source("./R/F-intervention_scenarios/0-make_scenarios.R", local = TRUE)
 
 wf <- add_workflow_step(
   wf_summary = wf,

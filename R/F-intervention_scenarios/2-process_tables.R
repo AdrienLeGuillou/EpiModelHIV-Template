@@ -32,37 +32,12 @@ d_ls <- future.apply::future_lapply(
 )
 
 d_sc_raw <- dplyr::bind_rows(d_ls)
-glimpse(d_sc_raw)
+saveRDS(d_sc_raw, fs::path(output_dir, paste0("d_raw.rds")))
 
 source("R/F-intervention_scenarios/labels.R", local = TRUE)
 
 format_table(d_sc_raw, var_labels, format_patterns) |>
   write.csv(fs::path(output_dir, "table.csv"), row.names = FALSE)
-
-
-# d_sc_raw |>
-#   filter(scenario_name != "baseline") |>
-#   pull(cml_addi_gfr_drop_nia) |>
-#   summary()
-#
-#
-# d_sc_raw |>
-#   filter(scenario_name != "baseline") |>
-#   select(sim, cml_prep_otc_py)
-#
-# d <- readRDS("data/run/scenarios/merged_tibbles/df__otc_best_some_hivtst_50.rds")
-#
-# d |>
-#   select(sim, time, dbg_hbv_flares_otc, prep.otcCurr) |>
-#   mutate(ir100 = dbg_hbv_flares_otc / prep.otcCurr) |>
-#   group_by(sim) |>
-#   summarise(
-#     tot = sum(prep.otcCurr),
-#     py = tot / 52,
-#     fl = sum(dbg_hbv_flares_otc),
-#     ir100 = sum(ir100),
-#     ir20 = fl / tot
-#   )
 
 # Make sub tables per scenario family ------------------------------------------
 
@@ -75,7 +50,9 @@ scs <- c(
 )
 for (i in seq_along(scs)) {
   sc <- scs[i]
-  sc_ref <- paste0("df__", sc, "_adhr_base.rds")
+  sc_ref <- paste0("df__", sc, "_some_hivtst_50")
+  if (!fs::file_exists(sc_ref)) next
+
   d_ref <- make_d_ref(fs::path(scenarios_tibble_dir, sc_ref))
 
   sc_info <- scenarios_info |>
@@ -87,7 +64,7 @@ for (i in seq_along(scs)) {
   )
 
   d_sc_raw <- dplyr::bind_rows(d_ls)
-  glimpse(d_sc_raw)
+  saveRDS(d_sc_raw, fs::path(output_dir, paste0("d_raw_", sc, ".rds")))
 
   source("R/F-intervention_scenarios/labels.R", local = TRUE)
 

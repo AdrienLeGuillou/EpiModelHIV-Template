@@ -22,7 +22,16 @@ d_raw <- readr::read_csv("data/output/table.csv")
 
 t2_scenarios <- c(
   "baseline",
-  "no_otc_prep_or150",
+  "plot_cli1.52_otc0_tst0.5", # 0% OTC
+  "plot_cli1.1_otc0.2_tst0.5", # 25% OTC
+  "plot_cli0.7_otc0.42_tst0.5", # 50% OTC
+  "plot_cli0.3_otc0.65_tst0.5", # 77% OTC
+  "plot_cli0_otc0.85_tst0.5" # 100% OTC
+)
+
+# use best as ref here?
+# or baseline?
+t3_scenarios <- c(
   "otc_best_some_hivtst_50",
   "otc_best_disc_050",
   "otc_best_disc_075",
@@ -36,15 +45,12 @@ t2_scenarios <- c(
   "otc_best_some_hivtst_25",
   "otc_best_some_hivtst_50",
   "otc_best_some_hivtst_75",
-  "otc_best_some_hivtst_100",
-  "plot_cli1.52_otc0_tst50", # 0% OTC
-  "plot_cli1.1_otc0.2_tst50", # 25% OTC
-  "plot_cli0.7_otc0.42_tst50", # 50% OTC
-  "plot_cli0.3_otc0.65_tst50", # 77% OTC
-  "plot_cli0_otc0.85_tst50" # 100% OTC
+  "otc_best_some_hivtst_100"
 )
 
 t2_cols <- c(
+  "lst_prep_any",
+  "lst_prop_otc",
   "cml_pia_all",
   "lst_prep_any_gfr_lt60",
   "cml_hbv_flare_otc_ir100kpy",
@@ -53,7 +59,14 @@ t2_cols <- c(
 )
 t2_cols <- var_labels[t2_cols]
 
-d_raw |>
-  semi_join(tibble(scenario_name = t2_scenarios)) |>
+tibble(scenario_name = t2_scenarios) |>
+  left_join(d_raw) |>
   # filter(scenario_name %in% t2_scenarios) |>
-  select(scenario_name, any_of(t2_cols))
+  select(scenario_name, any_of(t2_cols)) |>
+  DT::datatable()
+
+tibble(scenario_name = t3_scenarios) |>
+  left_join(d_raw) |>
+  # filter(scenario_name %in% t2_scenarios) |>
+  select(scenario_name, any_of(t2_cols)) |>
+  DT::datatable()

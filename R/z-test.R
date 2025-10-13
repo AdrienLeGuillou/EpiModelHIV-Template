@@ -48,3 +48,23 @@ d_cont <- lapply(seq_len(nrow(b_infos)), \(i) {
     summarise(across(everything(), median))
 }) |>
   bind_rows()
+
+# ------------------------------------------------------------------------------
+
+library(dplyr)
+source("R/shared_variables.R", local = TRUE)
+source("R/F-intervention_scenarios/outcomes.R", local = TRUE)
+
+d_sc_raw <- readRDS(fs::path(output_dir, paste0("d_raw.rds")))
+
+d_sc_raw <- d_sc_raw |>
+  mutate(
+    cml_resist_tdf_100i = cml_resist_tdf / cml_incid * 100,
+    cml_resist_ftc_100i = cml_resist_ftc / cml_incid * 100,
+  )
+
+
+source("R/F-intervention_scenarios/labels.R", local = TRUE)
+
+format_table(d_sc_raw, var_labels, format_patterns) |>
+  write.csv(fs::path(output_dir, "table_test.csv"), row.names = FALSE)

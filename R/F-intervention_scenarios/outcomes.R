@@ -197,7 +197,11 @@ process_one_scenario <- function(scenario_infos, d_ref) {
       cml_addi_resist_ftc_nia = (cml_resist_ftc - d_ref$cml_resist_ftc) /
         cml_nia_all,
       cml_addi_hbv_flare_otc_nia = cml_hbv_flare_otc / cml_nia_all,
-      cml_addi_gfr_drop_nia = (cml_gfr_drop - d_ref$cml_gfr_drop) / cml_nia_all
+      cml_addi_gfr_drop_nia = (cml_gfr_drop - d_ref$cml_gfr_drop) / cml_nia_all,
+
+      # resist per infection
+      cml_resist_tdf_100i = cml_resist_tdf / cml_incid * 100,
+      cml_resist_ftc_100i = cml_resist_ftc / cml_incid * 100
     )
 
   d

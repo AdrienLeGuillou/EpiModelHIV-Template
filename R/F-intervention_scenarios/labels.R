@@ -107,6 +107,9 @@ var_labels <- c(
   "cml_addi_hbv_flare_otc_nia" = "Additional of HBV Flares Due to OTC per Infection Averted (10y)",
   "cml_addi_gfr_drop_nia" = "Additional GFR Drops Due to PrEP per Infection Averted (10y)",
 
+  "cml_resist_tdf_100i" = "New TDF Resistances per 100 Infections (10y)",
+  "cml_resist_ftc_100i" = "New FTC Resistances per 100 Infections (10y)",
+
   "lst_num" = "num"
 )
 
@@ -138,12 +141,13 @@ format_patterns <- list(
       "lst_.*_ir100",
       "cml_addi_",
       "cml_nnt",
-      ".*_mean_eps"
+      ".*_mean_eps",
+      "cml_resist_.*_100i"
     ),
     fun = scales::label_number(0.01)
   ),
   small_perc = list(
-    patterns = c("lst_resist.*_prev"),
+    patterns = c("lst_resist.*_prev", "cml_resist_.*_i"),
     fun = scales::label_percent(0.01)
   ),
   perc = list(
@@ -219,9 +223,11 @@ scenarios_prefix_names <- c(
   "_stitst_13" = ": STI Test Every 3 Months",
   "_stitst_26" = ": STI Test Every 6 Months",
   "_stitst_52" = ": STI Test Every 12 Months",
+  "_some_hivtst_0" = ": Some (0%) HIV Test at OTC Start",
   "_some_hivtst_25" = ": Some (25%) HIV Test at OTC Start",
   "_some_hivtst_50" = ": Some (50%) HIV Test at OTC Start",
   "_some_hivtst_75" = ": Some (75%) HIV Test at OTC Start",
+  "_some_hivtst_100" = ": Some (100%) HIV Test at OTC Start",
   "_always_hivtst" = ": Always Test HIV at OTC Start",
   "_always_stitst" = ": Always Test STI at OTC Start",
   "_always_bothtst" = ": Always Test HIV and STI at OTC Start",

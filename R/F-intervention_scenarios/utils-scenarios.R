@@ -90,6 +90,12 @@ d_base_best <- tibble(
   prep.otc.hbv.flare.prob = param$prep.hbv.flare.prob
 )
 
+d_base_indic <- d_base_best |>
+  mutate(
+    prep.otc.risk.reassess.int = param$prep.risk.reassess.int,
+    prep.otc.hard.indications = 1,
+  )
+
 d_base_only_otc_same <- d_base_same |>
   mutate(
     prep.start.rate_1 = 0,

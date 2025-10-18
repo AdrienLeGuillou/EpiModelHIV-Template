@@ -18,32 +18,32 @@ source("R/F-intervention_scenarios/utils-scenarios.R", local = TRUE)
 sc_df_ls <- list()
 sc_names <- c()
 
-# Simply no OTC
-tmp_sc_names <- "baseline"
-sc_names <- c(sc_names, tmp_sc_names)
-sc_df_ls[["baseline"]] <- tibble(
-  .scenario.id = paste0("baseline"),
-  .at = intervention_start,
-  prep.otc.start.rate_1 = 0,
-  prep.otc.start.rate_2 = 0,
-  prep.otc.start.rate_3 = 0
-)
+# # Simply no OTC
+# tmp_sc_names <- "baseline"
+# sc_names <- c(sc_names, tmp_sc_names)
+# sc_df_ls[["baseline"]] <- tibble(
+#   .scenario.id = paste0("baseline"),
+#   .at = intervention_start,
+#   prep.otc.start.rate_1 = 0,
+#   prep.otc.start.rate_2 = 0,
+#   prep.otc.start.rate_3 = 0
+# )
 
 # # NOTE: to get the right OR for +30%
 #
-tmp_sc_names <- paste0("no_otc_prep_or", c("125", "150", "175", "200"))
-tmp_sc_names <- paste0("no_otc_prep_or", c("152"))
-sc_names <- c(sc_names, tmp_sc_names)
-ors <- c(1.25, 1.50, 1.75, 2.0)
-ors <- c(1.52)
-sc_df_ls[["no_otc_prep_or"]] <- sc_df_ls[["baseline"]] |>
-  slice_sample(n = length(ors), replace = TRUE) |>
-  mutate(
-    .scenario.id = tmp_sc_names,
-    prep.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
-    prep.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
-    prep.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
-  )
+# tmp_sc_names <- paste0("no_otc_prep_or", c("125", "150", "175", "200"))
+# tmp_sc_names <- paste0("no_otc_prep_or", c("152"))
+# sc_names <- c(sc_names, tmp_sc_names)
+# ors <- c(1.25, 1.50, 1.75, 2.0)
+# ors <- c(1.52)
+# sc_df_ls[["no_otc_prep_or"]] <- sc_df_ls[["baseline"]] |>
+#   slice_sample(n = length(ors), replace = TRUE) |>
+#   mutate(
+#     .scenario.id = tmp_sc_names,
+#     prep.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
+#     prep.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
+#     prep.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
+#   )
 
 # # NOTE: to get the right OR for same coverage
 #
@@ -147,14 +147,16 @@ name_bases <- c(
   # "base_only_otc_same_",
   # "only_otc_best_",
   #"otc_mix_",
-  "otc_best_"
+  # "otc_best_",
+  "otc_indic_"
 )
 d_bases <- list(
   # d_base_only_otc_relaxed,
   # d_base_only_otc_same,
   # d_base_only_otc_best,
   # d_base_otc_mix,
-  d_base_otc_best
+  # d_base_otc_best,
+  d_base_otc_indic
 )
 
 for (i in seq_along(name_bases)) {
@@ -251,12 +253,14 @@ for (i in seq_along(name_bases)) {
 name_bases <- c(
   # "only_otc_best_",
   # "otc_mix_",
-  "otc_best_"
+  # "otc_best_",
+  "otc_indic_"
 )
 d_bases <- list(
   # d_base_only_otc_best,
   # d_base_otc_mix,
-  d_base_otc_best
+  # d_base_otc_best,
+  d_base_otc_indic
 )
 
 for (i in seq_along(name_bases)) {

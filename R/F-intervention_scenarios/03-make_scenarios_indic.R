@@ -30,17 +30,17 @@ sc_df_ls[["baseline"]] <- tibble(
 )
 
 ors <- seq(0.05, 0.5, 0.05)
-orc <- c( # values from model
-  0.03780670,
-  0.08089587,
-  0.12802123,
-  0.18089827,
-  0.24124246,
-  0.31076927,
-  0.39119419,
-  0.48423269,
-  0.59160025,
-  0.71501234
+ors <- c(
+  0.03027552,
+  0.06595926,
+  0.10430880,
+  0.14680892,
+  0.19494439,
+  0.25019997,
+  0.31406043,
+  0.38801056,
+  0.47353511,
+  0.57211886
 )
 tmp_sc_names <- paste0("add_otc_best", ors)
 sc_names <- c(sc_names, tmp_sc_names)
@@ -54,6 +54,19 @@ sc_df_ls[["add_otc_best"]] <- d_base_best |>
   )
 
 ors <- seq(0.05, 0.5, 0.05)
+ors <- c(
+  # values from model
+  0.03780670,
+  0.08089587,
+  0.12802123,
+  0.18089827,
+  0.24124246,
+  0.31076927,
+  0.39119419,
+  0.48423269,
+  0.59160025,
+  0.71501234
+)
 tmp_sc_names <- paste0("add_otc_indics", ors)
 sc_names <- c(sc_names, tmp_sc_names)
 sc_df_ls[["add_otc_indics"]] <- d_base_indic |>

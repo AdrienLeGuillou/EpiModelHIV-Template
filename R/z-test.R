@@ -44,7 +44,7 @@ d_sc_raw$otc_or
 d_best <- d_sc_raw |> filter(grp == "best")
 d_indic <- d_sc_raw |> filter(grp == "indic")
 
-d <- d_indic
+d <- d_best
 mod_otc <- lm(otc_or ~ poly(lst_prop_otc, 3), data = d)
 summary(mod_otc)
 d_pred <- tibble(lst_prop_otc = seq(0.05, 0.5, 0.01))
@@ -56,3 +56,4 @@ ggplot(d, aes(y = otc_or, x = lst_prop_otc)) +
 
 d_interest <- tibble(lst_prop_otc = seq(0.05, 0.5, 0.05))
 d_interest$otc_or <- predict(mod_otc, newdata = d_interest)
+d_interest$otc_or

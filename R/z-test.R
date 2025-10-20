@@ -7,64 +7,52 @@
 #   output_dir = "./"
 # )
 
-rmarkdown::render(
-  "./Rmd/scenarios_explore.Rmd",
-  output_file = "scenarios_explore.html",
-  knit_root_dir = getwd(),
-  output_dir = "./"
-)
+# rmarkdown::render(
+#   "./Rmd/scenarios_explore.Rmd",
+#   output_file = "scenarios_explore.html",
+#   knit_root_dir = getwd(),
+#   output_dir = "./"
+# )
 
 library(dplyr)
 library(tidyr)
 library(ggplot2)
 theme_set(theme_light())
 
-source("R/shared_variables.R", local = TRUE)
-source("R/F-intervention_scenarios/outcomes.R", local = TRUE)
+# source("R/shared_variables.R", local = TRUE)
+# source("R/F-intervention_scenarios/outcomes.R", local = TRUE)
+# scenarios_tibble_dir <- "./data/run/indics_raw/merged_tibbles/"
+# scenarios_info <- EpiModelHPC::get_scenarios_tibble_infos(scenarios_tibble_dir)
+# d_ref <- make_d_ref(fs::path(scenarios_tibble_dir, "df__baseline.rds"))
+# d_ls <- lapply(
+#   seq_len(nrow(scenarios_info)),
+#   \(i) process_one_scenario(scenarios_info[i, ], d_ref)
+# )
+# d_sc_raw <- dplyr::bind_rows(d_ls)
+# saveRDS(d_sc_raw, "./data/run/indics_raw/d_raw.rds")
 
-scenarios_tibble_dir <- fs::path(scenarios_dir, "merged_tibbles")
-d_ref <- make_d_ref(fs::path(scenarios_tibble_dir, "df__baseline.rds"))
-
-b_infos <- EpiModelHPC::get_scenarios_tibble_infos(scenarios_tibble_dir) |>
-  filter(
-    stringr::str_detect(scenario_name, "cli[0-9\\.]*_otc[0-9\\.]*_tst[0-9\\.]*")
-  ) |>
-  mutate(scenario_name_tmp = scenario_name) |>
-  separate_wider_regex(
-    scenario_name_tmp,
-    c("cli[0-9\\.]*_otc[0-9\\.]*_tst", test_p = "[0-9\\.]*")
-  )
-
-d_cont <- lapply(seq_len(nrow(b_infos)), \(i) {
-  process_one_scenario(b_infos[i, ], d_ref) |>
-    mutate(tst_rate = as.numeric(b_infos[i, "test_p"])) |>
-    select(
-      tst_rate,
-      lst_prop_otc,
-      cml_pia_all,
-      cml_resist,
-      cml_addi_resist_nia
-    ) |>
-    summarise(across(everything(), median))
-}) |>
-  bind_rows()
-
-# ------------------------------------------------------------------------------
-
-library(dplyr)
-source("R/shared_variables.R", local = TRUE)
-source("R/F-intervention_scenarios/outcomes.R", local = TRUE)
-
-d_sc_raw <- readRDS(fs::path(output_dir, paste0("d_raw.rds")))
+d_sc_raw <- readRDS("./data/run/indics_raw/d_raw.rds")
 
 d_sc_raw <- d_sc_raw |>
   mutate(
-    cml_resist_tdf_100i = cml_resist_tdf / cml_incid * 100,
-    cml_resist_ftc_100i = cml_resist_ftc / cml_incid * 100,
-  )
+    otc_or = as.numeric(stringr::str_extract(scenario_name, "[0-9\\.]+")),
+    grp = stringr::str_extract(scenario_name, "(best)|(indic)")
+  ) |>
+  filter(scenario_name != "baseline")
+d_sc_raw$otc_or
 
+d_best <- d_sc_raw |> filter(grp == "best")
+d_indic <- d_sc_raw |> filter(grp == "indic")
 
-source("R/F-intervention_scenarios/labels.R", local = TRUE)
+d <- d_indic
+mod_otc <- lm(otc_or ~ poly(lst_prop_otc, 3), data = d)
+summary(mod_otc)
+d_pred <- tibble(lst_prop_otc = seq(0.05, 0.5, 0.01))
+d_pred$otc_or <- predict(mod_otc, newdata = d_pred)
 
-format_table(d_sc_raw, var_labels, format_patterns) |>
-  write.csv(fs::path(output_dir, "table_test.csv"), row.names = FALSE)
+ggplot(d, aes(y = otc_or, x = lst_prop_otc)) +
+  geom_point() +
+  geom_line(data = d_pred, aes(y = otc_or, x = lst_prop_otc))
+
+d_interest <- tibble(lst_prop_otc = seq(0.05, 0.5, 0.05))
+d_interest$otc_or <- predict(mod_otc, newdata = d_interest)

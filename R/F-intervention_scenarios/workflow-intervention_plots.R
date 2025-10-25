@@ -36,6 +36,7 @@ control <- control_msm(
 wf <- make_em_workflow("plt_interventions", override = TRUE)
 
 # Define test scenarios
+# TODO: also do the indics ones
 source("./R/F-intervention_scenarios/02-make_scenarios_contour.R", local = TRUE)
 
 wf <- add_workflow_step(

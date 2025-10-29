@@ -36,7 +36,7 @@ control <- control_msm(
 wf <- make_em_workflow("plt_interventions", override = TRUE)
 
 # Define test scenarios
-# TODO: also do the indics ones
+# TODO: process the new contour plot for best and indics scs
 source("./R/F-intervention_scenarios/02-make_scenarios_contour.R", local = TRUE)
 
 wf <- add_workflow_step(

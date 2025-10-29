@@ -68,3 +68,58 @@ if (!fs::dir_exists(plots_dir)) {
   fs::dir_create(plots_dir)
 }
 saveRDS(d_cont, fs::path(plots_dir, "df_cont_plot.Rds"))
+
+# Same for indics --------------------------------------------------------------
+b_infos <- EpiModelHPC::get_scenarios_tibble_infos(scenarios_tibble_dir) |>
+  filter(
+    stringr::str_detect(
+      scenario_name,
+      "plot_indics_cli[0-9\\.]*_otc[0-9\\.]*_tst[0-9\\.]*"
+    )
+  ) |>
+  mutate(scenario_name_tmp = scenario_name) |>
+  separate_wider_regex(
+    scenario_name_tmp,
+    c(
+      "plot_indics_cli",
+      cli = "[0-9\\.]*",
+      "_otc",
+      otc = "[0-9\\.]*",
+      "_tst",
+      test_p = "[0-9\\.]*"
+    )
+  )
+
+d_cont <- future.apply::future_lapply(seq_len(nrow(b_infos)), \(i) {
+  process_one_scenario(b_infos[i, ], d_ref) |>
+    mutate(
+      tst_rate = as.numeric(b_infos[i, "test_p"]),
+      or_cli = as.numeric(b_infos[i, "cli"]),
+      or_otc = as.numeric(b_infos[i, "otc"])
+    ) |>
+    select(
+      tst_rate,
+      or_cli,
+      or_otc,
+      lst_prop_otc,
+      cml_nia_all,
+      cml_pia_all,
+      cml_resist,
+      cml_addi_resist_nia
+    ) # |> summarise(across(everything(), median))
+}) |>
+  bind_rows()
+
+d_prop <- d_cont |>
+  filter(tst_rate == 0.5) |>
+  group_by(or_cli, or_otc, tst_rate) |>
+  summarise(prop_otc = median(lst_prop_otc)) |>
+  ungroup() |>
+  select(or_cli, or_otc, prop_otc)
+
+d_cont <- left_join(d_cont, d_prop, by = c("or_cli", "or_otc"))
+
+if (!fs::dir_exists(plots_dir)) {
+  fs::dir_create(plots_dir)
+}
+saveRDS(d_cont, fs::path(plots_dir, "df_cont_plot_indics.Rds"))

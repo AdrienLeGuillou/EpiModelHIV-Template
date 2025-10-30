@@ -93,7 +93,7 @@ loess_inter$y <- loess_inter$tst_rate
 p_res <- plot_common_elts(loess_inter) +
   labs(
     y = "Probability of HIV test before OTC start",
-    x = "Proportion of OTC PrEP",
+    x = "Addition of OTC PrEP",
     fill = "Resistances \nper 100 Infections"
   )
 
@@ -115,7 +115,7 @@ loess_inter$y <- loess_inter$tst_rate
 p_res_nia <- plot_common_elts(loess_inter) +
   labs(
     y = "Probability of HIV test before OTC start",
-    x = "Proportion of OTC PrEP",
+    x = "Addition of OTC PrEP",
     fill = "Resistances \nper Infections Averted"
   )
 
@@ -136,7 +136,7 @@ loess_inter$y <- loess_inter$tst_rate
 p_pia <- plot_common_elts(loess_inter) +
   labs(
     y = "Probability of HIV test before OTC start",
-    x = "Proportion of OTC PrEP",
+    x = "Addition of OTC PrEP",
     fill = "Percent of \nInfections Averted"
   )
 

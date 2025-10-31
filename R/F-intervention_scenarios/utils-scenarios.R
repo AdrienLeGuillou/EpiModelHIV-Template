@@ -97,6 +97,13 @@ d_base_indic <- d_base_best |>
     prep.otc.hard.indications = 1,
   )
 
+d_base_sdur <- d_base_best |>
+  mutate(
+    prep.otc.discont.int_1 = param$prep.discont.int[1],
+    prep.otc.discont.int_2 = param$prep.discont.int[2],
+    prep.otc.discont.int_3 = param$prep.discont.int[3]
+  )
+
 d_base_only_otc_same <- d_base_same |>
   mutate(
     prep.start.rate_1 = 0,

@@ -34,21 +34,25 @@ name_bases <- c(
   # "only_otc_relaxed_"
   # "base_only_otc_same_",
   # "only_otc_best_",
-  #"otc_mix_",
+  # "otc_mix_",
+  #
   "otc_best_",
   "otc_indic_"
+  # "otc_sdur_"
 )
 d_bases <- list(
   # d_base_only_otc_relaxed,
   # d_base_only_otc_same,
   # d_base_only_otc_best,
   # d_base_otc_mix,
+  #
   d_base_otc_best,
   d_base_otc_indic
+  # d_base_otc_sdur
 )
 
 for (i in seq_along(name_bases)) {
-  # Modify the discontinuation
+  Modify the discontinuation
   tmp_sc_names <- paste0(
     name_bases[i],
     "disc_",
@@ -116,10 +120,10 @@ for (i in seq_along(name_bases)) {
   tmp_sc_names <- paste0(
     name_bases[i],
     "adhr_",
-    c("m20", "m10", "m05", "base", "p05", "p10", "p20")
+    c("m20", "m10", "p10", "p20")
   )
   sc_names <- c(sc_names, tmp_sc_names)
-  shifts <- c(-20, -10, -5, 0, 5, 10, 20) / 100
+  shifts <- c(-20, -10, 10, 20) / 100
   adhrs <- vapply(
     shifts,
     EpiModelHIV::reallocate_pcp,
@@ -141,14 +145,18 @@ for (i in seq_along(name_bases)) {
 name_bases <- c(
   # "only_otc_best_",
   # "otc_mix_",
+  #
   "otc_best_",
-  "otc_indic_"
+  "otc_indic_",
+  "otc_sdur_"
 )
 d_bases <- list(
   # d_base_only_otc_best,
   # d_base_otc_mix,
+  #
   d_base_otc_best,
-  d_base_otc_indic
+  d_base_otc_indic,
+  d_base_otc_sdur
 )
 
 for (i in seq_along(name_bases)) {

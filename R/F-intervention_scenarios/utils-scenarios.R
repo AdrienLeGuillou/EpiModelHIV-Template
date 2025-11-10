@@ -25,6 +25,7 @@ otc_best_or <- 0.25
 otc_indic_or <- 0.31 # best guess with same indics
 otc_mix_or <- 0.52
 otc_sdur_or <- 0.33597545
+otc_same_or <- 0.43
 
 # Base DF for scenarios: -------------------------------------------------------
 #
@@ -166,6 +167,14 @@ d_base_otc_mix <- d_base_best |>
 
 tmp_or <- otc_sdur_or
 d_base_otc_sdur <- d_base_sdur |>
+  mutate(
+    prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], tmp_or),
+    prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], tmp_or),
+    prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], tmp_or)
+  )
+
+tmp_or <- otc_same_or
+d_base_otc_same <- d_base_same |>
   mutate(
     prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], tmp_or),
     prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], tmp_or),

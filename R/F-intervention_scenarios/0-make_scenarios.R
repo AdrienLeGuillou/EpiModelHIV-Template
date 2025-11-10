@@ -18,16 +18,16 @@ source("R/F-intervention_scenarios/utils-scenarios.R", local = TRUE)
 sc_df_ls <- list()
 sc_names <- c()
 
-# Simply no OTC
-tmp_sc_names <- "baseline"
-sc_names <- c(sc_names, tmp_sc_names)
-sc_df_ls[["baseline"]] <- tibble(
-  .scenario.id = paste0("baseline"),
-  .at = intervention_start,
-  prep.otc.start.rate_1 = 0,
-  prep.otc.start.rate_2 = 0,
-  prep.otc.start.rate_3 = 0
-)
+# # Simply no OTC
+# tmp_sc_names <- "baseline"
+# sc_names <- c(sc_names, tmp_sc_names)
+# sc_df_ls[["baseline"]] <- tibble(
+#   .scenario.id = paste0("baseline"),
+#   .at = intervention_start,
+#   prep.otc.start.rate_1 = 0,
+#   prep.otc.start.rate_2 = 0,
+#   prep.otc.start.rate_3 = 0
+# )
 
 # Scenarios exploring changes to relaxed, best and mix --------------------
 name_bases <- c(
@@ -36,9 +36,10 @@ name_bases <- c(
   # "only_otc_best_",
   # "otc_mix_",
   #
-  "otc_best_",
-  "otc_indic_"
-  # "otc_sdur_"
+  # "otc_best_",
+  # "otc_indic_",
+  # "otc_sdur_",
+  "otc_same_"
 )
 d_bases <- list(
   # d_base_only_otc_relaxed,
@@ -46,13 +47,14 @@ d_bases <- list(
   # d_base_only_otc_best,
   # d_base_otc_mix,
   #
-  d_base_otc_best,
-  d_base_otc_indic
-  # d_base_otc_sdur
+  # d_base_otc_best,
+  # d_base_otc_indic,
+  # d_base_otc_sdur,
+  d_base_otc_same
 )
 
 for (i in seq_along(name_bases)) {
-  Modify the discontinuation
+  # Modify the discontinuation
   tmp_sc_names <- paste0(
     name_bases[i],
     "disc_",
@@ -141,24 +143,16 @@ for (i in seq_along(name_bases)) {
     )
 }
 
-# Scenarios exploring always hiv/sti test in "best" likes ----------------------
-name_bases <- c(
-  # "only_otc_best_",
-  # "otc_mix_",
-  #
-  "otc_best_",
-  "otc_indic_",
-  "otc_sdur_"
-)
-d_bases <- list(
-  # d_base_only_otc_best,
-  # d_base_otc_mix,
-  #
-  d_base_otc_best,
-  d_base_otc_indic,
-  d_base_otc_sdur
-)
 
+# # Changes bases if needed
+# name_bases <- c(
+#   "otc_same_"
+# )
+# d_bases <- list(
+#   d_base_otc_same
+# )
+
+# Scenarios exploring always hiv/sti test in "best" likes ----------------------
 for (i in seq_along(name_bases)) {
   hivtst_prob <- c(0, 0.25, 0.5, 0.75, 1)
   tmp_sc_names <- paste0(name_bases[i], "some_hivtst_", c(0, 25, 50, 75, 100))

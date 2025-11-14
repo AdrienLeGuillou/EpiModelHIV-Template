@@ -27,16 +27,16 @@ control <- control_msm(
   start          = restart_time,
   nsteps         = intervention_end,
   initialize.FUN = reinit_msm,
-  debug          = TRUE,
-  .tracker.list  = EpiModelHIV::make_calibration_trackers(),
+  # debug          = TRUE,
+  # .tracker.list  = EpiModelHIV::make_calibration_trackers(),
   verbose        = FALSE
 )
 
 # Workflow creation
-wf <- make_em_workflow("interventions_ors", override = TRUE)
+wf <- make_em_workflow("interventions_find", override = TRUE)
 
 # Define test scenarios
-source("./R/F-intervention_scenarios/04-make_scenarios_search_ors.R", local = TRUE)
+source("./R/F-intervention_scenarios/01-make_scenarios_find_steps.R", local = TRUE)
 
 wf <- add_workflow_step(
   wf_summary = wf,

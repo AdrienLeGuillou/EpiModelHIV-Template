@@ -3,6 +3,7 @@
 library(dplyr)
 
 d_raws <- readRDS("./data/output/d_raw.rds")
+unique(d_raws$scenario_name)
 
 scs_base <- "add_otc_indics"
 d <- d_raws |>

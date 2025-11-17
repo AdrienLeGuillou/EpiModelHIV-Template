@@ -11,3 +11,4 @@ data/run
 data/output
 renv/
 workflows/
+ya_go.sh

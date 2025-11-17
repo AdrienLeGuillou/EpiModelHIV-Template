@@ -28,7 +28,7 @@ control <- control_msm(
   nsteps         = intervention_end,
   initialize.FUN = reinit_msm,
   # debug          = TRUE,
-  # .tracker.list  = EpiModelHIV::make_calibration_trackers(),
+  .tracker.list  = EpiModelHIV::make_calibration_trackers(),
   verbose        = FALSE
 )
 

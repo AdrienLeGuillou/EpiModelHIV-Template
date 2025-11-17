@@ -29,18 +29,24 @@ sc_df_ls[["baseline"]] <- tibble(
   prep.otc.start.rate_3 = 0
 )
 
-ors <- seq(0.05, 0.5, 0.05)
 # These make the prop of OTC be 5->50%
 ors <- c( # values from model
   0.03027552, 0.06595926, 0.10430880, 0.14680892, 0.19494439,
   0.25019997, 0.31406043, 0.38801056, 0.47353511, 0.57211886
 )
-
 # These make the number of anyprep be + 5%->50%
-ors <- c( # values from model
-  0.03062325, 0.06634091, 0.10449730, 0.14670575, 0.19457958,
-  0.24973212, 0.31377669, 0.38832660, 0.47499519, 0.57539578
-)
+ors <- c(
+  x1.05 = 0.0427757331296098,
+  x1.10 = 0.0805903516625563,
+  x1.15 = 0.120727256402551,
+  x1.20 = 0.162987492753426,
+  x1.25 = 0.207172106119017,
+  x1.30 = 0.253082141903155,
+  x1.35 = 0.300518645509675,
+  x1.40 = 0.349282662342408,
+  x1.45 = 0.399175237805191,
+  x1.50 = 0.449997417301854
+)[c("x1.10", "x1.20", "x1.30", "x1.40", "x1.50")]
 tmp_sc_names <- paste0("add_otc_best", ors)
 sc_names <- c(sc_names, tmp_sc_names)
 sc_df_ls[["add_otc_best"]] <- d_base_best |>
@@ -59,10 +65,18 @@ ors <- c( # values from model
   0.31076927, 0.39119419, 0.48423269, 0.59160025, 0.71501234
 )
 # These make the number of anyprep be + 5%->50%
-ors <- c( # values from model
-  0.05267499, 0.10014388, 0.15102485, 0.20502437, 0.26184895,
-  0.32120509, 0.38279929, 0.44633804, 0.51152784, 0.57807520
-)
+ors <- c(
+  x1.05 = 0.0520679281388087,
+  x1.10 = 0.0999954602099051,
+  x1.15 = 0.151512480593926,
+  x1.20 = 0.206166637399693,
+  x1.25 = 0.263505578736026,
+  x1.30 = 0.323076952711746,
+  x1.35 = 0.384428407435674,
+  x1.40 = 0.447107591016628,
+  x1.45 = 0.510662151563433,
+  x1.50 = 0.574639737184907
+)[c("x1.10", "x1.20", "x1.30", "x1.40", "x1.50")]
 tmp_sc_names <- paste0("add_otc_indics", ors)
 sc_names <- c(sc_names, tmp_sc_names)
 sc_df_ls[["add_otc_indics"]] <- d_base_indic |>
@@ -83,11 +97,19 @@ ors <- seq(0.05, 0.75, 0.05)
 #   0.03780670, 0.08089587, 0.12802123, 0.18089827, 0.24124246,
 #   0.31076927, 0.39119419, 0.48423269, 0.59160025, 0.71501234
 # )
-# # These make the number of anyprep be + 5%->50%
-# ors <- c( # values from model
-#   0.05267499, 0.10014388, 0.15102485, 0.20502437, 0.26184895,
-#   0.32120509, 0.38279929, 0.44633804, 0.51152784, 0.57807520
-# )
+# These make the number of anyprep be + 5%->50%
+ors <- c(
+  x1.05 = 0.0808281917472001,
+  x1.10 = 0.158451685729375,
+  x1.15 = 0.246881077657844,
+  x1.20 = 0.342297258210962,
+  x1.25 = 0.440881118067086,
+  x1.30 = 0.538813547904572,
+  x1.35 = 0.632275438401776,
+  x1.40 = 0.717447680237051,
+  x1.45 = 0.790511164088757,
+  x1.50 = 0.847646780635249
+)[c("x1.10", "x1.20", "x1.30", "x1.40", "x1.50")]
 tmp_sc_names <- paste0("add_otc_same", ors)
 sc_names <- c(sc_names, tmp_sc_names)
 sc_df_ls[["add_otc_same"]] <- d_base_same |>
@@ -98,6 +120,53 @@ sc_df_ls[["add_otc_same"]] <- d_base_same |>
     prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
     prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
   )
+
+# These make the number of anyprep be + 5%->50%
+ors <- c(
+  x1.05 = 0.0560576092205693,
+  x1.10 = 0.107715105354057,
+  x1.15 = 0.162691130302938,
+  x1.20 = 0.220466630000594,
+  x1.25 = 0.280522550380405,
+  x1.30 = 0.342339837375751,
+  x1.35 = 0.405399436920012,
+  x1.40 = 0.469182294946569,
+  x1.45 = 0.533169357388803,
+  x1.50 = 0.596841570180095
+)[c("x1.10", "x1.20", "x1.30", "x1.40", "x1.50")]
+tmp_sc_names <- paste0("add_otc_sdur", ors)
+sc_names <- c(sc_names, tmp_sc_names)
+sc_df_ls[["add_otc_sdur"]] <- d_base_sdur |>
+  slice_sample(n = length(ors), replace = TRUE) |>
+  mutate(
+    .scenario.id = tmp_sc_names,
+    prep.otc.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
+    prep.otc.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
+    prep.otc.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
+  )
+
+# ors <- c(
+#   x1.05 = 1.04765070808393,
+#   x1.10 = 1.11959438578896,
+#   x1.15 = 1.19394457036229,
+#   x1.20 = 1.27075337926099,
+#   x1.25 = 1.3500729299421,
+#   x1.30 = 1.43195533986268,
+#   x1.35 = 1.51645272647977,
+#   x1.40 = 1.60361720725044,
+#   x1.45 = 1.69350089963173,
+#   x1.50 = 1.78615592108069
+# )
+# tmp_sc_names <- paste0("add_no_otc", ors)
+# sc_names <- c(sc_names, tmp_sc_names)
+# sc_df_ls[["add_no_otc"]] <- sc_df_ls[["baseline"]] |>
+#   slice_sample(n = length(ors), replace = TRUE) |>
+#   mutate(
+#     .scenario.id = tmp_sc_names,
+#     prep.start.rate_1 = apply_odds_ratio(param$prep.start.rate[1], ors),
+#     prep.start.rate_2 = apply_odds_ratio(param$prep.start.rate[2], ors),
+#     prep.start.rate_3 = apply_odds_ratio(param$prep.start.rate[3], ors)
+#   )
 
 sc_ls <- lapply(sc_df_ls, EpiModel::create_scenario_list)
 scenarios_list <- Reduce(c, sc_ls, init = list())

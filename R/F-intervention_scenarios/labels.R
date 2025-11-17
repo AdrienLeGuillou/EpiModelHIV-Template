@@ -50,6 +50,7 @@ var_labels <- c(
   "cml_incid_chla" = "Chla Cumulative Incidence All (10y)",
 
   "lst_prep_any" = "Any PrEP Number (ly)",
+  "lst_additional_prep" = "Any PrEP Multiplier (ly)",
   "lst_prop_otc" = "Proportion of OTC (ly)",
   "lst_prep_num" = "STD PrEP Number (ly)",
   "lst_prep_otc_num" = "OTC PrEP Number (ly)",
@@ -157,7 +158,8 @@ format_patterns <- list(
       "lst_.*_cov",
       "lst_gfr[69].*",
       "lst_prep_.*_gfr_lt60",
-      "lst.*_prop"
+      "lst.*_prop",
+      "lst_additional_prep"
     ),
     fun = scales::label_percent(0.1)
   ),

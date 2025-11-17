@@ -47,7 +47,7 @@ wf <- add_workflow_step(
     control,
     scenarios_list = scenarios_list,
     output_dir = scenarios_dir,
-    n_rep = 512,
+    n_rep = 64, # 512,
     n_cores = max_cores,
     max_array_size = 500,
     setup_lines = hpc_node_setup

@@ -123,7 +123,8 @@ make_d_ref <- function(file_path) {
       cml_gfr_drop,
       cml_resist,
       cml_resist_tdf,
-      cml_resist_ftc
+      cml_resist_ftc,
+      lst_prep_any
     ) |>
     group_by(sim) |>
     summarize(across(everything(), \(x) sum(x, na.rm = TRUE))) |>
@@ -201,7 +202,9 @@ process_one_scenario <- function(scenario_infos, d_ref) {
 
       # resist per infection
       cml_resist_tdf_100i = cml_resist_tdf / cml_incid * 100,
-      cml_resist_ftc_100i = cml_resist_ftc / cml_incid * 100
+      cml_resist_ftc_100i = cml_resist_ftc / cml_incid * 100,
+
+      lst_additional_prep = lst_prep_any / d_ref$lst_prep_any
     )
 
   d

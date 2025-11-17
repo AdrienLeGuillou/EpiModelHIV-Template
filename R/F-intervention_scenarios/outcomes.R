@@ -204,7 +204,8 @@ process_one_scenario <- function(scenario_infos, d_ref) {
       cml_resist_tdf_100i = cml_resist_tdf / cml_incid * 100,
       cml_resist_ftc_100i = cml_resist_ftc / cml_incid * 100,
 
-      lst_additional_prep = lst_prep_any / d_ref$lst_prep_any
+      # TODO: fix that to use `d_ref$lst_prep_any` - do not work now
+      lst_additional_prep = lst_prep_any / 12663
     )
 
   d

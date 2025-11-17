@@ -21,11 +21,11 @@ apply_odds_ratio <- function(p, or) {
 ################################################################################
 only_otc_relaxed_or <- 0.8563
 only_otc_best_or <- 0.595
-otc_best_or <- 0.24973212 # 0.25
-otc_indic_or <- 0.31 # best guess with same indics
+otc_best_or <- 0.253082141903155 # 0.25
+otc_indic_or <- 0.323076952711746 # best guess with same indics
 otc_mix_or <- 0.52
-otc_sdur_or <- 0.33597545
-otc_same_or <- 0.43
+otc_sdur_or <- 0.342339837375751
+otc_same_or <- 0.538813547904572
 
 # Base DF for scenarios: -------------------------------------------------------
 #

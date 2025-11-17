@@ -33,7 +33,7 @@ control <- control_msm(
 )
 
 # Workflow creation
-wf <- make_em_workflow("indic_interventions", override = TRUE)
+wf <- make_em_workflow("interventions_indic", override = TRUE)
 
 # Define test scenarios
 source("./R/F-intervention_scenarios/03-make_scenarios_indic.R", local = TRUE)

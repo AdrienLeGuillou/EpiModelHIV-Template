@@ -19,15 +19,21 @@ sc_df_ls <- list()
 sc_names <- c()
 
 # # Simply no OTC
-# tmp_sc_names <- "baseline"
-# sc_names <- c(sc_names, tmp_sc_names)
-# sc_df_ls[["baseline"]] <- tibble(
-#   .scenario.id = paste0("baseline"),
-#   .at = intervention_start,
-#   prep.otc.start.rate_1 = 0,
-#   prep.otc.start.rate_2 = 0,
-#   prep.otc.start.rate_3 = 0
-# )
+tmp_sc_names <- "baseline"
+sc_names <- c(sc_names, tmp_sc_names)
+sc_df_ls[["baseline"]] <- tibble(
+  .scenario.id = paste0("baseline"),
+  .at = intervention_start,
+  prep.otc.start.rate_1 = 0,
+  prep.otc.start.rate_2 = 0,
+  prep.otc.start.rate_3 = 0
+)
+
+sc_df_ls[["plus_30_same"]] <- d_base_otc_same |>
+  mutate(
+    .scenario.id = "add_otc_same_30",
+    .at = intervention_start
+  )
 
 # Scenarios exploring changes to relaxed, best and mix --------------------
 name_bases <- c(
@@ -38,8 +44,8 @@ name_bases <- c(
   #
   # "otc_best_",
   # "otc_indic_",
-  # "otc_sdur_",
-  "otc_same_"
+  # "otc_same_",
+  "otc_sdur_"
 )
 d_bases <- list(
   # d_base_only_otc_relaxed,
@@ -49,8 +55,8 @@ d_bases <- list(
   #
   # d_base_otc_best,
   # d_base_otc_indic,
-  # d_base_otc_sdur,
-  d_base_otc_same
+  # d_base_otc_same,
+  d_base_otc_sdur
 )
 
 for (i in seq_along(name_bases)) {

@@ -80,7 +80,7 @@ wf <- add_workflow_step(
 wf <- add_workflow_step(
   wf_summary = wf,
   step_tmpl = step_tmpl_do_call_script(
-    r_script = "R/F-intervention_scenarios/2-process_tables.R",
+    r_script = "./R/F-intervention_scenarios/2x-find_prep_covs.R",
     args = list(
       hpc_context = TRUE,
       n_cores = max_cores

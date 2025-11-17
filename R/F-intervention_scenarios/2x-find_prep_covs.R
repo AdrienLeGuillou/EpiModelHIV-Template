@@ -19,8 +19,6 @@ mutate_outcomes <- function(d) {
       ## Clinical PrEP
       lst_prep_num = prepCurr,
       lst_prep_otc_num = prep.otcCurr,
-      lst_prep_otc_mean_dur = prep.otc.dur.mean,
-      lst_prep_otc_mean_eps = dbg_prep_otc_eps_mean,
       lst_prep_any = prepCurr + prep.otcCurr,
       lst_prop_otc = prep.otcCurr / lst_prep_any,
       lst_prep_otc_std_indic_cov = prep.otc.std.indic / prep.otcCurr

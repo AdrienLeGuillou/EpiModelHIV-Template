@@ -10,6 +10,7 @@ renv::init()
 source("R/shared_variables.R", local = TRUE)
 
 # This code installs the correct version of EpiModelHIV-p for your project
+renv::install("EpiModel/EpiModel@rm_missing")
 renv::install(paste0("EpiModel/EpiModelHIV-p@", EMHIVp_branch))
 
 # Snapshot the list of installed packages to the `renv.lock` file

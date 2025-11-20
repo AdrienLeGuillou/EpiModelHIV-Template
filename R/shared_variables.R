@@ -3,8 +3,8 @@
 ## This script should not be run directly. But `sourced` from other scripts
 
 # EpiModelHIV-p local directory
-EMHIVp_branch <- "v3.2.x"
-EMHIVp_dir    <- "~/../Desktop/GitHub/EpiModelHIV-p"
+EMHIVp_branch <- "reworks"
+EMHIVp_dir    <- "../EpiModelHIV-p.git/reworks/"
 
 # Relevant time steps for the simulation
 time_unit  <- 7               # number of days in a time step

@@ -100,7 +100,7 @@
     "EpiModel": {
       "Package": "EpiModel",
       "Version": "2.5.0",
-      "Source": "GitHub",
+      "Source": "Repository",
       "Date": "2024-10-10",
       "Title": "Mathematical Modeling of Infectious Disease Dynamics",
       "Description": "Tools for simulating mathematical models of infectious disease dynamics. Epidemic model classes include deterministic compartmental models, stochastic individual-contact models, and stochastic network models. Network models use the robust statistical methods of exponential-family random graph models (ERGMs) from the Statnet suite of software packages in R. Standard templates for epidemic modeling include SI, SIR, and SIS disease types. EpiModel features an API for extending these templates to address novel scientific research aims. Full methods for EpiModel are detailed in Jenness et al. (2018, <doi:10.18637/jss.v084.i08>).",
@@ -138,7 +138,6 @@
         "networkLite (>= 1.0.5)"
       ],
       "Suggests": [
-        "DT",
         "ergm.ego (>= 1.1.0)",
         "egor",
         "knitr",
@@ -156,14 +155,9 @@
       ],
       "RoxygenNote": "7.3.2",
       "Encoding": "UTF-8",
-      "Roxygen": "list(markdown = TRUE)",
+      "NeedsCompilation": "yes",
       "Author": "Samuel Jenness [cre, aut], Steven M. Goodreau [aut], Martina Morris [aut], Adrien Le Guillou [aut], Chad Klumb [aut], Skye Bender-deMoll [ctb]",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteUsername": "EpiModel",
-      "RemoteRepo": "EpiModel",
-      "RemoteRef": "rm_missing",
-      "RemoteSha": "1db9366b370aad15cf54623def9a3220f67d1e73"
+      "Repository": "CRAN"
     },
     "EpiModelHIV": {
       "Package": "EpiModelHIV",
@@ -209,8 +203,8 @@
       "RemoteType": "github",
       "RemoteUsername": "EpiModel",
       "RemoteRepo": "EpiModelHIV-p",
-      "RemoteRef": "reworks",
-      "RemoteSha": "a2047c03ee847792d349ba6c1ec10ef6cf6ce4dd",
+      "RemoteRef": "v3.2.x",
+      "RemoteSha": "46ba6797c5bec2c5ba32c5429e8a37f016787d0e",
       "RemoteHost": "api.github.com",
       "Remotes": "github::EpiModel/ARTnet@main, github::EpiModel/ARTnetData@main"
     },

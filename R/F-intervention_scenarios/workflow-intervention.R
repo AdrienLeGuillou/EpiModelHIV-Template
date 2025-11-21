@@ -33,7 +33,7 @@ control <- control_msm(
 )
 
 # Workflow creation
-wf <- make_em_workflow("interventions_missings", override = TRUE)
+wf <- make_em_workflow("interventions", override = TRUE)
 
 # Define test scenarios
 source("./R/F-intervention_scenarios/0-make_scenarios.R", local = TRUE)

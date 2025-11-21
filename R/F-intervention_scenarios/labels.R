@@ -188,7 +188,10 @@ scenarios_root_names <- c(
   "add_otc_best" = "Adding OTC PrEP Best Guess",
   "add_otc_indics" = "Adding OTC PrEP Same Indications",
   "otc_mix" = "Adding OTC PrEP Best Guess - Lower STD Start Rate",
-  "otc_best" = "Adding OTC PrEP Best Guess - Keep STD Start Rate"
+  "otc_best" = "Adding OTC PrEP Best Guess - Keep STD Start Rate",
+  "add_otc_sdur" = "Adding OTC PrEP Best Guess",
+  "otc_sdur" = "OTC PrEP Best Guess",
+  "add_otc_same" = "Adding OTC PrEP Same as Clinical"
 )
 
 scenarios_prefix_names <- c(
@@ -240,26 +243,11 @@ scenarios_prefix_names <- c(
   "_150" = ": OR 1.5",
   "_175" = ": OR 1.75",
   "_200" = ": OR 2",
-  "0.0378067" = ": 5%",
-  "0.08089587" = ": 10%",
-  "0.12802123" = ": 15%",
-  "0.18089827" = ": 20%",
-  "0.24124246" = ": 25%",
-  "0.31076927" = ": 30%",
-  "0.39119419" = ": 35%",
-  "0.48423269" = ": 40%",
-  "0.59160025" = ": 45%",
-  "0.71501234" = ": 50%",
-  "0.03027552" = ": 5%",
-  "0.06595926" = ": 10%",
-  "0.1043088" = ": 15%",
-  "0.14680892" = ": 20%",
-  "0.19494439" = ": 25%",
-  "0.25019997" = ": 30%",
-  "0.31406043" = ": 35%",
-  "0.38801056" = ": 40%",
-  "0.47353511" = ": 45%",
-  "0.57211886" = ": 50%"
+  "x1.10" = " + 10%",
+  "x1.20" = " + 20%",
+  "x1.30" = " + 30%",
+  "x1.40" = " + 40%",
+  "x1.50" = " + 50%"
 )
 
 nicefy_scs_names <- function(scs_names) {

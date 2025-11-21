@@ -42,7 +42,7 @@ sc_names <- c()
 #   x1.45 = 0.399175237805191,
 #   x1.50 = 0.449997417301854
 # )[c("x1.10", "x1.20", "x1.30", "x1.40", "x1.50")]
-# tmp_sc_names <- paste0("add_otc_best", ors)
+# tmp_sc_names <- paste0("add_otc_best", names(ors))
 # sc_names <- c(sc_names, tmp_sc_names)
 # sc_df_ls[["add_otc_best"]] <- d_base_best |>
 #   slice_sample(n = length(ors), replace = TRUE) |>
@@ -66,7 +66,7 @@ sc_names <- c()
 #   x1.45 = 0.510662151563433,
 #   x1.50 = 0.574639737184907
 # )[c("x1.10", "x1.20", "x1.30", "x1.40", "x1.50")]
-# tmp_sc_names <- paste0("add_otc_indics", ors)
+# tmp_sc_names <- paste0("add_otc_indics", names(ors))
 # sc_names <- c(sc_names, tmp_sc_names)
 # sc_df_ls[["add_otc_indics"]] <- d_base_indic |>
 #   slice_sample(n = length(ors), replace = TRUE) |>
@@ -94,7 +94,7 @@ ors <- c(
   x1.50 = 0.847646780635249
 # )[c("x1.10", "x1.20", "x1.30", "x1.40", "x1.50")]
 )[c("x1.30")]
-tmp_sc_names <- paste0("add_otc_same", ors)
+tmp_sc_names <- paste0("add_otc_same", names(ors))
 sc_names <- c(sc_names, tmp_sc_names)
 sc_df_ls[["add_otc_same"]] <- d_base_same |>
   slice_sample(n = length(ors), replace = TRUE) |>
@@ -118,7 +118,7 @@ ors <- c(
   x1.45 = 0.533169357388803,
   x1.50 = 0.596841570180095
 )[c("x1.10", "x1.20", "x1.30", "x1.40", "x1.50")]
-tmp_sc_names <- paste0("add_otc_sdur", ors)
+tmp_sc_names <- paste0("add_otc_sdur", names(ors))
 sc_names <- c(sc_names, tmp_sc_names)
 sc_df_ls[["add_otc_sdur"]] <- d_base_sdur |>
   slice_sample(n = length(ors), replace = TRUE) |>

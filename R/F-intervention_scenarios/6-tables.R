@@ -6,7 +6,6 @@ source("R/shared_variables.R", local = TRUE)
 source("R/F-intervention_scenarios/z-context.R", local = TRUE)
 source("R/F-intervention_scenarios/labels.R", local = TRUE)
 
-d_raw <- readr::read_csv("data/output/table_test.csv")
 d_raw <- readr::read_csv("data/output/table.csv")
 
 # Tables and Plots:
@@ -21,38 +20,18 @@ d_raw <- readr::read_csv("data/output/table.csv")
 
 t2_scenarios <- c(
   "baseline",
-  "no_otc_prep_or152",
-  "add_otc_best0.03027552",
-  "add_otc_best0.06595926",
-  "add_otc_best0.1043088",
-  "add_otc_best0.14680892",
-  "add_otc_best0.19494439",
-  "add_otc_best0.25019997",
-  "add_otc_best0.31406043",
-  "add_otc_best0.38801056",
-  "add_otc_best0.47353511",
-  "add_otc_best0.57211886",
-  "add_otc_indics0.0378067",
-  "add_otc_indics0.08089587",
-  "add_otc_indics0.12802123",
-  "add_otc_indics0.18089827",
-  "add_otc_indics0.24124246",
-  "add_otc_indics0.31076927",
-  "add_otc_indics0.39119419",
-  "add_otc_indics0.48423269",
-  "add_otc_indics0.59160025",
-  "add_otc_indics0.71501234"
-  # "plot_cli1.52_otc0_tst0.5", # 0% OTC
-  # "plot_cli1.1_otc0.2_tst0.5", # 25% OTC
-  # "plot_cli0.7_otc0.42_tst0.5", # 50% OTC
-  # "plot_cli0.3_otc0.65_tst0.5", # 77% OTC
-  # "plot_cli0_otc0.85_tst0.5" # 100% OTC
+  "add_otc_samex1.30",
+  "add_otc_sdurx1.10",
+  "add_otc_sdurx1.20",
+  "add_otc_sdurx1.30",
+  "add_otc_sdurx1.40",
+  "add_otc_sdurx1.50"
 )
 
 
 t2_cols <- c(
-  "lst_prep_any",
-  "lst_prop_otc",
+  # "lst_prep_any",
+  # "lst_prop_otc",
   "cml_pia_all",
   "lst_prep_any_gfr_lt60",
   # "cml_hbv_flare_otc_ir100kpy",
@@ -71,49 +50,44 @@ t2$scenario_name <- nicefy_scs_names(t2$scenario_name)
 names(t2) <- var_labels[names(t2)]
 write.csv(t2, "data/output/pres_t2.csv", row.names = FALSE)
 
-t2 |> DT::datatable()
+# t2 |> DT::datatable()
 
 # use best as ref here?
 # or baseline?
 t3_scenarios <- c(
-  "otc_best_some_hivtst_50",
-  "otc_best_disc_050",
-  "otc_best_disc_075",
-  "otc_best_disc_125",
-  "otc_best_disc_150",
-  "otc_best_gfr_5",
-  "otc_best_gfr_3",
-  "otc_best_gfr_1",
-  "otc_best_gfr_same",
-  "otc_best_some_hivtst_0",
-  "otc_best_some_hivtst_25",
-  "otc_best_some_hivtst_50",
-  "otc_best_some_hivtst_75",
-  "otc_best_some_hivtst_100",
-
-  "otc_indics_some_hivtst_50",
-  "otc_indics_disc_050",
-  "otc_indics_disc_075",
-  "otc_indics_disc_125",
-  "otc_indics_disc_150",
-  "otc_indics_gfr_5",
-  "otc_indics_gfr_3",
-  "otc_indics_gfr_1",
-  "otc_indics_gfr_same",
-  "otc_indics_some_hivtst_0",
-  "otc_indics_some_hivtst_25",
-  "otc_indics_some_hivtst_50",
-  "otc_indics_some_hivtst_75",
-  "otc_indics_some_hivtst_100"
+  "otc_sdur_some_hivtst_50",
+  "otc_sdur_disc_050",
+  "otc_sdur_disc_075",
+  "otc_sdur_disc_125",
+  "otc_sdur_disc_150",
+  "otc_sdur_gfr_Inf",
+  "otc_sdur_gfr_5",
+  "otc_sdur_gfr_3",
+  "otc_sdur_gfr_1",
+  "otc_sdur_gfr_same",
+  "otc_sdur_some_hivtst_0",
+  "otc_sdur_some_hivtst_25",
+  "otc_sdur_some_hivtst_50",
+  "otc_sdur_some_hivtst_75",
+  "otc_sdur_some_hivtst_100",
+  "otc_sdur_hivtst_13",
+  "otc_sdur_hivtst_26",
+  "otc_sdur_hivtst_52",
+  "otc_sdur_hivtst_104",
+  "otc_sdur_hivtst_208",
+  "otc_sdur_stitst_13",
+  "otc_sdur_stitst_26",
+  "otc_sdur_stitst_52",
+  "otc_sdur_stitst_104",
+  "otc_sdur_stitst_208"
 )
 
 t3_cols <- c(
-  "lst_prep_any",
-  "lst_prop_otc",
+  "lst_additional_prep",
   "cml_pia_all",
   "lst_prep_any_gfr_lt60",
   "lst_prep_otc_gfr_lt60",
-  "cml_hbv_flare_otc_ir100kpy",
+  "cml_hbv_flare_otc",
   # "cml_hbv_flare_otc",
   "cml_resist_tdf_100i",
   "cml_resist_ftc_100i"
@@ -129,4 +103,4 @@ t3$scenario_name <- nicefy_scs_names(t3$scenario_name)
 names(t3) <- var_labels[names(t3)]
 write.csv(t3, "data/output/pres_t3.csv", row.names = FALSE)
 
-t3 |> DT::datatable()
+# t3 |> DT::datatable()

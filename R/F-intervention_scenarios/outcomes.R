@@ -87,7 +87,7 @@ mutate_outcomes <- function(d) {
       cml_hbv_py = 2952, # NOTE: calc on baseline only
       cml_hbv_flare = (dbg_hbv_flares_std + dbg_hbv_flares_otc),
       cml_hbv_flare_otc = dbg_hbv_flares_otc,
-      cml_hbv_flare_otc_ir100k = cml_hbv_flare_otc / cml_hbv_py * 1e5,
+      cml_hbv_flare_otc_ir100kpy = cml_hbv_flare_otc / cml_hbv_py * 1e5,
       cml_hbv_flare_std = dbg_hbv_flares_std,
       # Resistance -------------------------------------------------------------
       cml_resist = any.resist.incid,

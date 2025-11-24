@@ -83,9 +83,11 @@ mutate_outcomes <- function(d) {
         num * 1e5 * 52,
       lst_hbv_flare_otc_ir100k = dbg_hbv_flares_otc / num * 1e5 * 52,
       lst_hbv_flare_std_ir100k = dbg_hbv_flares_std / num * 1e5 * 52,
-      cml_hbv_py = ,
+      # cml_hbv_py = dbg_hbv_cur / 52,
+      cml_hbv_py = 2952, # NOTE: calc on baseline only
       cml_hbv_flare = (dbg_hbv_flares_std + dbg_hbv_flares_otc),
       cml_hbv_flare_otc = dbg_hbv_flares_otc,
+      cml_hbv_flare_otc_ir100k = cml_hbv_flare_otc / cml_hbv_py * 1e5,
       cml_hbv_flare_std = dbg_hbv_flares_std,
       # Resistance -------------------------------------------------------------
       cml_resist = any.resist.incid,
@@ -123,7 +125,8 @@ make_d_ref <- function(file_path) {
       cml_resist,
       cml_resist_tdf,
       cml_resist_ftc,
-      lst_prep_any
+      lst_prep_any,
+      cml_hbv_py
     ) |>
     group_by(sim) |>
     summarize(across(everything(), \(x) sum(x, na.rm = TRUE))) |>
@@ -190,7 +193,7 @@ process_one_scenario <- function(scenario_infos, d_ref) {
 
   d <- d |>
     mutate(
-      cml_hbv_flare_otc_ir100kpy = cml_hbv_flare_otc / cml_prep_otc_py * 1e5,
+      # cml_hbv_flare_otc_ir100kpy = cml_hbv_flare_otc / cml_prep_otc_py * 1e5,
       cml_addi_resist_nia = (cml_resist - d_ref$cml_resist) / cml_nia_all,
       cml_addi_resist_tdf_nia = (cml_resist_tdf - d_ref$cml_resist_tdf) /
         cml_nia_all,

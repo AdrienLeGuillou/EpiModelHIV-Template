@@ -35,6 +35,8 @@ mutate_outcomes <- function(d) {
       cml_incid_gono = incid.gono,
       lst_ir100_chla = ir100.chla,
       cml_incid_chla = incid.chla,
+      lst_ir100_sti = ir100.sti,
+      cml_incid_sti = incid.sti,
 
       ## Clinical PrEP
       lst_prep_num = prepCurr,
@@ -88,6 +90,7 @@ mutate_outcomes <- function(d) {
       cml_hbv_flare = (dbg_hbv_flares_std + dbg_hbv_flares_otc),
       cml_hbv_flare_otc = dbg_hbv_flares_otc,
       cml_hbv_flare_otc_ir100kpy = cml_hbv_flare_otc / cml_hbv_py * 1e5,
+      cml_hbv_flare_otc_ir100py = cml_hbv_flare_otc / cml_hbv_py * 1e2,
       cml_hbv_flare_std = dbg_hbv_flares_std,
       # Resistance -------------------------------------------------------------
       cml_resist = any.resist.incid,

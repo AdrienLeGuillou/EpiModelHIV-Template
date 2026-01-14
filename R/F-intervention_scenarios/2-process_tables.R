@@ -34,6 +34,21 @@ d_ls <- future.apply::future_lapply(
 d_sc_raw <- dplyr::bind_rows(d_ls)
 saveRDS(d_sc_raw, fs::path(output_dir, paste0("d_raw.rds")))
 
+# d_sc_raw <- readRDS(fs::path(output_dir, paste0("d_raw.rds"))) |>
+#   mutate(
+#     lst_ir100_sti = lst_ir100_gono + lst_ir100_chla,
+#     cml_incid_sti = cml_incid_gono + cml_incid_chla,
+#     scenario_name = case_when(
+#       scenario_name == "add_otc_same0.538813547904572" ~ "add_otc_samex1.30",
+#       scenario_name == "add_otc_sdur0.107715105354057" ~ "add_otc_sdurx1.10",
+#       scenario_name == "add_otc_sdur0.220466630000594" ~ "add_otc_sdurx1.20",
+#       scenario_name == "add_otc_sdur0.342339837375751" ~ "add_otc_sdurx1.30",
+#       scenario_name == "add_otc_sdur0.469182294946569" ~ "add_otc_sdurx1.40",
+#       scenario_name == "add_otc_sdur0.596841570180095" ~ "add_otc_sdurx1.50",
+#       TRUE ~ scenario_name
+#     )
+#   )
+
 source("R/F-intervention_scenarios/labels.R", local = TRUE)
 
 format_table(d_sc_raw, var_labels, format_patterns) |>

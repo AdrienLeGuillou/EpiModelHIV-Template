@@ -45,6 +45,7 @@ var_labels <- c(
 
   "lst_ir100_gono" = "Gono IR100 All (ly)",
   "lst_ir100_chla" = "Chla IR100 All (ly)",
+  "lst_ir100_sti" = "STI IR100 All (ly)",
 
   "cml_incid_gono" = "Gono Cumulative Incidence All (10y)",
   "cml_incid_chla" = "Chla Cumulative Incidence All (10y)",
@@ -89,6 +90,7 @@ var_labels <- c(
   "cml_hbv_flare_otc" = "HBV Flares Cumulative - OTC PrEP (10y)",
   "cml_hbv_flare_std" = "HBV Flares Cumulative - STD PrEP (10y)",
   "cml_hbv_flare_otc_ir100kpy" = "HBV Flares OTC IR100k PY (10y)",
+  "cml_hbv_flare_otc_ir100py" = "HBV Flares OTC IR100 PY (10y)",
 
   "cml_resist" = "Any ART resistance Cumulative (10y)",
   "cml_resist_tdf" = "TDF resistance Cumulative (10y)",
@@ -143,7 +145,8 @@ format_patterns <- list(
       "cml_addi_",
       "cml_nnt",
       ".*_mean_eps",
-      "cml_resist_.*_100i"
+      "cml_resist_.*_100i",
+      "cml_hbv_flare_otc_ir100py"
     ),
     fun = scales::label_number(0.01)
   ),
@@ -227,9 +230,13 @@ scenarios_prefix_names <- c(
   "_hivtst_13" = ": HIV Test Every 3 Months",
   "_hivtst_26" = ": HIV Test Every 6 Months",
   "_hivtst_52" = ": HIV Test Every 12 Months",
+  "_hivtst_104" = ": HIV Test Every 24 Months",
+  "_hivtst_208" = ": HIV Test Every 48 Months",
   "_stitst_13" = ": STI Test Every 3 Months",
   "_stitst_26" = ": STI Test Every 6 Months",
   "_stitst_52" = ": STI Test Every 12 Months",
+  "_stitst_104" = ": STI Test Every 24 Months",
+  "_stitst_208" = ": STI Test Every 48 Months",
   "_some_hivtst_0" = ": Some (0%) HIV Test at OTC Start",
   "_some_hivtst_25" = ": Some (25%) HIV Test at OTC Start",
   "_some_hivtst_50" = ": Some (50%) HIV Test at OTC Start",

@@ -94,6 +94,24 @@ for (i in seq_along(name_bases)) {
       prep.otc.gfr.high.risk.int = year_steps * high_gfr_ints
     )
 
+  # Modify gfr testing - add initial testing
+  tmp_sc_names <- paste0(
+    name_bases[i],
+    "gfrfix_",
+    c("same", "1", "2", "3", "5", "Inf")
+  )
+  sc_names <- c(sc_names, tmp_sc_names)
+  low_gfr_ints <- c(1, 1, 2, 3, 5, Inf)
+  high_gfr_ints <- c(1 / 2, 1, 2, 3, 5, Inf)
+  sc_df_ls[[paste0(name_bases[i], "gfrfix")]] <- d_bases[[i]] |>
+    slice_sample(n = length(low_gfr_ints), replace = TRUE) |>
+    mutate(
+      .scenario.id = tmp_sc_names,
+      prep.otc.gfr.risk.rng = 0,
+      prep.otc.gfr.low.risk.int = year_steps * low_gfr_ints,
+      prep.otc.gfr.high.risk.int = year_steps * high_gfr_ints
+    )
+
   # Modify hiv testing
   tmp_sc_names <- paste0(
     name_bases[i],

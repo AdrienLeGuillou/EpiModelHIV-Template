@@ -20,7 +20,7 @@ d_raw <- readr::read_csv("data/output/table.csv")
 
 t2_scenarios <- c(
   "baseline",
-  "add_otc_samex1.30",
+  # "add_otc_samex1.30",
   "add_otc_sdurx1.10",
   "add_otc_sdurx1.20",
   "add_otc_sdurx1.30",
@@ -34,12 +34,16 @@ t2_cols <- c(
   # "lst_prop_otc",
   "cml_pia_all",
   "lst_prep_any_gfr_lt60",
-  # "cml_hbv_flare_otc_ir100kpy",
-  "cml_hbv_flare_otc",
+  "cml_hbv_flare_otc_ir100py",
+  # "cml_hbv_flare_otc",
   "cml_resist_tdf_100i",
-  "cml_resist_ftc_100i"
+  "cml_resist_ftc_100i",
   # "cml_addi_resist_tdf_nia",
-  # "cml_addi_resist_ftc_nia"
+  # "cml_addi_resist_ftc_nia",
+  "lst_ir100_gono",
+  "lst_ir100_chla",
+  "lst_ir100_sti",
+  "cml_nnt_otc"
 )
 t2_cols <- var_labels[t2_cols]
 
@@ -55,11 +59,16 @@ write.csv(t2, "data/output/pres_t2.csv", row.names = FALSE)
 # use best as ref here?
 # or baseline?
 t3_scenarios <- c(
+  "baseline",
   "otc_sdur_some_hivtst_50",
   "otc_sdur_disc_050",
   "otc_sdur_disc_075",
   "otc_sdur_disc_125",
   "otc_sdur_disc_150",
+  "otc_sdur_adhr_m20",
+  "otc_sdur_adhr_m10",
+  "otc_sdur_adhr_p10",
+  "otc_sdur_adhr_p20",
   "otc_sdur_gfr_Inf",
   "otc_sdur_gfr_5",
   "otc_sdur_gfr_3",
@@ -86,13 +95,17 @@ t3_cols <- c(
   "lst_additional_prep",
   "cml_pia_all",
   "lst_prep_any_gfr_lt60",
-  "lst_prep_otc_gfr_lt60",
-  "cml_hbv_flare_otc",
+  # "lst_prep_otc_gfr_lt60",
+  "cml_hbv_flare_otc_ir100py",
   # "cml_hbv_flare_otc",
   "cml_resist_tdf_100i",
-  "cml_resist_ftc_100i"
+  "cml_resist_ftc_100i",
   # "cml_addi_resist_tdf_nia",
   # "cml_addi_resist_ftc_nia"
+  "lst_ir100_gono",
+  "lst_ir100_chla",
+  "lst_ir100_sti",
+  "cml_nnt_otc"
 )
 t3_cols <- var_labels[t3_cols]
 

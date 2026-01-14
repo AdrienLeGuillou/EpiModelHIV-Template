@@ -37,6 +37,10 @@ wf <- make_em_workflow("interventions", override = TRUE)
 
 # Define test scenarios
 source("./R/F-intervention_scenarios/0-make_scenarios.R", local = TRUE)
+scenarios_list <- scenarios_list[c(
+"otc_sdur_gfrfix_same",
+"otc_sdur_gfrfix_2",
+"otc_sdur_gfrfix_5")]
 
 wf <- add_workflow_step(
   wf_summary = wf,
